@@ -22,6 +22,7 @@ deploy_dir      = "_deploy"   # deploy directory (for Github pages deployment)
 stash_dir       = "_stash"    # directory to stash posts for speedy generation
 posts_dir       = "_posts"    # directory for blog files
 themes_dir      = ".themes"   # directory for blog files
+posts_drafts_dir = "_drafts"  # directory for draft files
 new_post_ext    = "markdown"  # default new post file extension when using the new_post task
 new_page_ext    = "markdown"  # default new page file extension when using the new_page task
 server_port     = "4000"      # port for preview server eg. localhost:4000
@@ -374,4 +375,59 @@ desc "list tasks"
 task :list do
   puts "Tasks: #{(Rake::Task.tasks - [Rake::Task[:list]]).join(', ')}"
   puts "(type rake -T for more detail)\n\n"
+end
+
+# usage rake new_draft[my-new-draft] or rake new_draft['my new draft'] or rake new_draft (defaults to "new-draft")
+desc "Begin a new draft post in #{source_dir}/#{posts_drafts_dir}"
+task :new_draft, :title do |t, args|
+  raise "### You haven't set anything up yet. First run `rake install` to set up an Octopress theme." unless File.directory?(source_dir)
+  mkdir_p "#{source_dir}/#{posts_drafts_dir}"
+  args.with_defaults(:title => 'new-draft-post')
+  title = args.title
+  filename = "#{source_dir}/#{posts_drafts_dir}/#{Time.now.strftime('%Y-%m-%d')}-#{title.to_url}.#{new_post_ext}"
+  if File.exist?(filename)
+    abort("rake aborted!") if ask("#{filename} already exists. Do you want to overwrite?", ['y', 'n']) == 'n'
+  end
+  puts "Creating new post: #{filename}"
+  open(filename, 'w') do |post|
+    post.puts "---"
+    post.puts "layout: post"
+    post.puts "title: \"#{title.gsub(/&/,'&amp;')}\""
+    post.puts "date: #{Time.now.strftime('%Y-%m-%d %H:%M')}"
+    post.puts "comments: true"
+    post.puts "categories: "
+    post.puts "keywords: """
+    post.puts "---"
+  end
+end
+
+# usage rake publish_draft[my-draft] and reset the date to today
+desc "Move draft post to _posts."
+task :publish_draft, :filename_partial do |t, args|
+  raise "### You must specify file name partial." unless args[:filename_partial]
+  move_dir = "#{source_dir}/#{posts_dir}"
+  new_date = Time.now.strftime('%Y-%m-%d %H:%M')
+  new_file_date = Time.now.strftime('%Y-%m-%d')
+  FileUtils.mkdir(move_dir) unless File.exist?(move_dir)
+  Dir.glob("#{source_dir}/#{posts_drafts_dir}/*#{args.filename_partial}*.markdown") do |post|
+    new_file_name_suffix = post.match(/-[a-z]\w.*/)
+    new_file_name = "#{move_dir }/#{new_file_date}#{new_file_name_suffix}"
+    FileUtils.mv post, "#{new_file_name}"
+
+    # read the file and update the date: header
+    text = File.read(new_file_name)
+    puts = text.gsub(/(date:\s\w.*)/, "date: #{new_date}")
+    File.open(new_file_name, "w") { |file| file << puts }
+  end
+end
+
+# usage rake yank_post[my-draft]
+desc "Move post to _drafts."
+task :yank_post, :filename_partial do |t, args|
+  raise "### You must specify file name partial." unless args[:filename_partial]
+  move_dir = "#{source_dir}/#{posts_drafts_dir}"
+  FileUtils.mkdir(move_dir) unless File.exist?(move_dir)
+  Dir.glob("#{source_dir}/#{posts_dir}/*#{args.filename_partial}*.markdown") do |post|
+    FileUtils.mv post, move_dir
+  end
 end

@@ -2,7 +2,7 @@
 #      Main Configs       #
 # ----------------------- #
 
-url: http://gerardcondon.github.com
+url: http://www.gerardcondon.com
 title: Gerard Condon's Blog
 subtitle: Scribbling of an iPhone developer.
 author: Gerard Condon
@@ -93,7 +93,7 @@ disqus_short_name:
 disqus_show_comment_count: false
 
 # Google Analytics
-google_analytics_tracking_id:
+google_analytics_tracking_id: UA-29293592-1
 
 # Facebook Like
 facebook_like: false
