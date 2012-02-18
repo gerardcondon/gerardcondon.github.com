@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Development | Gerard Condon's Blog]]></title>
+  <link href="http://www.gerardcondon.com/blog/categories/development/atom.xml" rel="self"/>
+  <link href="http://www.gerardcondon.com/"/>
+  <updated>2012-02-18T09:54:40+00:00</updated>
+  <id>http://www.gerardcondon.com/</id>
+  <author>
+    <name><![CDATA[Gerard Condon]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Apple's New Introduction to iOS Development]]></title>
+    <link href="http://www.gerardcondon.com/blog/2012/02/18/apple-new-introduction-to-ios-development/"/>
+    <updated>2012-02-18T09:44:00+00:00</updated>
+    <id>http://www.gerardcondon.com/blog/2012/02/18/apple-new-introduction-to-ios-development</id>
+    <content type="html"><![CDATA[<p>Apple has posted a <a href="https://developer.apple.com/library/ios/#referencelibrary/GettingStarted/RoadMapiOS/Introduction/Introduction.html">new guide</a> to iOS development which ties together all the various strands of creating an app. (via <a href="http://www.loopinsight.com/2012/02/17/apple-posts-guide-to-start-developing-ios-apps/">Loop Insight</a>). Looks really nice.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Adding Code Coverage to Unit Tests for Xcode 4.2]]></title>
+    <link href="http://www.gerardcondon.com/blog/2012/02/17/adding-code-coverage-to-unit-tests/"/>
+    <updated>2012-02-17T22:27:00+00:00</updated>
+    <id>http://www.gerardcondon.com/blog/2012/02/17/adding-code-coverage-to-unit-tests</id>
+    <content type="html"><![CDATA[<p>If you are going to the effort of having unit tests, then you really need to have code coverage. This will allow you to ensure that your tests are exercising all your code. It is really easy to spot a missing test when you see a branch of an if-else with no coverage. Code coverage for me is also a way to motivate myself to implement the tests. It's like high scores in games - it gives me a target to aim for. Coverage gives feedback that your tests are actually doing something, and with each test you add, you can see the areas of untested code steadily decrease.</p>
+
+<p>To set up code coverage in Xcode 4.2 I used the guide on these blogs - <a href="http://www.infinite-loop.dk/blog/2011/05/covering-it-all-up/">Infinite Loop</a> and <a href="http://mattrajca.com/post/8749868513/llvm-code-coverage-and-xcode-4">Matt Rajca</a>. Originally only the gcc compiler was supported but since then the Clang compiler has had code coverage enabled. This is important as we need to use Clang for ARC and static analysis among other things.</p>
+
+<h3>XCode Build Settings</h3>
+
+<p>Xcode has the concept of build configurations which can have built settings altered independently of each other. The two default configurations are Debug and Release. We want to add a new configuration named Coverage. To do this duplicate the Debug configuration.</p>
+
+<p><img src="/images/codeCoverage/NewBuildConfig.png" title="New Build Configuration" ></p>
+
+<p>In order to specify different settings for configurations in Xcode, hover over the left hand margin directly to the left of the setting we wish to update. An arrow will appear which when clicked will expand to an additional three lines for Debug, Coverage and Release. Editing the top line will alter the setting for all versions. Altering either of the new lines will only update the setting for that version of the build.</p>
+
+<p><img src="/images/codeCoverage/BuildSettings.png" title="Build Settings" ></p>
+
+<ul>
+<li>Open the Build Settings tab for the main target. Under "Apple LLVM 3.0 compiler - Code Generation", enable both
+
+<ul>
+<li>"Generate Test Coverage Files"</li>
+<li> "Instrument Program Flow"</li>
+</ul>
+</li>
+<li> We now need to add the libprofile_rt library to the build. This will link in the implementations of the coverage functions. If you are seeing link errors like "_llvm_gcda_increment_indirect_counter", referenced from:", then you have not done this step.<br/>
+This library is located in /Developer/usr/lib. This folder contains libprofile.a which is a static library and a libprofile.dylib which is a dynamic linked library (similar to a .dll in Windows). To link this open the Build Phases tab for the main target. Expand the "Link Binary with Libraries" and click the + button. Click "Add Other" and then find libprofile_rt.dylib in the file viewer and add it.</li>
+</ul>
+
+
+<h3>Executing Tests</h3>
+
+<p>Now your unit tests should run and if you examine the build output files under the DerivedData folder you should find .gcda and .gcno coverage files along with your .o files. To find this folder you can go to the Projects tab in the Organizer and select your project. The path to the Derived Data folder is listed here along with an arrow which will open the folder in the Finder.</p>
+
+<p><img src="/images/codeCoverage/DerivedData.png" title="Derived Data" ></p>
+
+<p>From here the path to the coverage files is Build/Intermediates/${Project Target}.build/Coverage-iphonesimulator/${Project Target}.build/Objects-normal/i386. Replace ${Project Target} with the name of your project target.</p>
+
+<h3>Viewing Coverage Data</h3>
+
+<p>To view the coverage data I used <a href="http://code.google.com/p/coverstory/">CoverStory</a>. Simply open the app and point it at the coverage folder. This will give a nice two pane display showing your files on the left and an editor which shows how often each line of code was hit. Now you can identify untested code and add new tests to cover them.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Test Automation]]></title>
+    <link href="http://www.gerardcondon.com/blog/2012/02/13/test-automation/"/>
+    <updated>2012-02-13T18:00:00+00:00</updated>
+    <id>http://www.gerardcondon.com/blog/2012/02/13/test-automation</id>
+    <content type="html"><![CDATA[<p>  Wherever possible I think that automating your testing is essential. For this project there is no way that I can manually rerun the same tests over and over again - the time commitment is just too much. I need to be able to click a button and have a framework run all my tests automatically and report back to me the number of tests passing, failing etc. I know that this won't catch all the bugs in the code and that I'll still need to do some manual testing for each release. However, the more I can push into this automated testing, the more time I'll save on the manual testing later.</p>
+
+<p>Based on my previous <a href="blog/2012/02/10/devising-my-unit-testing-philosophy/">post</a> I've mentally divided up the code into different layers which build on top of each other. The app GUI is one layer. Then we have the model classes which in turn depend on utility classes etc. These different levels of code require different levels of testing.</p>
+
+<p>  For the utility and model layers I plan to use an automated unit testing framework such as <a href="http://www.junit.org/">JUnit</a>. Xcode provides <a href="https://developer.apple.com/library/ios/#documentation/DeveloperTools/Conceptual/UnitTesting/03-Writing_Test_Case_Methods/writing_tests.html#//apple_ref/doc/uid/TP40002143-CH4-SW1">OCUnit</a> which is a JUnit like framework for implementing unit tests. This framework provides the usual fail and assert macros and functions. There are some annoying things about running unit tests in Xcode. One is that it doesn't have a separate test runner panel like JUnit has in <a href="http://www.eclipse.org/">Eclipse</a>. Instead it treats the unit test errors as build failures. All the print output for the tests is dumped into the same console output which can make it tricky to identify which output is for which test. Also there is no way to selectively run these tests. You have to rerun them all together every time. There are other frameworks out there e.g. <a href="https://github.com/gabriel/gh-unit">GHUnit</a> but for the moment I'll stick with the default.</p>
+
+<p>For the higher level GUI code, unit testing is not useful so I'll need a different testing approach and toolset. There seem to be number of <a href="http://sgleadow.github.com/blog/2011/10/26/which-automated-ios-testing-tool-to-use/">options</a> out there. I'm not sure what is available and what is the best to use. Apple have an <a href="https://developer.apple.com/library/mac/documentation/developertools/conceptual/InstrumentsUserGuide/Built-InInstruments/Built-InInstruments.html#//apple_ref/doc/uid/TP40004652-CH6-SW75">Instruments</a> application which allows you do perform UI testing using Javascript. I've also seen these <a href="http://www.testingwithfrank.com/">Frank</a> and <a href="http://www.zucchiniframework.org/">Zucchini</a> frameworks. I haven't evaluated any of these yet as I don't have a fully functional app to test it on. Once I get a nearly complete app I can see how much my unit testing provides, compare that to what I have left to test, and then make a judgement on where to go from there.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Devising my Unit Testing Philosophy]]></title>
+    <link href="http://www.gerardcondon.com/blog/2012/02/10/devising-my-unit-testing-philosophy/"/>
+    <updated>2012-02-10T18:00:00+00:00</updated>
+    <id>http://www.gerardcondon.com/blog/2012/02/10/devising-my-unit-testing-philosophy</id>
+    <content type="html"><![CDATA[<p>Up to now my approach to unit testing has been dictated by who I was writing the code for. For instance in college I never wrote unit tests. In the real world some of my employers required unit testing, with certain branch and code coverage goals, while other employers didn’t require much in the way of unit testing, as long as other types of testing were carried out. In practice I found that the as the code became more lower level, the demands for unit tests increased.</p>
+
+<p>For this project I need to define for myself what level of testing I will perform. My initial assumption was that of course I would do unit testing. Personally I thought that the benefits of unit testing were</p>
+
+<ul>
+<li>the confidence that it gives me in my code. I know that I can call this piece of code from somewhere else and there is a high probability that it will work as intended.</li>
+<li>by catching errors at an early stage, I spend less time in the debugger later.</li>
+<li>refactoring should go easier as the unit tests will catch a lot of regression issues</li>
+<li>I can be confident that any new bugs will be in the new code rather than the older highly unit tested modules, thus cutting down the amount of code required to search in order to fix the bug.</li>
+</ul>
+
+
+<p>However I read an interesting and thought provoking <a href="http://wilshipley.com/blog/2005/09/unit-testing-is-teh-suck-urr.html" title="">article</a> by Will Shipley outlining why he doesn’t do unit testing. My immediate reaction was astonishment. How can you not have unit tests? However instead of unit tests, he beta tests the product. This finds the type of bugs that the actual end users will find. Also he writes his code in a manner that doesn’t require unit tests.</p>
+
+<blockquote><p>My programming philosophy is “less code is better code.” Unit tests take a lot of code, and in my projects I don’t find that they find very many bugs. Part of this is because I tend not to modify my individual methods much once they’ve been written; if my “append string to string” method works, it’s really not going to get revisited anytime soon unless it has a bug.
+Part of it is because, in fact, I do do integrated testing of a form, and I probably should have talked about that more. Yes, I use “NSAssert” all over the place, and I perform sanity checks and raise errors if there’s a problem.</p></blockquote>
+
+<p>I don’t think I’ve come across “Not modifying methods once they are written” before but looking at it now it makes sense. By not changing existing working methods and treating them as black boxes, we should have fewer regression errors in future. I’m not sure how to reconcile this with refactoring though - it’s something to think about. I’d imagine a coding style that favours smaller, more focused methods would be more suited to this approach.</p>
+
+<p>His use of sanity checks and asserts also struck a chord especially when he says</p>
+
+<blockquote><p>Debugging most errors, once found, should take very little time in a properly-written program, because the error should always be from one of your own sanity checks, and you know where those are in the code, so you just go there and figure out what went wrong.</p></blockquote>
+
+<p>This was eye-opening for me. I’ve never tracked this before so I’m not sure if the bugs I’ve written have evaded my sanity checks and asserts. I would imagine a lot of them did. I’d never have seen that as important before but looking at it now it seems to me that this is a failure on my behalf. Not catching these errors means that I’m not fully aware of how my code can go wrong and what it is doing in all cases. I think a useful analysis I should run on each bug I find is - did this escape my coding checks/asserts and if so why? I should learn from this and in future code should check for this condition.</p>
+
+<p>In a response to Will’s article, a <a href="http://www.friday.com/bbum/2005/09/24/unit-testing">follow up post</a> by bbum shows how unit testing was of great benefit on infrastructure code, in this case the <a href="http://developer.apple.com/macosx/coredata.html">Core Data</a> library. This would suggest to me that the utility and model code would be amenable to unit testing but that it’s not useful for the GUI code.</p>
+
+<p>Another <a href="http://blog.codeville.net/2009/08/24/writing-great-unit-tests-best-and-worst-practises/">article</a> on codeville challenged my assumptions that unit tests were about finding bugs. Instead the type of testing that finds bugs is manual testing or automated integration testing. According to him, unit testing is not about finding bugs (except during refactoring) but more about designing robust software components.</p>
+
+<blockquote><p>TDD is a design process, not a testing process. TDD is a robust way of designing software components (“units”) interactively so that their behaviour is specified through unit tests
+Also it’s not enough to just write unit tests. The tests need to be either true unit tests which design a single component or else integration tests which automate the entire system. Anything in between are
+dirty hybrids. Unclear goal. High maintenance, don’t prove much
+Otherwise when we refactor code, we end up breaking lots of seemingly unrelated hybrid tests. If you change a unit, then its unit tests should change but no other unit tests should.</p></blockquote>
+
+<p>After all that I’ve decided that I want to do some level of unit testing but I realize that I need to focus it on the right areas. I think it will be useful for the utility type code that I write but that I need to do more research into how I want to implement integration testing and UI testing.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Objective C Categories and Monkey Patching]]></title>
+    <link href="http://www.gerardcondon.com/blog/2012/02/04/objective-c-categories-and-monkey-patching/"/>
+    <updated>2012-02-04T18:00:00+00:00</updated>
+    <id>http://www.gerardcondon.com/blog/2012/02/04/objective-c-categories-and-monkey-patching</id>
+    <content type="html"><![CDATA[<p>One of my favorite features of Objective C are <a href="http://developer.apple.com/library/ios/#documentation/cocoa/conceptual/objectivec/chapters/occategories.html">categories</a>. Categories allow you to add your own functionality to existing classes without the need for inheritance. You don't even need the source code of the modified class. You are only allowed add extra methods or modify existing methods. Adding extra instance variables is not permitted. This feature is generally known as <a href="http://en.wikipedia.org/wiki/Monkey_patch">monkey patching</a> (what a great name!) in languages such as Ruby.</p>
+
+<p>Creating a category is straightforward. The interface and implementation files look the same as normal interface and implementation files except the category name is placed in brackets after the name of the class we are extending. For example to create a category MyCategory on MyClass the interface file looks like
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>MyClass+MyCategory.h  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">import</span> <span class="s">&quot;MyClass.h&quot;</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">@</span><span class="n">interface</span> <span class="n">MyClass</span> <span class="p">(</span><span class="n">MyCategory</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// Declare Methods here</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">@end</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+and the implementation like this
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>MyClass+MyCategory.m  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">import</span> <span class="s">&quot;MyClass+MyCategory.h&quot;</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">@</span><span class="n">implementation</span> <span class="n">MyClass</span> <span class="p">(</span><span class="n">MyCategory</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// Implement methods here</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">@end</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>The standard naming convention for category files is ClassToExtend+Category.(h|m). So for the above we would have both MyClass+MyCategory.h and MyClass+MyCategory.m files. The header file needs to be imported in any file that uses the category. For common extensions we can place them in the precompiled header (pch) files.</p>
+
+<p>This has a number of applications. It allows you to add methods to classes (or indeed to alter existing methods) instead of having to create utility classes comprised of static methods. Thus the code is more clearly associated with the class to which it belongs. It allows you to create object-oriented code that favours composition over inheritance.</p>
+
+<p>To give a concrete example, for my current project I wanted to be able to shuffle an array. Instead of having to create a ShuffleableArray subclass or implement an ArrayUtils.shuffle helper method, I was able to add a shuffle method to the NSArray type via a category.</p>
+
+<p>Not only does the class to which you add the category get the new method, but all its subclasses gain the method also. This can be very useful if you are extending a class high up in the hierarchy. For example, another use I made of categories was to add debug methods to the UIView class e.g. to print data about itself and its subviews. Given that lots of the UI widget classes extend UIView this means that everything on screen got my new methods. I find trace methods like these very useful during unit testing and debugging. I tend to prefer adding print code where possible rather than step through the debugger, and for that case the ability to add functionality to existing classes is invaluable.</p>
+
+<p>Naturally like all programming language features categories can be greatly abused. Changing the behaviour of existing functions can break code which assumes the older behaviour. I'd imaging this would be especially so with system classes such as NSArray etc. However done right, they look like a very useful feature which I'm sure I'll use a great deal.</p>
+]]></content>
+  </entry>
+  
+</feed>

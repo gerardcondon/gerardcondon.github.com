@@ -1,0 +1,290 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Devising my Unit Testing Philosophy - Gerard Condon's Blog</title>
+  <meta name="author" content="Gerard Condon">
+
+  
+  <meta name="description" content="Up to now my approach to unit testing has been dictated by who I was writing the code for. For instance in college I never wrote unit tests. In the &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://www.gerardcondon.com/blog/2012/02/10/devising-my-unit-testing-philosophy">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Gerard Condon's Blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-29293592-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Gerard Condon's Blog</a></h1>
+  
+    <h2>Scribbling of an iPhone developer.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:www.gerardcondon.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/about">About</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Devising My Unit Testing Philosophy</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-10T18:00:00+00:00" pubdate data-updated="true">Feb 10<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Up to now my approach to unit testing has been dictated by who I was writing the code for. For instance in college I never wrote unit tests. In the real world some of my employers required unit testing, with certain branch and code coverage goals, while other employers didn’t require much in the way of unit testing, as long as other types of testing were carried out. In practice I found that the as the code became more lower level, the demands for unit tests increased.</p>
+
+<p>For this project I need to define for myself what level of testing I will perform. My initial assumption was that of course I would do unit testing. Personally I thought that the benefits of unit testing were</p>
+
+<ul>
+<li>the confidence that it gives me in my code. I know that I can call this piece of code from somewhere else and there is a high probability that it will work as intended.</li>
+<li>by catching errors at an early stage, I spend less time in the debugger later.</li>
+<li>refactoring should go easier as the unit tests will catch a lot of regression issues</li>
+<li>I can be confident that any new bugs will be in the new code rather than the older highly unit tested modules, thus cutting down the amount of code required to search in order to fix the bug.</li>
+</ul>
+
+
+<p>However I read an interesting and thought provoking <a href="http://wilshipley.com/blog/2005/09/unit-testing-is-teh-suck-urr.html" title="">article</a> by Will Shipley outlining why he doesn’t do unit testing. My immediate reaction was astonishment. How can you not have unit tests? However instead of unit tests, he beta tests the product. This finds the type of bugs that the actual end users will find. Also he writes his code in a manner that doesn’t require unit tests.</p>
+
+<blockquote><p>My programming philosophy is “less code is better code.” Unit tests take a lot of code, and in my projects I don’t find that they find very many bugs. Part of this is because I tend not to modify my individual methods much once they’ve been written; if my “append string to string” method works, it’s really not going to get revisited anytime soon unless it has a bug.
+Part of it is because, in fact, I do do integrated testing of a form, and I probably should have talked about that more. Yes, I use “NSAssert” all over the place, and I perform sanity checks and raise errors if there’s a problem.</p></blockquote>
+
+<p>I don’t think I’ve come across “Not modifying methods once they are written” before but looking at it now it makes sense. By not changing existing working methods and treating them as black boxes, we should have fewer regression errors in future. I’m not sure how to reconcile this with refactoring though - it’s something to think about. I’d imagine a coding style that favours smaller, more focused methods would be more suited to this approach.</p>
+
+<p>His use of sanity checks and asserts also struck a chord especially when he says</p>
+
+<blockquote><p>Debugging most errors, once found, should take very little time in a properly-written program, because the error should always be from one of your own sanity checks, and you know where those are in the code, so you just go there and figure out what went wrong.</p></blockquote>
+
+<p>This was eye-opening for me. I’ve never tracked this before so I’m not sure if the bugs I’ve written have evaded my sanity checks and asserts. I would imagine a lot of them did. I’d never have seen that as important before but looking at it now it seems to me that this is a failure on my behalf. Not catching these errors means that I’m not fully aware of how my code can go wrong and what it is doing in all cases. I think a useful analysis I should run on each bug I find is - did this escape my coding checks/asserts and if so why? I should learn from this and in future code should check for this condition.</p>
+
+<p>In a response to Will’s article, a <a href="http://www.friday.com/bbum/2005/09/24/unit-testing">follow up post</a> by bbum shows how unit testing was of great benefit on infrastructure code, in this case the <a href="http://developer.apple.com/macosx/coredata.html">Core Data</a> library. This would suggest to me that the utility and model code would be amenable to unit testing but that it’s not useful for the GUI code.</p>
+
+<p>Another <a href="http://blog.codeville.net/2009/08/24/writing-great-unit-tests-best-and-worst-practises/">article</a> on codeville challenged my assumptions that unit tests were about finding bugs. Instead the type of testing that finds bugs is manual testing or automated integration testing. According to him, unit testing is not about finding bugs (except during refactoring) but more about designing robust software components.</p>
+
+<blockquote><p>TDD is a design process, not a testing process. TDD is a robust way of designing software components (“units”) interactively so that their behaviour is specified through unit tests
+Also it’s not enough to just write unit tests. The tests need to be either true unit tests which design a single component or else integration tests which automate the entire system. Anything in between are
+dirty hybrids. Unclear goal. High maintenance, don’t prove much
+Otherwise when we refactor code, we end up breaking lots of seemingly unrelated hybrid tests. If you change a unit, then its unit tests should change but no other unit tests should.</p></blockquote>
+
+<p>After all that I’ve decided that I want to do some level of unit testing but I realize that I need to focus it on the right areas. I think it will be useful for the utility type code that I write but that I need to do more research into how I want to implement integration testing and UI testing.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Gerard Condon</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-10T18:00:00+00:00" pubdate data-updated="true">Feb 10<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/development/'>Development</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.gerardcondon.com/blog/2012/02/10/devising-my-unit-testing-philosophy/" data-via="" data-counturl="http://www.gerardcondon.com/blog/2012/02/10/devising-my-unit-testing-philosophy/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/02/04/objective-c-categories-and-monkey-patching/" title="Previous Post: Objective C Categories and Monkey Patching">&laquo; Objective C Categories and Monkey Patching</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/02/13/test-automation/" title="next Post: Test Automation">Test Automation &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/02/18/apple-new-introduction-to-ios-development/">Apple's New Introduction to iOS Development</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/17/adding-code-coverage-to-unit-tests/">Adding Code Coverage to Unit Tests for Xcode 4.2</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/16/moving-the-blog-to-octopress/">Moving the blog to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/13/test-automation/">Test Automation</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/10/devising-my-unit-testing-philosophy/">Devising my Unit Testing Philosophy</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/04/objective-c-categories-and-monkey-patching/">Objective C Categories and Monkey Patching</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/29/itunes-u-and-online-learning/">iTunes U and Online Learning</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/27/accessorizer-for-xcode/">Accessorizer for XCode</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/26/version-control-in-xcode-using-git-and-dropbox/">Version Control in Xcode using Git and Dropbox</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/21/learning-objective-c/">Learning Objective C</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+<section>
+  <h1>About Me</h1>
+  <p>I'm a software developer based in Cork, Ireland. I use C++ and Java in my day job and have started to create iPhone apps in my spare time.</p>
+  <p>Contact me at gercondonblog (at) gmail (dot) com</p>
+</section>
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Gerard Condon -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
