@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Development | Gerard Condon's Blog]]></title>
-  <link href="http://www.gerardcondon.com/blog/categories/development/atom.xml" rel="self"/>
-  <link href="http://www.gerardcondon.com/"/>
-  <updated>2012-02-18T09:54:40+00:00</updated>
-  <id>http://www.gerardcondon.com/</id>
+  <link href="http://gerardcondon.github.com/blog/categories/development/atom.xml" rel="self"/>
+  <link href="http://gerardcondon.github.com/"/>
+  <updated>2012-02-18T10:01:44+00:00</updated>
+  <id>http://gerardcondon.github.com/</id>
   <author>
     <name><![CDATA[Gerard Condon]]></name>
     
@@ -15,18 +15,18 @@
   
   <entry>
     <title type="html"><![CDATA[Apple's New Introduction to iOS Development]]></title>
-    <link href="http://www.gerardcondon.com/blog/2012/02/18/apple-new-introduction-to-ios-development/"/>
+    <link href="http://gerardcondon.github.com/blog/2012/02/18/apple-new-introduction-to-ios-development/"/>
     <updated>2012-02-18T09:44:00+00:00</updated>
-    <id>http://www.gerardcondon.com/blog/2012/02/18/apple-new-introduction-to-ios-development</id>
+    <id>http://gerardcondon.github.com/blog/2012/02/18/apple-new-introduction-to-ios-development</id>
     <content type="html"><![CDATA[<p>Apple has posted a <a href="https://developer.apple.com/library/ios/#referencelibrary/GettingStarted/RoadMapiOS/Introduction/Introduction.html">new guide</a> to iOS development which ties together all the various strands of creating an app. (via <a href="http://www.loopinsight.com/2012/02/17/apple-posts-guide-to-start-developing-ios-apps/">Loop Insight</a>). Looks really nice.</p>
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[Adding Code Coverage to Unit Tests for Xcode 4.2]]></title>
-    <link href="http://www.gerardcondon.com/blog/2012/02/17/adding-code-coverage-to-unit-tests/"/>
+    <link href="http://gerardcondon.github.com/blog/2012/02/17/adding-code-coverage-to-unit-tests/"/>
     <updated>2012-02-17T22:27:00+00:00</updated>
-    <id>http://www.gerardcondon.com/blog/2012/02/17/adding-code-coverage-to-unit-tests</id>
+    <id>http://gerardcondon.github.com/blog/2012/02/17/adding-code-coverage-to-unit-tests</id>
     <content type="html"><![CDATA[<p>If you are going to the effort of having unit tests, then you really need to have code coverage. This will allow you to ensure that your tests are exercising all your code. It is really easy to spot a missing test when you see a branch of an if-else with no coverage. Code coverage for me is also a way to motivate myself to implement the tests. It's like high scores in games - it gives me a target to aim for. Coverage gives feedback that your tests are actually doing something, and with each test you add, you can see the areas of untested code steadily decrease.</p>
 
 <p>To set up code coverage in Xcode 4.2 I used the guide on these blogs - <a href="http://www.infinite-loop.dk/blog/2011/05/covering-it-all-up/">Infinite Loop</a> and <a href="http://mattrajca.com/post/8749868513/llvm-code-coverage-and-xcode-4">Matt Rajca</a>. Originally only the gcc compiler was supported but since then the Clang compiler has had code coverage enabled. This is important as we need to use Clang for ARC and static analysis among other things.</p>
@@ -70,9 +70,9 @@ This library is located in /Developer/usr/lib. This folder contains libprofile.a
   
   <entry>
     <title type="html"><![CDATA[Test Automation]]></title>
-    <link href="http://www.gerardcondon.com/blog/2012/02/13/test-automation/"/>
+    <link href="http://gerardcondon.github.com/blog/2012/02/13/test-automation/"/>
     <updated>2012-02-13T18:00:00+00:00</updated>
-    <id>http://www.gerardcondon.com/blog/2012/02/13/test-automation</id>
+    <id>http://gerardcondon.github.com/blog/2012/02/13/test-automation</id>
     <content type="html"><![CDATA[<p>  Wherever possible I think that automating your testing is essential. For this project there is no way that I can manually rerun the same tests over and over again - the time commitment is just too much. I need to be able to click a button and have a framework run all my tests automatically and report back to me the number of tests passing, failing etc. I know that this won't catch all the bugs in the code and that I'll still need to do some manual testing for each release. However, the more I can push into this automated testing, the more time I'll save on the manual testing later.</p>
 
 <p>Based on my previous <a href="blog/2012/02/10/devising-my-unit-testing-philosophy/">post</a> I've mentally divided up the code into different layers which build on top of each other. The app GUI is one layer. Then we have the model classes which in turn depend on utility classes etc. These different levels of code require different levels of testing.</p>
@@ -85,9 +85,9 @@ This library is located in /Developer/usr/lib. This folder contains libprofile.a
   
   <entry>
     <title type="html"><![CDATA[Devising my Unit Testing Philosophy]]></title>
-    <link href="http://www.gerardcondon.com/blog/2012/02/10/devising-my-unit-testing-philosophy/"/>
+    <link href="http://gerardcondon.github.com/blog/2012/02/10/devising-my-unit-testing-philosophy/"/>
     <updated>2012-02-10T18:00:00+00:00</updated>
-    <id>http://www.gerardcondon.com/blog/2012/02/10/devising-my-unit-testing-philosophy</id>
+    <id>http://gerardcondon.github.com/blog/2012/02/10/devising-my-unit-testing-philosophy</id>
     <content type="html"><![CDATA[<p>Up to now my approach to unit testing has been dictated by who I was writing the code for. For instance in college I never wrote unit tests. In the real world some of my employers required unit testing, with certain branch and code coverage goals, while other employers didn’t require much in the way of unit testing, as long as other types of testing were carried out. In practice I found that the as the code became more lower level, the demands for unit tests increased.</p>
 
 <p>For this project I need to define for myself what level of testing I will perform. My initial assumption was that of course I would do unit testing. Personally I thought that the benefits of unit testing were</p>
@@ -128,9 +128,9 @@ Otherwise when we refactor code, we end up breaking lots of seemingly unrelated 
   
   <entry>
     <title type="html"><![CDATA[Objective C Categories and Monkey Patching]]></title>
-    <link href="http://www.gerardcondon.com/blog/2012/02/04/objective-c-categories-and-monkey-patching/"/>
+    <link href="http://gerardcondon.github.com/blog/2012/02/04/objective-c-categories-and-monkey-patching/"/>
     <updated>2012-02-04T18:00:00+00:00</updated>
-    <id>http://www.gerardcondon.com/blog/2012/02/04/objective-c-categories-and-monkey-patching</id>
+    <id>http://gerardcondon.github.com/blog/2012/02/04/objective-c-categories-and-monkey-patching</id>
     <content type="html"><![CDATA[<p>One of my favorite features of Objective C are <a href="http://developer.apple.com/library/ios/#documentation/cocoa/conceptual/objectivec/chapters/occategories.html">categories</a>. Categories allow you to add your own functionality to existing classes without the need for inheritance. You don't even need the source code of the modified class. You are only allowed add extra methods or modify existing methods. Adding extra instance variables is not permitted. This feature is generally known as <a href="http://en.wikipedia.org/wiki/Monkey_patch">monkey patching</a> (what a great name!) in languages such as Ruby.</p>
 
 <p>Creating a category is straightforward. The interface and implementation files look the same as normal interface and implementation files except the category name is placed in brackets after the name of the class we are extending. For example to create a category MyCategory on MyClass the interface file looks like

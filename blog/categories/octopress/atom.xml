@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Octopress | Gerard Condon's Blog]]></title>
-  <link href="http://www.gerardcondon.com/blog/categories/octopress/atom.xml" rel="self"/>
-  <link href="http://www.gerardcondon.com/"/>
-  <updated>2012-02-18T09:54:40+00:00</updated>
-  <id>http://www.gerardcondon.com/</id>
+  <link href="http://gerardcondon.github.com/blog/categories/octopress/atom.xml" rel="self"/>
+  <link href="http://gerardcondon.github.com/"/>
+  <updated>2012-02-18T10:01:44+00:00</updated>
+  <id>http://gerardcondon.github.com/</id>
   <author>
     <name><![CDATA[Gerard Condon]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Moving the blog to Octopress]]></title>
-    <link href="http://www.gerardcondon.com/blog/2012/02/16/moving-the-blog-to-octopress/"/>
+    <link href="http://gerardcondon.github.com/blog/2012/02/16/moving-the-blog-to-octopress/"/>
     <updated>2012-02-16T20:11:00+00:00</updated>
-    <id>http://www.gerardcondon.com/blog/2012/02/16/moving-the-blog-to-octopress</id>
+    <id>http://gerardcondon.github.com/blog/2012/02/16/moving-the-blog-to-octopress</id>
     <content type="html"><![CDATA[<p>I've decided to switch the blog from <a href="http://www.wordpress.com">Wordpress.com</a> to an <a href="http://www.octopress.org">Octopress</a> site hosted on <a href="http://pages.github.com">Github Pages</a>. From now on there will be no more new posts on Wordpress. I've also registered the domain <a href="http://www.gerardcondon.com">gerardcondon.com</a> and will be using this address for the blog in future.</p>
 
 <p>I have a few reasons for switching</p>
