@@ -9,7 +9,7 @@
   <meta name="author" content="Gerard Condon">
 
   
-  <meta name="description" content="In a previous post I described how I got code coverage up and running in Xcode 4.2. Apple have just released Xcode 4.3 and unfortunatly updating to &hellip;">
+  <meta name="description" content="Apple has posted a new guide to iOS development which ties together all the various strands of creating an app. (via Loop Insight). Looks really nice &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,46 +77,6 @@
     <div id="content">
       <div class="blog-index">
   
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/02/18/code-coverage-updates-for-xcode-4-dot-3/">Code Coverage Updates for Xcode 4.3</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-18T23:45:00+00:00" pubdate data-updated="true">Feb 18<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>In a previous <a href="http://www.gerardcondon.com/blog/2012/02/17/adding-code-coverage-to-unit-tests/">post</a> I described how I got code coverage up and running in Xcode 4.2. Apple have just released Xcode 4.3 and unfortunatly updating to this has broken my code coverage. The reason is that 4.3 removes the /Developer folder and moves this internally to the Xcode.app package. While this has good consequences - it should be possible to update Xcode from the App Store like a normal app - unfortunately it has also removed the libprofile_rt library from /Developer/usr/lib. I haven&#8217;t been able to find a new version of this library in Xcode 4.3. When I tried using the version from 4.2, I got &#8220;mach-o but wrong architecture&#8221; errors.</p>
-
-<p>This means that now when building my unit tests with Coverage I get link errors saying that I am missing llvm_gcda functions (llvm_gcda_start_file, llvm_gcda_increment_indirect_counter, llvm_gcda_emit_function, llvm_gcda_emit_arcs). I searched on Google to try and find a solution for this for 4.3 but it seemed all solutions were 4.2 so I needed to try to solve this myself. The solution I came up with is fairly hacky. I&#8217;m hoping that as more people upgrade to 4.3, a better solution will be found and I can switch to that.</p>
-
-<p>My solution is to take the actual file which contained the gcda functions in libprofile_rt, add it to my own source code and compile it myself. The file in questions is <a href="https://llvm.org/svn/llvm-project/llvm/trunk/runtime/libprofile/GCDAProfiling.c">here</a>. To get it to build locally I deleted the win32 and sys includes (lines 27 to 31 inclusive) and replaced the llvm include (line 23) with <code>#include "stdint.h"</code>. This builds fine using the Coverage build configuration and outputs the same gcdo and gcno files as before. To make sure that this code doesn&#8217;t end up in the released project by accident, I&#8217;ve included it in the unit test bundle rather than the app bundle. This is fine for me as I only need coverage when running the tests anyway.</p>
-</div>
-  
-  
-
-
-    </article>
   
   
     <article>
@@ -613,6 +573,63 @@ The bare option is used as this will just clone the contents of the local .git d
 
     </article>
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/01/21/learning-objective-c/">Learning Objective C</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-21T18:00:00+00:00" pubdate data-updated="true">Jan 21<span>st</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Here is a list of the resources I used when learning Objective C.</p>
+
+<ul>
+<li><a href="http://developer.apple.com/library/ios/navigation/#section=Resource%20Types&amp;amp;topic=Getting%20Started">Apple Documentation</a>. This is really good, especially the Javadoc like pages for the UI classes. There are load of documents here. Ones that I missed first time around are the “Your First/Second/Third iOS App” guides. I’ll have to catch up on those. (One tip which I completely missed out on for ages. For these webpages, on the right hand side of the second toolbar, is a button which gets the whole doc as a PDF. It’s worth building up a library of these.) The two main documents that I used were
+
+<ul>
+<li><a href="http://developer.apple.com/library/ios/#documentation/UserExperience/Conceptual/MobileHIG/Introduction/Introduction.html">The Human Interface Guide</a>. This is a really excellent document for describing how to design an iOS app. It’s not code based but instead operates at a higher level explaining the UI principles and how the UI elements should be used.</li>
+<li> <a href="http://developer.apple.com/library/ios/#documentation/Cocoa/Conceptual/ObjectiveC/Introduction/introObjectiveC.html#//apple_ref/doc/uid/TP30001163">Objective C Programming Language</a>. I think this document is essential for learning Obejctive C. It details the extensions Objective C makes to the base C language and is really thorough.</li>
+</ul>
+</li>
+<li> <a href="http://www.stackoverflow.com" title="">Stack Overflow</a>. This site is an absolute godsend. How did we ever live without it? The documents above are fine as an introduction to Objective C and app development. However when you start to create an app and run into practical issues, this site is fantastic. There has been no coding question that I have had that they haven’t been able to answer and the coding samples provided are normally top notch. I can’t recommend this site enough.</li>
+<li>Google &amp; Blogs. In general searching for Objective C questions on google brings up a list of blogs which detail people’s practical implementations of various issues. These are useful to read as they normally contain any design decisions and reasons why alternatives were rejected.</li>
+</ul>
+
+
+<p>The main class of resources that I haven’t decided to use in learning Objective C have been books. There seem to be some good ones out there but I don’t think there’s much there that I haven’t been able to find on the web. Blogs and Stack Overflow have killed programming language books for me.</p>
+
+<p>The other thing is that I think books about specific programming languages are the ones at risk of going out of date. My data structures and pattern books from college are still useful but any Java books from then have become outdated. The core object-oriented parts are still valid but you can say goodbye to vectors, Swing etc. I’ll have to keep an eye out for good Objective C pattern books.</p>
+
+<p>To give a specific example, the ARC memory management recently introduced to Objective C has rendered the sample code in a lot of books obsolete. Not just obsolete but incorrect actually as the old code won’t compile with ARC enabled. On the web this can be updated, but the books are stuck with the older, invalid code. Maybe with ebooks becoming more popular there will be scope for having books that update their sample code automatically. Until then we have to wait for revised editions, if indeed they are released at all.</p>
+
+<p>I just found <a href="http://chachatelier.fr/programmation/fichiers/cpp-objc-en.pdf">this</a> document (via <a href="http://www.twitter.com/steipete">@steipete</a>) which is a guide from C++ to Objective C. This looks to be really good.</p>
+</div>
+  
+  
+
+
+    </article>
+  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -626,10 +643,6 @@ The bare option is used as this will just clone the contents of the local .git d
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/2012/02/18/code-coverage-updates-for-xcode-4-dot-3/">Code Coverage Updates for Xcode 4.3</a>
-      </li>
     
       <li class="post">
         <a href="/blog/2012/02/18/apple-new-introduction-to-ios-development/">Apple&#8217;s New Introduction to iOS Development</a>
@@ -665,6 +678,10 @@ The bare option is used as this will just clone the contents of the local .git d
     
       <li class="post">
         <a href="/blog/2012/01/26/version-control-in-xcode-using-git-and-dropbox/">Version Control in Xcode using Git and Dropbox</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/21/learning-objective-c/">Learning Objective C</a>
       </li>
     
   </ul>
