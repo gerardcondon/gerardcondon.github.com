@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Gerard Condon's Blog]]></title>
-  <link href="http://gerardcondon.github.com/atom.xml" rel="self"/>
-  <link href="http://gerardcondon.github.com/"/>
-  <updated>2012-02-18T10:01:44+00:00</updated>
-  <id>http://gerardcondon.github.com/</id>
+  <link href="http://www.gerardcondon.com/atom.xml" rel="self"/>
+  <link href="http://www.gerardcondon.com/"/>
+  <updated>2012-02-19T00:22:35+00:00</updated>
+  <id>http://www.gerardcondon.com/</id>
   <author>
     <name><![CDATA[Gerard Condon]]></name>
     
@@ -14,19 +14,32 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Code Coverage Updates for Xcode 4.3]]></title>
+    <link href="http://www.gerardcondon.com/blog/2012/02/18/code-coverage-updates-for-xcode-4-dot-3/"/>
+    <updated>2012-02-18T23:45:00+00:00</updated>
+    <id>http://www.gerardcondon.com/blog/2012/02/18/code-coverage-updates-for-xcode-4-dot-3</id>
+    <content type="html"><![CDATA[<p>In a previous <a href="http://www.gerardcondon.com/blog/2012/02/17/adding-code-coverage-to-unit-tests/">post</a> I described how I got code coverage up and running in Xcode 4.2. Apple have just released Xcode 4.3 and unfortunatly updating to this has broken my code coverage. The reason is that 4.3 removes the /Developer folder and moves this internally to the Xcode.app package. While this has good consequences - it should be possible to update Xcode from the App Store like a normal app - unfortunately it has also removed the libprofile_rt library from /Developer/usr/lib. I haven&#8217;t been able to find a new version of this library in Xcode 4.3. When I tried using the version from 4.2, I got &#8220;mach-o but wrong architecture&#8221; errors.</p>
+
+<p>This means that now when building my unit tests with Coverage I get link errors saying that I am missing llvm_gcda functions (llvm_gcda_start_file, llvm_gcda_increment_indirect_counter, llvm_gcda_emit_function, llvm_gcda_emit_arcs). I searched on Google to try and find a solution for this for 4.3 but it seemed all solutions were 4.2 so I needed to try to solve this myself. The solution I came up with is fairly hacky. I&#8217;m hoping that as more people upgrade to 4.3, a better solution will be found and I can switch to that.</p>
+
+<p>My solution is to take the actual file which contained the gcda functions in libprofile_rt, add it to my own source code and compile it myself. The file in questions is <a href="https://llvm.org/svn/llvm-project/llvm/trunk/runtime/libprofile/GCDAProfiling.c">here</a>. To get it to build locally I deleted the win32 and sys includes (lines 27 to 31 inclusive) and replaced the llvm include (line 23) with <code>#include "stdint.h"</code>. This builds fine using the Coverage build configuration and outputs the same gcdo and gcno files as before. To make sure that this code doesn&#8217;t end up in the released project by accident, I&#8217;ve included it in the unit test bundle rather than the app bundle. This is fine for me as I only need coverage when running the tests anyway.</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Apple's New Introduction to iOS Development]]></title>
-    <link href="http://gerardcondon.github.com/blog/2012/02/18/apple-new-introduction-to-ios-development/"/>
+    <link href="http://www.gerardcondon.com/blog/2012/02/18/apple-new-introduction-to-ios-development/"/>
     <updated>2012-02-18T09:44:00+00:00</updated>
-    <id>http://gerardcondon.github.com/blog/2012/02/18/apple-new-introduction-to-ios-development</id>
+    <id>http://www.gerardcondon.com/blog/2012/02/18/apple-new-introduction-to-ios-development</id>
     <content type="html"><![CDATA[<p>Apple has posted a <a href="https://developer.apple.com/library/ios/#referencelibrary/GettingStarted/RoadMapiOS/Introduction/Introduction.html">new guide</a> to iOS development which ties together all the various strands of creating an app. (via <a href="http://www.loopinsight.com/2012/02/17/apple-posts-guide-to-start-developing-ios-apps/">Loop Insight</a>). Looks really nice.</p>
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[Adding Code Coverage to Unit Tests for Xcode 4.2]]></title>
-    <link href="http://gerardcondon.github.com/blog/2012/02/17/adding-code-coverage-to-unit-tests/"/>
+    <link href="http://www.gerardcondon.com/blog/2012/02/17/adding-code-coverage-to-unit-tests/"/>
     <updated>2012-02-17T22:27:00+00:00</updated>
-    <id>http://gerardcondon.github.com/blog/2012/02/17/adding-code-coverage-to-unit-tests</id>
+    <id>http://www.gerardcondon.com/blog/2012/02/17/adding-code-coverage-to-unit-tests</id>
     <content type="html"><![CDATA[<p>If you are going to the effort of having unit tests, then you really need to have code coverage. This will allow you to ensure that your tests are exercising all your code. It is really easy to spot a missing test when you see a branch of an if-else with no coverage. Code coverage for me is also a way to motivate myself to implement the tests. It&#8217;s like high scores in games - it gives me a target to aim for. Coverage gives feedback that your tests are actually doing something, and with each test you add, you can see the areas of untested code steadily decrease.</p>
 
 <p>To set up code coverage in Xcode 4.2 I used the guide on these blogs - <a href="http://www.infinite-loop.dk/blog/2011/05/covering-it-all-up/">Infinite Loop</a> and <a href="http://mattrajca.com/post/8749868513/llvm-code-coverage-and-xcode-4">Matt Rajca</a>. Originally only the gcc compiler was supported but since then the Clang compiler has had code coverage enabled. This is important as we need to use Clang for ARC and static analysis among other things.</p>
@@ -35,11 +48,11 @@
 
 <p>Xcode has the concept of build configurations which can have built settings altered independently of each other. The two default configurations are Debug and Release. We want to add a new configuration named Coverage. To do this duplicate the Debug configuration.</p>
 
-<p><img src="http://gerardcondon.github.com/images/codeCoverage/NewBuildConfig.png" title="New Build Configuration" ></p>
+<p><img src="http://www.gerardcondon.com/images/codeCoverage/NewBuildConfig.png" title="New Build Configuration" ></p>
 
 <p>In order to specify different settings for configurations in Xcode, hover over the left hand margin directly to the left of the setting we wish to update. An arrow will appear which when clicked will expand to an additional three lines for Debug, Coverage and Release. Editing the top line will alter the setting for all versions. Altering either of the new lines will only update the setting for that version of the build.</p>
 
-<p><img src="http://gerardcondon.github.com/images/codeCoverage/BuildSettings.png" title="Build Settings" ></p>
+<p><img src="http://www.gerardcondon.com/images/codeCoverage/BuildSettings.png" title="Build Settings" ></p>
 
 <ul>
 <li>Open the Build Settings tab for the main target. Under &#8220;Apple LLVM 3.0 compiler - Code Generation&#8221;, enable both
@@ -58,7 +71,7 @@ This library is located in /Developer/usr/lib. This folder contains libprofile.a
 
 <p>Now your unit tests should run and if you examine the build output files under the DerivedData folder you should find .gcda and .gcno coverage files along with your .o files. To find this folder you can go to the Projects tab in the Organizer and select your project. The path to the Derived Data folder is listed here along with an arrow which will open the folder in the Finder.</p>
 
-<p><img src="http://gerardcondon.github.com/images/codeCoverage/DerivedData.png" title="Derived Data" ></p>
+<p><img src="http://www.gerardcondon.com/images/codeCoverage/DerivedData.png" title="Derived Data" ></p>
 
 <p>From here the path to the coverage files is Build/Intermediates/${Project Target}.build/Coverage-iphonesimulator/${Project Target}.build/Objects-normal/i386. Replace ${Project Target} with the name of your project target.</p>
 
@@ -70,9 +83,9 @@ This library is located in /Developer/usr/lib. This folder contains libprofile.a
   
   <entry>
     <title type="html"><![CDATA[Moving the blog to Octopress]]></title>
-    <link href="http://gerardcondon.github.com/blog/2012/02/16/moving-the-blog-to-octopress/"/>
+    <link href="http://www.gerardcondon.com/blog/2012/02/16/moving-the-blog-to-octopress/"/>
     <updated>2012-02-16T20:11:00+00:00</updated>
-    <id>http://gerardcondon.github.com/blog/2012/02/16/moving-the-blog-to-octopress</id>
+    <id>http://www.gerardcondon.com/blog/2012/02/16/moving-the-blog-to-octopress</id>
     <content type="html"><![CDATA[<p>I&#8217;ve decided to switch the blog from <a href="http://www.wordpress.com">Wordpress.com</a> to an <a href="http://www.octopress.org">Octopress</a> site hosted on <a href="http://pages.github.com">Github Pages</a>. From now on there will be no more new posts on Wordpress. I&#8217;ve also registered the domain <a href="http://www.gerardcondon.com">gerardcondon.com</a> and will be using this address for the blog in future.</p>
 
 <p>I have a few reasons for switching</p>
@@ -96,9 +109,9 @@ This library is located in /Developer/usr/lib. This folder contains libprofile.a
   
   <entry>
     <title type="html"><![CDATA[Test Automation]]></title>
-    <link href="http://gerardcondon.github.com/blog/2012/02/13/test-automation/"/>
+    <link href="http://www.gerardcondon.com/blog/2012/02/13/test-automation/"/>
     <updated>2012-02-13T18:00:00+00:00</updated>
-    <id>http://gerardcondon.github.com/blog/2012/02/13/test-automation</id>
+    <id>http://www.gerardcondon.com/blog/2012/02/13/test-automation</id>
     <content type="html"><![CDATA[<p>  Wherever possible I think that automating your testing is essential. For this project there is no way that I can manually rerun the same tests over and over again - the time commitment is just too much. I need to be able to click a button and have a framework run all my tests automatically and report back to me the number of tests passing, failing etc. I know that this won&#8217;t catch all the bugs in the code and that I&#8217;ll still need to do some manual testing for each release. However, the more I can push into this automated testing, the more time I&#8217;ll save on the manual testing later.</p>
 
 <p>Based on my previous <a href="blog/2012/02/10/devising-my-unit-testing-philosophy/">post</a> I&#8217;ve mentally divided up the code into different layers which build on top of each other. The app GUI is one layer. Then we have the model classes which in turn depend on utility classes etc. These different levels of code require different levels of testing.</p>
@@ -111,9 +124,9 @@ This library is located in /Developer/usr/lib. This folder contains libprofile.a
   
   <entry>
     <title type="html"><![CDATA[Devising my Unit Testing Philosophy]]></title>
-    <link href="http://gerardcondon.github.com/blog/2012/02/10/devising-my-unit-testing-philosophy/"/>
+    <link href="http://www.gerardcondon.com/blog/2012/02/10/devising-my-unit-testing-philosophy/"/>
     <updated>2012-02-10T18:00:00+00:00</updated>
-    <id>http://gerardcondon.github.com/blog/2012/02/10/devising-my-unit-testing-philosophy</id>
+    <id>http://www.gerardcondon.com/blog/2012/02/10/devising-my-unit-testing-philosophy</id>
     <content type="html"><![CDATA[<p>Up to now my approach to unit testing has been dictated by who I was writing the code for. For instance in college I never wrote unit tests. In the real world some of my employers required unit testing, with certain branch and code coverage goals, while other employers didn’t require much in the way of unit testing, as long as other types of testing were carried out. In practice I found that the as the code became more lower level, the demands for unit tests increased.</p>
 
 <p>For this project I need to define for myself what level of testing I will perform. My initial assumption was that of course I would do unit testing. Personally I thought that the benefits of unit testing were</p>
@@ -154,9 +167,9 @@ Otherwise when we refactor code, we end up breaking lots of seemingly unrelated 
   
   <entry>
     <title type="html"><![CDATA[Objective C Categories and Monkey Patching]]></title>
-    <link href="http://gerardcondon.github.com/blog/2012/02/04/objective-c-categories-and-monkey-patching/"/>
+    <link href="http://www.gerardcondon.com/blog/2012/02/04/objective-c-categories-and-monkey-patching/"/>
     <updated>2012-02-04T18:00:00+00:00</updated>
-    <id>http://gerardcondon.github.com/blog/2012/02/04/objective-c-categories-and-monkey-patching</id>
+    <id>http://www.gerardcondon.com/blog/2012/02/04/objective-c-categories-and-monkey-patching</id>
     <content type="html"><![CDATA[<p>One of my favorite features of Objective C are <a href="http://developer.apple.com/library/ios/#documentation/cocoa/conceptual/objectivec/chapters/occategories.html">categories</a>. Categories allow you to add your own functionality to existing classes without the need for inheritance. You don&#8217;t even need the source code of the modified class. You are only allowed add extra methods or modify existing methods. Adding extra instance variables is not permitted. This feature is generally known as <a href="http://en.wikipedia.org/wiki/Monkey_patch">monkey patching</a> (what a great name!) in languages such as Ruby.</p>
 
 <p>Creating a category is straightforward. The interface and implementation files look the same as normal interface and implementation files except the category name is placed in brackets after the name of the class we are extending. For example to create a category MyCategory on MyClass the interface file looks like</p>
@@ -205,9 +218,9 @@ Otherwise when we refactor code, we end up breaking lots of seemingly unrelated 
   
   <entry>
     <title type="html"><![CDATA[iTunes U and Online Learning]]></title>
-    <link href="http://gerardcondon.github.com/blog/2012/01/29/itunes-u-and-online-learning/"/>
+    <link href="http://www.gerardcondon.com/blog/2012/01/29/itunes-u-and-online-learning/"/>
     <updated>2012-01-29T18:00:00+00:00</updated>
-    <id>http://gerardcondon.github.com/blog/2012/01/29/itunes-u-and-online-learning</id>
+    <id>http://www.gerardcondon.com/blog/2012/01/29/itunes-u-and-online-learning</id>
     <content type="html"><![CDATA[<p>Apple have just released the <a href="http://itunes.apple.com/ie/app/itunes-u/id490217893?mt=8">iTunes U app</a>. I think this has gotten a little lost compared to the attention on the new iBooks Author and its EULA. The iTunes U app looks to be an excellent app which puts some structure on the courses that were available through iTunes. Now you can watch the videos on your iPhone and iPad, and also download the slides to them. You can also use AirPlay to stream the videos to an Apple TV and the app will sync the progress of the course between devices.</p>
 
 <p>The course I am currently looking at is the <a href="http://itunes.apple.com/ie/course/ipad-iphone-app-development/id495052415">Stanford iOS Programming course</a>. I&#8217;ve only seen the first few lectures but they are of excellent quality. There are about thirty of these new iTunes U courses at present but more should be added in the future.</p>
@@ -224,9 +237,9 @@ Otherwise when we refactor code, we end up breaking lots of seemingly unrelated 
   
   <entry>
     <title type="html"><![CDATA[Accessorizer for XCode]]></title>
-    <link href="http://gerardcondon.github.com/blog/2012/01/27/accessorizer-for-xcode/"/>
+    <link href="http://www.gerardcondon.com/blog/2012/01/27/accessorizer-for-xcode/"/>
     <updated>2012-01-27T18:00:00+00:00</updated>
-    <id>http://gerardcondon.github.com/blog/2012/01/27/accessorizer-for-xcode</id>
+    <id>http://www.gerardcondon.com/blog/2012/01/27/accessorizer-for-xcode</id>
     <content type="html"><![CDATA[<p>One thing about Objective C that struck me is the amount of boiler plate code that needs to be written for variables and methods. Ideally Xcode would handle all this but unfortunately it doesn&#8217;t.</p>
 
 <p>An app I found to solve this problem is <a href="http://www.kevincallahan.org/software/accessorizer.html">Accessorizer</a>. It can generate interface and implementation for properties plus a whole range of other code (all that KVO and coding stuff that I haven&#8217;t looked into yet). It&#8217;s only 4 euro on the Mac App Store and it&#8217;s well worth it. There are some videos tutorials on the site which show you how much can be done with the program.</p>
@@ -235,9 +248,9 @@ Otherwise when we refactor code, we end up breaking lots of seemingly unrelated 
   
   <entry>
     <title type="html"><![CDATA[Version Control in Xcode using Git and Dropbox]]></title>
-    <link href="http://gerardcondon.github.com/blog/2012/01/26/version-control-in-xcode-using-git-and-dropbox/"/>
+    <link href="http://www.gerardcondon.com/blog/2012/01/26/version-control-in-xcode-using-git-and-dropbox/"/>
     <updated>2012-01-26T18:00:00+00:00</updated>
-    <id>http://gerardcondon.github.com/blog/2012/01/26/version-control-in-xcode-using-git-and-dropbox</id>
+    <id>http://www.gerardcondon.com/blog/2012/01/26/version-control-in-xcode-using-git-and-dropbox</id>
     <content type="html"><![CDATA[<p>When I first created projects in Xcode, I just let it take care of the version control for me by creating a Git local repository for my code. This was working fine for me but I could see that in future I would need more flexibility. I think it’s better to build that (and good programming habits in general) in at the start of a project when the codebase is small rather than refactoring down the line when it becomes a bigger problem.</p>
 
 <p>One issue is that the local Git repository could only be used by one computer. If I wanted to share this code I would need to switch to using remote Git repositories. I also wanted to incorporate some form of remote backup for additional security.</p>
@@ -267,9 +280,9 @@ The bare option is used as this will just clone the contents of the local .git d
   
   <entry>
     <title type="html"><![CDATA[Learning Objective C]]></title>
-    <link href="http://gerardcondon.github.com/blog/2012/01/21/learning-objective-c/"/>
+    <link href="http://www.gerardcondon.com/blog/2012/01/21/learning-objective-c/"/>
     <updated>2012-01-21T18:00:00+00:00</updated>
-    <id>http://gerardcondon.github.com/blog/2012/01/21/learning-objective-c</id>
+    <id>http://www.gerardcondon.com/blog/2012/01/21/learning-objective-c</id>
     <content type="html"><![CDATA[<p>Here is a list of the resources I used when learning Objective C.</p>
 
 <ul>
@@ -297,9 +310,9 @@ The bare option is used as this will just clone the contents of the local .git d
   
   <entry>
     <title type="html"><![CDATA[Beginning with Xcode]]></title>
-    <link href="http://gerardcondon.github.com/blog/2012/01/18/beginning-with-xcode/"/>
+    <link href="http://www.gerardcondon.com/blog/2012/01/18/beginning-with-xcode/"/>
     <updated>2012-01-18T21:58:00+00:00</updated>
-    <id>http://gerardcondon.github.com/blog/2012/01/18/beginning-with-xcode</id>
+    <id>http://www.gerardcondon.com/blog/2012/01/18/beginning-with-xcode</id>
     <content type="html"><![CDATA[<p>The main application for developing apps is Xcode. I&#8217;m not sure if there are any alternatives but at the moment I don&#8217;t think I really need any. Xcode is free, installs from the app store. What more do I need?</p>
 
 <p>Ok, so first I installed Xcode. Or rather I installed an installer for Xcode. Seems a bit odd. I&#8217;m not sure how that will work with updates from the Mac Store. At first glance it looked the same as most other editors. Text area for writing code, tree navigator for files etc. My initial impressions are that it should be straightforward to learn to use.</p>
@@ -310,9 +323,9 @@ The bare option is used as this will just clone the contents of the local .git d
   
   <entry>
     <title type="html"><![CDATA[Choosing a language]]></title>
-    <link href="http://gerardcondon.github.com/blog/2012/01/14/choosing-a-language/"/>
+    <link href="http://www.gerardcondon.com/blog/2012/01/14/choosing-a-language/"/>
     <updated>2012-01-14T18:00:00+00:00</updated>
-    <id>http://gerardcondon.github.com/blog/2012/01/14/choosing-a-language</id>
+    <id>http://www.gerardcondon.com/blog/2012/01/14/choosing-a-language</id>
     <content type="html"><![CDATA[<p>My initial thought was that I would obviously use Objective C to program the app. However a work colleague suggested that I look at <a href="http://www.appcelerator.com/">Appcelerator</a> as he had used it to create his app. (The app is for Irish Leaving Certificate students. It allows them to download past exam papers to their iPhone or iPad. If you&#8217;re a 5th or 6th year student check it out at <a href="http://www.jamessugrue.ie/app">http://www.jamessugrue.ie/app</a>.)</p>
 
 <p>The technology basically allows you to use Javascript to create your application. This presumably will hide the lower level implementation details and allow you to create apps faster. Also the apps should be portable across mobile OSes so this would allow for Android ports.</p>
@@ -327,9 +340,9 @@ The bare option is used as this will just clone the contents of the local .git d
   
   <entry>
     <title type="html"><![CDATA[Initial Post]]></title>
-    <link href="http://gerardcondon.github.com/blog/2012/01/08/7/"/>
+    <link href="http://www.gerardcondon.com/blog/2012/01/08/7/"/>
     <updated>2012-01-08T18:00:00+00:00</updated>
-    <id>http://gerardcondon.github.com/blog/2012/01/08/7</id>
+    <id>http://www.gerardcondon.com/blog/2012/01/08/7</id>
     <content type="html"><![CDATA[<p>Here&#8217;s my initial blog post. I&#8217;m creating this blog as I&#8217;ve decided to create iOS apps in my spare time. Up to now I&#8217;ve been working as a programmer for eight years in Java, C++ and C. I&#8217;ve never written an Objective C application before nor programmed on the Mac. Also I&#8217;ve never blogged before so this is a totally new experience for me.</p>
 
 <p>Given the time of year, there is a lot of advice regarding New Year Resolutions and how to stick with them. One of the ideas is that by telling your resolution to other people, this acts as positive reinforcement to actually carry it out. My version of that is this blog. I am making a commitment to create and publish an app to the app store. After that, we&#8217;ll see.</p>
