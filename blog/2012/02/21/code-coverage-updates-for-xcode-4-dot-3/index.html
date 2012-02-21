@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Initial Post - Gerard Condon's Blog</title>
+  <title>Code Coverage Updates for Xcode 4.3 - Gerard Condon's Blog</title>
   <meta name="author" content="Gerard Condon">
 
   
-  <meta name="description" content="Here&#8217;s my initial blog post. I&#8217;m creating this blog as I&#8217;ve decided to create iOS apps in my spare time. Up to now I&#8217;ve been &hellip;">
-  
+  <meta name="description" content="In a previous post, I described how I got code coverage up and running in Xcode 4.2. Apple have just released Xcode 4.3 and unfortunatly updating to &hellip;">
+  <meta name="keywords" content="XCode 4.3 Code coverage, libprofile_rt, llvm, gcda">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://www.gerardcondon.com/blog/2012/01/08/7">
+  <link rel="canonical" href="http://www.gerardcondon.com/blog/2012/02/21/code-coverage-updates-for-xcode-4-dot-3">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -80,7 +80,7 @@
   
   <header>
     
-      <h1 class="entry-title">Initial Post</h1>
+      <h1 class="entry-title">Code Coverage Updates for Xcode 4.3</h1>
     
     
       <p class="meta">
@@ -96,18 +96,18 @@
   
 
 
-<time datetime="2012-01-08T18:00:00+00:00" pubdate data-updated="true">Jan 8<span>th</span>, 2012</time>
+<time datetime="2012-02-21T00:02:00+00:00" pubdate data-updated="true">Feb 21<span>st</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>Here&#8217;s my initial blog post. I&#8217;m creating this blog as I&#8217;ve decided to create iOS apps in my spare time. Up to now I&#8217;ve been working as a programmer for eight years in Java, C++ and C. I&#8217;ve never written an Objective C application before nor programmed on the Mac. Also I&#8217;ve never blogged before so this is a totally new experience for me.</p>
+<div class="entry-content"><p>In a previous <a href="http://www.gerardcondon.com/blog/2012/02/17/adding-code-coverage-to-unit-tests/">post</a>, I described how I got code coverage up and running in Xcode 4.2. Apple have just released Xcode 4.3 and unfortunatly updating to this has broken my code coverage. The reason is that 4.3 removes the /Developer folder and moves this internally to the Xcode.app package. While this has good consequences - it should be possible to update Xcode from the App Store like a normal app - unfortunately it has also removed the libprofile_rt library from /Developer/usr/lib. I haven&#8217;t been able to find a new version of this library in Xcode 4.3. When I tried using the version from 4.2, I got &#8220;mach-o but wrong architecture&#8221; errors.</p>
 
-<p>Given the time of year, there is a lot of advice regarding New Year Resolutions and how to stick with them. One of the ideas is that by telling your resolution to other people, this acts as positive reinforcement to actually carry it out. My version of that is this blog. I am making a commitment to create and publish an app to the app store. After that, we&#8217;ll see.</p>
+<p>This means that when building my unit tests with Coverage I get link errors saying that I am missing llvm_gcda functions (llvm_gcda_start_file, llvm_gcda_increment_indirect_counter, llvm_gcda_emit_function, llvm_gcda_emit_arcs). I searched on Google to try and find a solution for 4.3 but it seemed all solutions were for 4.2 so I needed to try to solve this myself. The solution I came up with is fairly hacky. I&#8217;m hoping that as more people upgrade to 4.3, a better solution will be found and I can switch to that.</p>
 
-<p>I want to use this blog to document my journey to learn not only the technical aspects e.g. learning Objective C and Xcode, but also the other non software activities that come with creating and publishing software. This will no doubt change with time as (hopefully) I start to release apps but will do for a starting point.</p>
+<p>My solution is to take the actual file which contained the gcda functions in libprofile_rt, add it to my own source code and compile it myself. The file in question can be found on llvm.org - <a href="https://llvm.org/svn/llvm-project/llvm/trunk/runtime/libprofile/GCDAProfiling.c">here</a>. To get it to build locally I deleted the win32 and sys includes (lines 27 to 31 inclusive) and replaced the llvm include (line 23) with <code>#include "stdint.h"</code>. This builds fine using the Coverage build configuration and outputs the same gcda and gcno files as before. To make sure that this code doesn&#8217;t end up in the released project by accident, I&#8217;ve included it in the unit test bundle rather than the app bundle. This is fine for me as I only need coverage when running the tests anyway.</p>
 </div>
 
 
@@ -130,7 +130,7 @@
   
 
 
-<time datetime="2012-01-08T18:00:00+00:00" pubdate data-updated="true">Jan 8<span>th</span>, 2012</time>
+<time datetime="2012-02-21T00:02:00+00:00" pubdate data-updated="true">Feb 21<span>st</span>, 2012</time>
       
 
 <span class="categories">
@@ -144,7 +144,7 @@
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.gerardcondon.com/blog/2012/01/08/7/" data-via="" data-counturl="http://www.gerardcondon.com/blog/2012/01/08/7/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.gerardcondon.com/blog/2012/02/21/code-coverage-updates-for-xcode-4-dot-3/" data-via="" data-counturl="http://www.gerardcondon.com/blog/2012/02/21/code-coverage-updates-for-xcode-4-dot-3/" >Tweet</a>
   
   
   
@@ -153,8 +153,8 @@
     
     <p class="meta">
       
+        <a class="basic-alignment left" href="/blog/2012/02/18/apple-new-introduction-to-ios-development/" title="Previous Post: Apple's New Introduction to iOS Development">&laquo; Apple's New Introduction to iOS Development</a>
       
-        <a class="basic-alignment right" href="/blog/2012/01/14/choosing-a-language/" title="next Post: Choosing a language">Choosing a language &raquo;</a>
       
     </p>
   </footer>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Development | Gerard Condon's Blog]]></title>
   <link href="http://www.gerardcondon.com/blog/categories/development/atom.xml" rel="self"/>
   <link href="http://www.gerardcondon.com/"/>
-  <updated>2012-02-19T00:24:09+00:00</updated>
+  <updated>2012-02-21T00:02:57+00:00</updated>
   <id>http://www.gerardcondon.com/</id>
   <author>
     <name><![CDATA[Gerard Condon]]></name>
@@ -12,6 +12,19 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Code Coverage Updates for Xcode 4.3]]></title>
+    <link href="http://www.gerardcondon.com/blog/2012/02/21/code-coverage-updates-for-xcode-4-dot-3/"/>
+    <updated>2012-02-21T00:02:00+00:00</updated>
+    <id>http://www.gerardcondon.com/blog/2012/02/21/code-coverage-updates-for-xcode-4-dot-3</id>
+    <content type="html"><![CDATA[<p>In a previous <a href="http://www.gerardcondon.com/blog/2012/02/17/adding-code-coverage-to-unit-tests/">post</a>, I described how I got code coverage up and running in Xcode 4.2. Apple have just released Xcode 4.3 and unfortunatly updating to this has broken my code coverage. The reason is that 4.3 removes the /Developer folder and moves this internally to the Xcode.app package. While this has good consequences - it should be possible to update Xcode from the App Store like a normal app - unfortunately it has also removed the libprofile_rt library from /Developer/usr/lib. I haven't been able to find a new version of this library in Xcode 4.3. When I tried using the version from 4.2, I got "mach-o but wrong architecture" errors.</p>
+
+<p>This means that when building my unit tests with Coverage I get link errors saying that I am missing llvm_gcda functions (llvm_gcda_start_file, llvm_gcda_increment_indirect_counter, llvm_gcda_emit_function, llvm_gcda_emit_arcs). I searched on Google to try and find a solution for 4.3 but it seemed all solutions were for 4.2 so I needed to try to solve this myself. The solution I came up with is fairly hacky. I'm hoping that as more people upgrade to 4.3, a better solution will be found and I can switch to that.</p>
+
+<p>My solution is to take the actual file which contained the gcda functions in libprofile_rt, add it to my own source code and compile it myself. The file in question can be found on llvm.org - <a href="https://llvm.org/svn/llvm-project/llvm/trunk/runtime/libprofile/GCDAProfiling.c">here</a>. To get it to build locally I deleted the win32 and sys includes (lines 27 to 31 inclusive) and replaced the llvm include (line 23) with <code>#include "stdint.h"</code>. This builds fine using the Coverage build configuration and outputs the same gcda and gcno files as before. To make sure that this code doesn't end up in the released project by accident, I've included it in the unit test bundle rather than the app bundle. This is fine for me as I only need coverage when running the tests anyway.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Apple's New Introduction to iOS Development]]></title>
@@ -123,72 +136,6 @@ dirty hybrids. Unclear goal. High maintenance, don’t prove much
 Otherwise when we refactor code, we end up breaking lots of seemingly unrelated hybrid tests. If you change a unit, then its unit tests should change but no other unit tests should.</p></blockquote>
 
 <p>After all that I’ve decided that I want to do some level of unit testing but I realize that I need to focus it on the right areas. I think it will be useful for the utility type code that I write but that I need to do more research into how I want to implement integration testing and UI testing.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Objective C Categories and Monkey Patching]]></title>
-    <link href="http://www.gerardcondon.com/blog/2012/02/04/objective-c-categories-and-monkey-patching/"/>
-    <updated>2012-02-04T18:00:00+00:00</updated>
-    <id>http://www.gerardcondon.com/blog/2012/02/04/objective-c-categories-and-monkey-patching</id>
-    <content type="html"><![CDATA[<p>One of my favorite features of Objective C are <a href="http://developer.apple.com/library/ios/#documentation/cocoa/conceptual/objectivec/chapters/occategories.html">categories</a>. Categories allow you to add your own functionality to existing classes without the need for inheritance. You don't even need the source code of the modified class. You are only allowed add extra methods or modify existing methods. Adding extra instance variables is not permitted. This feature is generally known as <a href="http://en.wikipedia.org/wiki/Monkey_patch">monkey patching</a> (what a great name!) in languages such as Ruby.</p>
-
-<p>Creating a category is straightforward. The interface and implementation files look the same as normal interface and implementation files except the category name is placed in brackets after the name of the class we are extending. For example to create a category MyCategory on MyClass the interface file looks like
-<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>MyClass+MyCategory.h  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">import</span> <span class="s">&quot;MyClass.h&quot;</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">@</span><span class="n">interface</span> <span class="n">MyClass</span> <span class="p">(</span><span class="n">MyCategory</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// Declare Methods here</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">@end</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-and the implementation like this
-<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>MyClass+MyCategory.m  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">import</span> <span class="s">&quot;MyClass+MyCategory.h&quot;</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">@</span><span class="n">implementation</span> <span class="n">MyClass</span> <span class="p">(</span><span class="n">MyCategory</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// Implement methods here</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">@end</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>The standard naming convention for category files is ClassToExtend+Category.(h|m). So for the above we would have both MyClass+MyCategory.h and MyClass+MyCategory.m files. The header file needs to be imported in any file that uses the category. For common extensions we can place them in the precompiled header (pch) files.</p>
-
-<p>This has a number of applications. It allows you to add methods to classes (or indeed to alter existing methods) instead of having to create utility classes comprised of static methods. Thus the code is more clearly associated with the class to which it belongs. It allows you to create object-oriented code that favours composition over inheritance.</p>
-
-<p>To give a concrete example, for my current project I wanted to be able to shuffle an array. Instead of having to create a ShuffleableArray subclass or implement an ArrayUtils.shuffle helper method, I was able to add a shuffle method to the NSArray type via a category.</p>
-
-<p>Not only does the class to which you add the category get the new method, but all its subclasses gain the method also. This can be very useful if you are extending a class high up in the hierarchy. For example, another use I made of categories was to add debug methods to the UIView class e.g. to print data about itself and its subviews. Given that lots of the UI widget classes extend UIView this means that everything on screen got my new methods. I find trace methods like these very useful during unit testing and debugging. I tend to prefer adding print code where possible rather than step through the debugger, and for that case the ability to add functionality to existing classes is invaluable.</p>
-
-<p>Naturally like all programming language features categories can be greatly abused. Changing the behaviour of existing functions can break code which assumes the older behaviour. I'd imaging this would be especially so with system classes such as NSArray etc. However done right, they look like a very useful feature which I'm sure I'll use a great deal.</p>
 ]]></content>
   </entry>
   
