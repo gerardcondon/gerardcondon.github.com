@@ -2,69 +2,73 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
         <loc>http://www.gerardcondon.com/blog/2012/01/08/7/</loc>
-        <lastmod>2012-02-15T21:34:20+00:00</lastmod>
+        <lastmod>2012-02-21T23:56:35+00:00</lastmod>
     </url>
     <url>
         <loc>http://www.gerardcondon.com/blog/2012/01/14/choosing-a-language/</loc>
-        <lastmod>2012-02-15T21:39:20+00:00</lastmod>
+        <lastmod>2012-02-21T23:57:39+00:00</lastmod>
     </url>
     <url>
         <loc>http://www.gerardcondon.com/blog/2012/01/18/beginning-with-xcode/</loc>
-        <lastmod>2012-02-15T22:06:36+00:00</lastmod>
+        <lastmod>2012-02-21T23:57:57+00:00</lastmod>
     </url>
     <url>
         <loc>http://www.gerardcondon.com/blog/2012/01/21/learning-objective-c/</loc>
-        <lastmod>2012-02-15T21:11:21+00:00</lastmod>
+        <lastmod>2012-02-21T23:58:26+00:00</lastmod>
     </url>
     <url>
         <loc>
             http://www.gerardcondon.com/blog/2012/01/26/version-control-in-xcode-using-git-and-dropbox/
         </loc>
-        <lastmod>2012-02-15T22:38:04+00:00</lastmod>
+        <lastmod>2012-02-21T23:59:15+00:00</lastmod>
     </url>
     <url>
         <loc>http://www.gerardcondon.com/blog/2012/01/27/accessorizer-for-xcode/</loc>
-        <lastmod>2012-02-15T22:45:47+00:00</lastmod>
+        <lastmod>2012-02-21T23:59:41+00:00</lastmod>
     </url>
     <url>
         <loc>http://www.gerardcondon.com/blog/2012/01/29/itunes-u-and-online-learning/</loc>
-        <lastmod>2012-02-15T22:51:35+00:00</lastmod>
+        <lastmod>2012-02-21T23:59:56+00:00</lastmod>
     </url>
     <url>
         <loc>
             http://www.gerardcondon.com/blog/2012/02/04/objective-c-categories-and-monkey-patching/
         </loc>
-        <lastmod>2012-02-15T23:00:41+00:00</lastmod>
+        <lastmod>2012-02-22T00:00:12+00:00</lastmod>
     </url>
     <url>
         <loc>
             http://www.gerardcondon.com/blog/2012/02/10/devising-my-unit-testing-philosophy/
         </loc>
-        <lastmod>2012-02-15T23:05:52+00:00</lastmod>
+        <lastmod>2012-02-22T00:00:30+00:00</lastmod>
     </url>
     <url>
         <loc>http://www.gerardcondon.com/blog/2012/02/13/test-automation/</loc>
-        <lastmod>2012-02-15T23:29:07+00:00</lastmod>
+        <lastmod>2012-02-22T00:00:53+00:00</lastmod>
     </url>
     <url>
         <loc>http://www.gerardcondon.com/blog/2012/02/16/moving-the-blog-to-octopress/</loc>
-        <lastmod>2012-02-17T22:12:42+00:00</lastmod>
+        <lastmod>2012-02-22T00:01:21+00:00</lastmod>
     </url>
     <url>
         <loc>http://www.gerardcondon.com/blog/2012/02/17/adding-code-coverage-to-unit-tests/</loc>
-        <lastmod>2012-02-17T23:00:40+00:00</lastmod>
+        <lastmod>2012-02-22T00:01:47+00:00</lastmod>
     </url>
     <url>
         <loc>
             http://www.gerardcondon.com/blog/2012/02/18/apple-new-introduction-to-ios-development/
         </loc>
-        <lastmod>2012-02-18T10:12:36+00:00</lastmod>
+        <lastmod>2012-02-22T00:02:06+00:00</lastmod>
     </url>
     <url>
         <loc>
             http://www.gerardcondon.com/blog/2012/02/21/code-coverage-updates-for-xcode-4-dot-3/
         </loc>
-        <lastmod>2012-02-21T00:02:47+00:00</lastmod>
+        <lastmod>2012-02-22T00:02:10+00:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.gerardcondon.com/blog/2012/02/22/os-x-mountain-lion/</loc>
+        <lastmod>2012-02-22T23:42:58+00:00</lastmod>
     </url>
     <url>
         <loc>http://www.gerardcondon.com/about/</loc>
@@ -72,10 +76,10 @@
     </url>
     <url>
         <loc>http://www.gerardcondon.com/blog/archives/</loc>
-        <lastmod>2012-02-21T00:02:47+00:00</lastmod>
+        <lastmod>2012-02-22T23:42:58+00:00</lastmod>
     </url>
     <url>
         <loc>http://www.gerardcondon.com/</loc>
-        <lastmod>2012-02-21T00:02:47+00:00</lastmod>
+        <lastmod>2012-02-22T23:42:58+00:00</lastmod>
     </url>
 </urlset>
