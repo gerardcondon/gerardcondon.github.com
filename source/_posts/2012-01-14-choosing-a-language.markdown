@@ -3,6 +3,7 @@ layout: post
 title: Choosing a language
 date: 2012-01-14 18:00
 categories: Development
+keywords: Objective C, iPhone, iPad
 ---
 My initial thought was that I would obviously use Objective C to program the app. However a work colleague suggested that I look at [Appcelerator](http://www.appcelerator.com/) as he had used it to create his app. (The app is for Irish Leaving Certificate students. It allows them to download past exam papers to their iPhone or iPad. If you're a 5th or 6th year student check it out at [http://www.jamessugrue.ie/app](http://www.jamessugrue.ie/app).)
 

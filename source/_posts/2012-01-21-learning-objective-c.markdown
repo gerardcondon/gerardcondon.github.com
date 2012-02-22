@@ -4,6 +4,7 @@ title: Learning Objective C
 date: 2012-01-21 18:00
 comments: true
 categories: Development
+keywords: iOS Development, Apple, learning Objective C
 ---
 Here is a list of the resources I used when learning Objective C.
 

@@ -4,6 +4,7 @@ title: Devising my Unit Testing Philosophy
 date: 2012-02-10 18:00
 comments: true
 categories: Development
+keywords: iOS Unit Testing
 ---
 Up to now my approach to unit testing has been dictated by who I was writing the code for. For instance in college I never wrote unit tests. In the real world some of my employers required unit testing, with certain branch and code coverage goals, while other employers didn’t require much in the way of unit testing, as long as other types of testing were carried out. In practice I found that the as the code became more lower level, the demands for unit tests increased.
 

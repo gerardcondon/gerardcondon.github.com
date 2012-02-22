@@ -4,6 +4,7 @@ title: Accessorizer for XCode
 date: 2012-01-27 18:00
 comments: true
 categories: Development
+keywords: Xcode, Accessorizer, Review
 ---
 One thing about Objective C that struck me is the amount of boiler plate code that needs to be written for variables and methods. Ideally Xcode would handle all this but unfortunately it doesn't.
 

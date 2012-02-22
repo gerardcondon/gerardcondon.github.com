@@ -4,6 +4,7 @@ title: iTunes U and Online Learning
 date: 2012-01-29 18:00
 comments: true
 categories: Development
+keywords: iTunes U, iBooks
 ---
 Apple have just released the [iTunes U app](http://itunes.apple.com/ie/app/itunes-u/id490217893?mt=8). I think this has gotten a little lost compared to the attention on the new iBooks Author and its EULA. The iTunes U app looks to be an excellent app which puts some structure on the courses that were available through iTunes. Now you can watch the videos on your iPhone and iPad, and also download the slides to them. You can also use AirPlay to stream the videos to an Apple TV and the app will sync the progress of the course between devices.
 

@@ -4,6 +4,7 @@ title: Version Control in Xcode using Git and Dropbox
 date: 2012-01-26 18:00
 comments: true
 categories: Development
+keywords: git, dropbox, version control, setup repository, Xcode, iOS Development
 ---
 When I first created projects in Xcode, I just let it take care of the version control for me by creating a Git local repository for my code. This was working fine for me but I could see that in future I would need more flexibility. I think it’s better to build that (and good programming habits in general) in at the start of a project when the codebase is small rather than refactoring down the line when it becomes a bigger problem.
 

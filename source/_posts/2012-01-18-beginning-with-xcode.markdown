@@ -4,6 +4,7 @@ title: Beginning with Xcode
 date: 2012-01-18 21:58
 comments: true
 categories: Development
+keywords: iOS Development, XCode
 ---
 The main application for developing apps is Xcode. I'm not sure if there are any alternatives but at the moment I don't think I really need any. Xcode is free, installs from the app store. What more do I need?
 

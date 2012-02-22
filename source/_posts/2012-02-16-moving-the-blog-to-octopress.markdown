@@ -4,6 +4,7 @@ title: "Moving the blog to Octopress"
 date: 2012-02-16 20:11
 comments: true
 categories: Octopress
+keywords: blog, Wordpress, Octopress, static
 ---
 I've decided to switch the blog from [Wordpress.com](http://www.wordpress.com) to an [Octopress](http://www.octopress.org) site hosted on [Github Pages](http://pages.github.com). From now on there will be no more new posts on Wordpress. I've also registered the domain [gerardcondon.com](http://www.gerardcondon.com) and will be using this address for the blog in future. 
 

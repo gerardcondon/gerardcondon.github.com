@@ -4,6 +4,7 @@ title: Objective C Categories and Monkey Patching
 date: 2012-02-04 18:00
 comments: true
 categories: Development
+keywords: iOS Development, categories, Objective C
 
 ---
 One of my favorite features of Objective C are [categories](http://developer.apple.com/library/ios/#documentation/cocoa/conceptual/objectivec/chapters/occategories.html). Categories allow you to add your own functionality to existing classes without the need for inheritance. You don't even need the source code of the modified class. You are only allowed add extra methods or modify existing methods. Adding extra instance variables is not permitted. This feature is generally known as [monkey patching](http://en.wikipedia.org/wiki/Monkey_patch) (what a great name!) in languages such as Ruby.

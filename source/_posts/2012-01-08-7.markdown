@@ -3,6 +3,7 @@ layout: post
 title: Initial Post
 date: 2012-01-08 18:00
 categories: Development
+keywords: iOS Development
 ---
 Here's my initial blog post. I'm creating this blog as I've decided to create iOS apps in my spare time. Up to now I've been working as a programmer for eight years in Java, C++ and C. I've never written an Objective C application before nor programmed on the Mac. Also I've never blogged before so this is a totally new experience for me.
 
