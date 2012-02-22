@@ -126,7 +126,7 @@
 </ul>
 </li>
 <li> We now need to add the libprofile_rt library to the build. This will link in the implementations of the coverage functions. If you are seeing link errors like &#8220;_llvm_gcda_increment_indirect_counter&#8221;, referenced from:&#8221;, then you have not done this step.<br/>
-This library is located in /Developer/usr/lib. This folder contains libprofile.a which is a static library and a libprofile.dylib which is a dynamic linked library (similar to a .dll in Windows). To link this open the Build Phases tab for the main target. Expand the &#8220;Link Binary with Libraries&#8221; and click the + button. Click &#8220;Add Other&#8221; and then find libprofile_rt.dylib in the file viewer and add it.</li>
+This library is located in /Developer/usr/lib. This folder contains libprofile.a which is a static library and a libprofile.dylib which is a dynamic linked library (similar to a .dll in Windows). To link this open the Build Phases tab for the main target. Expand the &#8220;Link Binary with Libraries&#8221; and click the + button. Click &#8220;Add Other&#8221; and then find libprofile_rt.dylib in the file viewer and add it. (Note that this doesn&#8217;t work for me since Xcode 4.3. I&#8217;ve documented the updates I needed to make <a href="http://www.gerardcondon.com/blog/2012/02/21/code-coverage-updates-for-xcode-4-dot-3/">here</a>).</li>
 </ul>
 
 
