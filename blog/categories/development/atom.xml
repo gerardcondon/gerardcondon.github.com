@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Development | Gerard Condon's Blog]]></title>
   <link href="http://www.gerardcondon.com/blog/categories/development/atom.xml" rel="self"/>
   <link href="http://www.gerardcondon.com/"/>
-  <updated>2012-03-20T23:50:11+00:00</updated>
+  <updated>2012-04-02T00:39:00+01:00</updated>
   <id>http://www.gerardcondon.com/</id>
   <author>
     <name><![CDATA[Gerard Condon]]></name>
@@ -35,6 +35,10 @@ Also this library didn't produce .gcda files but instead generated .dia files wh
 <code>Detected an attempt to call a symbol in system libraries that is not present on the iPhone:
 fopen$UNIX2003 called from function llvm_gcda_start_file</code>
 He found the solution to this issue <a href="http://www.infinite-loop.dk/blog/2012/02/code-coverage-and-fopen-unix2003-problems/">here</a>. I still got link errors when I followed this though so I need to stick with my original solution.</p>
+
+<p><strong>Update:</strong> Rajiv emailed me to say that creating a new target for his project made the coverage work for him. I've tried creating a new simple iOS app and I don't get any errors for this when I enable coverage. However it generates the .dia files which I don't know how to process.</p>
+
+<p>One thing which might impact this is the type of project being built. My original project (which still doesn't work) was a static library. I tried to create a new static library project and when I try to enable coverage I get the same link errors as above.</p>
 ]]></content>
   </entry>
   
