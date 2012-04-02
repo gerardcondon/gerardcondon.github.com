@@ -347,10 +347,6 @@ Also this library didn&#8217;t produce .gcda files but instead generated .dia fi
 <code>Detected an attempt to call a symbol in system libraries that is not present on the iPhone:
 fopen$UNIX2003 called from function llvm_gcda_start_file</code>
 He found the solution to this issue <a href="http://www.infinite-loop.dk/blog/2012/02/code-coverage-and-fopen-unix2003-problems/">here</a>. I still got link errors when I followed this though so I need to stick with my original solution.</p>
-
-<p><strong>Update:</strong> Rajiv emailed me to say that creating a new target for his project made the coverage work for him. I&#8217;ve tried creating a new simple iOS app and I don&#8217;t get any errors for this when I enable coverage. However it generates the .dia files which I don&#8217;t know how to process.</p>
-
-<p>One thing which might impact this is the type of project being built. My original project (which still doesn&#8217;t work) was a static library. I tried to create a new static library project and when I try to enable coverage I get the same link errors as above.</p>
 </div>
   
   
