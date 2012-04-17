@@ -4,7 +4,7 @@
   <title><![CDATA[Gerard Condon's Blog]]></title>
   <link href="http://www.gerardcondon.com/atom.xml" rel="self"/>
   <link href="http://www.gerardcondon.com/"/>
-  <updated>2012-04-02T08:01:13+01:00</updated>
+  <updated>2012-04-17T23:17:34+01:00</updated>
   <id>http://www.gerardcondon.com/</id>
   <author>
     <name><![CDATA[Gerard Condon]]></name>
@@ -151,6 +151,10 @@ Also this library didn&#8217;t produce .gcda files but instead generated .dia fi
 <code>Detected an attempt to call a symbol in system libraries that is not present on the iPhone:
 fopen$UNIX2003 called from function llvm_gcda_start_file</code>
 He found the solution to this issue <a href="http://www.infinite-loop.dk/blog/2012/02/code-coverage-and-fopen-unix2003-problems/">here</a>. I still got link errors when I followed this though so I need to stick with my original solution.</p>
+
+<p><strong>Update:</strong> Another commenter Rajiv emailed me to say that creating a new target for his project made the coverage work for him. It generated the .gcda and .gcno files when he exited using exit(0). I&#8217;ve tried creating a new simple iOS app and I don&#8217;t get any errors for this when I enable coverage.</p>
+
+<p>One thing which might explain why it still doesn&#8217;t work for some of my projects is the type of project being built. My original project  was a static library. I tried to create a new static library project and when I try to enable coverage I get the same link errors as above.</p>
 ]]></content>
   </entry>
   
@@ -394,7 +398,7 @@ Otherwise when we refactor code, we end up breaking lots of seemingly unrelated 
 <ul>
 <li>I created the project I wanted in Xcode and allowed it to set up a local Git Repository for me.</li>
 <li>I cloned the repository using the bare keyword to a Dropbox location.
-<code>git clone –bare . ~/Dropbox/development/repositories/GCUtils/GCUtils.git</code>
+<code>git clone –-bare . ~/Dropbox/development/repositories/GCUtils/GCUtils.git</code>
 The bare option is used as this will just clone the contents of the local .git directory to Dropbox. We don’t want to create a working copy of the code on Dropbox, as this may lead to Dropbox edit conflicts if that working copy is edited directly. In order to edit the code, a user should have to clone the repository to their machine, work on it locally and then push the changes to the Dropbox repository.</li>
 <li>I created a remote alias.
 <code>git remote add dbGCUtils ~/Dropbox/development/repositories/GCUtils/GCUtils.git</code></li>
