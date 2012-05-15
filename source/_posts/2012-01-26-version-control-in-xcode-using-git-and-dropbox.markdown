@@ -20,7 +20,7 @@ To set up Dropbox I followed the steps on [this](http://www.cimgf.com/2008/06/03
 
 *   I created the project I wanted in Xcode and allowed it to set up a local Git Repository for me.
 *   I cloned the repository using the bare keyword to a Dropbox location.
-`git clone –bare . ~/Dropbox/development/repositories/GCUtils/GCUtils.git`
+`git clone –-bare . ~/Dropbox/development/repositories/GCUtils/GCUtils.git`
 The bare option is used as this will just clone the contents of the local .git directory to Dropbox. We don’t want to create a working copy of the code on Dropbox, as this may lead to Dropbox edit conflicts if that working copy is edited directly. In order to edit the code, a user should have to clone the repository to their machine, work on it locally and then push the changes to the Dropbox repository.
 *   I created a remote alias.
 `git remote add dbGCUtils ~/Dropbox/development/repositories/GCUtils/GCUtils.git`

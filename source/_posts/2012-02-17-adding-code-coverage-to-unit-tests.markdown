@@ -24,7 +24,7 @@ In order to specify different settings for configurations in Xcode, hover over t
     *	"Generate Test Coverage Files"
 	*    "Instrument Program Flow"
 *    We now need to add the libprofile_rt library to the build. This will link in the implementations of the coverage functions. If you are seeing link errors like "_llvm_gcda_increment_indirect_counter", referenced from:", then you have not done this step.  
-    This library is located in /Developer/usr/lib. This folder contains libprofile.a which is a static library and a libprofile.dylib which is a dynamic linked library (similar to a .dll in Windows). To link this open the Build Phases tab for the main target. Expand the "Link Binary with Libraries" and click the + button. Click "Add Other" and then find libprofile_rt.dylib in the file viewer and add it.
+    This library is located in /Developer/usr/lib. This folder contains libprofile.a which is a static library and a libprofile.dylib which is a dynamic linked library (similar to a .dll in Windows). To link this open the Build Phases tab for the main target. Expand the "Link Binary with Libraries" and click the + button. Click "Add Other" and then find libprofile_rt.dylib in the file viewer and add it. (Note that this doesn't work for me since Xcode 4.3. I've documented the updates I needed to make [here](http://www.gerardcondon.com/blog/2012/02/21/code-coverage-updates-for-xcode-4-dot-3/)).
 
 ### Executing Tests
 
