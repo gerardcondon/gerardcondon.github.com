@@ -4,7 +4,7 @@
   <title><![CDATA[Gerard Condon's Blog]]></title>
   <link href="http://www.gerardcondon.com/atom.xml" rel="self"/>
   <link href="http://www.gerardcondon.com/"/>
-  <updated>2012-05-15T23:31:00+01:00</updated>
+  <updated>2012-05-19T18:00:51+01:00</updated>
   <id>http://www.gerardcondon.com/</id>
   <author>
     <name><![CDATA[Gerard Condon]]></name>
@@ -12,6 +12,41 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Localizing iOS Apps]]></title>
+    <link href="http://www.gerardcondon.com/blog/2012/05/19/localizing-ios-apps/"/>
+    <updated>2012-05-19T16:54:00+01:00</updated>
+    <id>http://www.gerardcondon.com/blog/2012/05/19/localizing-ios-apps</id>
+    <content type="html"><![CDATA[<p>I was looking at a tutorial for creating a settings bundle for my app and it had separate files for different languages. I realised that I hadn&#8217;t a clue how to localize iOS applications. I decided I&#8217;d better look into it now, rather than at the end of development, in case it required me to change existing code. Much better to implement with localization in mind, than retrofit at the end of development.</p>
+
+<p>I&#8217;m interested to see how many translations I&#8217;ll be able to include in the app. I&#8217;m not sure how easy it will be to do the translation or even how much text there will be to translate. I&#8217;m planning a Chinese translation and for sentimental reasons I&#8217;ll do an Irish translation. I&#8217;ll probably try to get some European languages done also. I think that once I put in the infrastructure to do one language then adding additional ones shouldn&#8217;t be too much bother.</p>
+
+<p>The basics of implementing localization is that you externalize all strings in your application to .strings files and then provide versions of these files for each language you support. The process for creating the basic localization.strings file is outlined <a href="http://userflex.wordpress.com/2011/10/20/localized-strings-xcode4/">here</a>. In your code you can get the localized values for these strings using NSLocalizedString(@&#8221;Externalized String Name&#8221;, @&#8221;&#8220;).</p>
+
+<h2>Localization Tools</h2>
+
+<p>Using this method, we will have to deal with lots of .strings files. Xcode doesn&#8217;t provide much help here so I looked around for third party apps. I bought <a href="http://www.cocoanetics.com/apps/linguan/">Linguan</a> on the Mac App Store and it looks very good. You point it at an Xcode project file and it locates all the .strings files and presents them in a nice table. It can generate text files which you can send on to your translators for them to translate and re-import their translations. I&#8217;m very pleased with it so far.</p>
+
+<p>Apart from having .strings files for strings in the code, I also need to localize the app&#8217;s storyboards. Albert Mata has a fantastic tutorial on how to do this <a href="http://www.albertmata.net/articles/introduction-to-internationalization-using-storyboards-on-ios-5.html">here</a>. A big problem with localizing storyboards is that changes in one language&#8217;s storyboards are not propagated to the others. Manually keeping these in sync would be a nightmare. Thankfully there is a handy script <a href="http://code.google.com/p/edim-mobile/source/browse/trunk/ios/IncrementalLocalization/localize.py">here</a> by Ederson Machado, which will update the .strings files for the storyboard and also keep the storyboards in sync. There is a nice video outlining the features of the script <a href="http://www.youtube.com/watch?v=cF1Rf02QvZQ">here</a>. By adding this script as a build run script, we can ensure that our storyboards are always in sync.</p>
+
+<h2>Localization Workflow</h2>
+
+<p>My localization workflow is as follows:</p>
+
+<ul>
+<li>First I created multiple storyboards for each language using the Localization area on the sidebar. This will create a language.proj folder for each language.</li>
+<li>I ran the localize.py script on the project. This generated the mainstoryboard.strings files in each of the language folders.</li>
+<li>I manually add these files to Xcode. First I added the English version. Then I clicked the plus button in the Localization sidebar and added the other languages. Xcode is able to find those .strings files and link them to the overall file.</li>
+<li>I create a localization.strings file to deal with the strings in the code and added all languages.</li>
+<li>I ran genstrings but I don&#8217;t think this is needed if you&#8217;re using Linguan.</li>
+<li>When I opened the project in Linguan it was able to find all the strings files, including those from the storyboard.</li>
+</ul>
+
+
+<p>I&#8217;m satisfied now that I have the localization mostly under control. One thing I still need to look at is how does this affect testing. Hopefully any test framework that I used will be able to run the tests in all languages.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Starting out with Core Data]]></title>
@@ -511,19 +546,6 @@ The bare option is used as this will just clone the contents of the local .git d
 <p>Another problem with these type of frameworks is that if Apple add new features, then you have to wait for your framework provider to update their product, to support the new features. In this case I think you&#8217;re better off using the standard language and APIs for the platform rather than a third party solution. Also the iPhone libraries seem fairly similar to the Mac libraries, so in future it should be straightforward enough to learn Mac programming after gaining an iOS foundation.</p>
 
 <p>Given my C/C++ experience I think I will pick up Objective C quicker. I have no intention to support Android at this time so the cross platform support is not of any use to me. I&#8217;d also assume that, as most apps are developed in Objective C, that this will be more in demand by employers in future. So, Objective C it is then. How hard can it be&#8230;</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Initial Post]]></title>
-    <link href="http://www.gerardcondon.com/blog/2012/01/08/7/"/>
-    <updated>2012-01-08T18:00:00+00:00</updated>
-    <id>http://www.gerardcondon.com/blog/2012/01/08/7</id>
-    <content type="html"><![CDATA[<p>Here&#8217;s my initial blog post. I&#8217;m creating this blog as I&#8217;ve decided to create iOS apps in my spare time. Up to now I&#8217;ve been working as a programmer for eight years in Java, C++ and C. I&#8217;ve never written an Objective C application before nor programmed on the Mac. Also I&#8217;ve never blogged before so this is a totally new experience for me.</p>
-
-<p>Given the time of year, there is a lot of advice regarding New Year Resolutions and how to stick with them. One of the ideas is that by telling your resolution to other people, this acts as positive reinforcement to actually carry it out. My version of that is this blog. I am making a commitment to create and publish an app to the app store. After that, we&#8217;ll see.</p>
-
-<p>I want to use this blog to document my journey to learn not only the technical aspects e.g. learning Objective C and Xcode, but also the other non software activities that come with creating and publishing software. This will no doubt change with time as (hopefully) I start to release apps but will do for a starting point.</p>
 ]]></content>
   </entry>
   

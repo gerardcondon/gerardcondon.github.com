@@ -9,7 +9,7 @@
   <meta name="author" content="Gerard Condon">
 
   
-  <meta name="description" content="For my project, I need a way to store the model data that I will be generating. I certainly don&#8217;t want to write a persistence layer for my &hellip;">
+  <meta name="description" content="I was looking at a tutorial for creating a settings bundle for my app and it had separate files for different languages. I realised that I hadn&#8217 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +77,68 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/05/19/localizing-ios-apps/">Localizing iOS Apps</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-05-19T16:54:00+01:00" pubdate data-updated="true">May 19<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I was looking at a tutorial for creating a settings bundle for my app and it had separate files for different languages. I realised that I hadn&#8217;t a clue how to localize iOS applications. I decided I&#8217;d better look into it now, rather than at the end of development, in case it required me to change existing code. Much better to implement with localization in mind, than retrofit at the end of development.</p>
+
+<p>I&#8217;m interested to see how many translations I&#8217;ll be able to include in the app. I&#8217;m not sure how easy it will be to do the translation or even how much text there will be to translate. I&#8217;m planning a Chinese translation and for sentimental reasons I&#8217;ll do an Irish translation. I&#8217;ll probably try to get some European languages done also. I think that once I put in the infrastructure to do one language then adding additional ones shouldn&#8217;t be too much bother.</p>
+
+<p>The basics of implementing localization is that you externalize all strings in your application to .strings files and then provide versions of these files for each language you support. The process for creating the basic localization.strings file is outlined <a href="http://userflex.wordpress.com/2011/10/20/localized-strings-xcode4/">here</a>. In your code you can get the localized values for these strings using NSLocalizedString(@&#8221;Externalized String Name&#8221;, @&#8221;&#8220;).</p>
+
+<h2>Localization Tools</h2>
+
+<p>Using this method, we will have to deal with lots of .strings files. Xcode doesn&#8217;t provide much help here so I looked around for third party apps. I bought <a href="http://www.cocoanetics.com/apps/linguan/">Linguan</a> on the Mac App Store and it looks very good. You point it at an Xcode project file and it locates all the .strings files and presents them in a nice table. It can generate text files which you can send on to your translators for them to translate and re-import their translations. I&#8217;m very pleased with it so far.</p>
+
+<p>Apart from having .strings files for strings in the code, I also need to localize the app&#8217;s storyboards. Albert Mata has a fantastic tutorial on how to do this <a href="http://www.albertmata.net/articles/introduction-to-internationalization-using-storyboards-on-ios-5.html">here</a>. A big problem with localizing storyboards is that changes in one language&#8217;s storyboards are not propagated to the others. Manually keeping these in sync would be a nightmare. Thankfully there is a handy script <a href="http://code.google.com/p/edim-mobile/source/browse/trunk/ios/IncrementalLocalization/localize.py">here</a> by Ederson Machado, which will update the .strings files for the storyboard and also keep the storyboards in sync. There is a nice video outlining the features of the script <a href="http://www.youtube.com/watch?v=cF1Rf02QvZQ">here</a>. By adding this script as a build run script, we can ensure that our storyboards are always in sync.</p>
+
+<h2>Localization Workflow</h2>
+
+<p>My localization workflow is as follows:</p>
+
+<ul>
+<li>First I created multiple storyboards for each language using the Localization area on the sidebar. This will create a language.proj folder for each language.</li>
+<li>I ran the localize.py script on the project. This generated the mainstoryboard.strings files in each of the language folders.</li>
+<li>I manually add these files to Xcode. First I added the English version. Then I clicked the plus button in the Localization sidebar and added the other languages. Xcode is able to find those .strings files and link them to the overall file.</li>
+<li>I create a localization.strings file to deal with the strings in the code and added all languages.</li>
+<li>I ran genstrings but I don&#8217;t think this is needed if you&#8217;re using Linguan.</li>
+<li>When I opened the project in Linguan it was able to find all the strings files, including those from the storyboard.</li>
+</ul>
+
+
+<p>I&#8217;m satisfied now that I have the localization mostly under control. One thing I still need to look at is how does this affect testing. Hopefully any test framework that I used will be able to run the tests in all languages.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -565,59 +627,6 @@ This library is located in /Developer/usr/lib. This folder contains libprofile.a
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/02/16/moving-the-blog-to-octopress/">Moving the Blog to Octopress</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-16T20:11:00+00:00" pubdate data-updated="true">Feb 16<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I&#8217;ve decided to switch the blog from <a href="http://www.wordpress.com">Wordpress.com</a> to an <a href="http://www.octopress.org">Octopress</a> site hosted on <a href="http://pages.github.com">Github Pages</a>. From now on there will be no more new posts on Wordpress. I&#8217;ve also registered the domain <a href="http://www.gerardcondon.com">gerardcondon.com</a> and will be using this address for the blog in future.</p>
-
-<p>I have a few reasons for switching</p>
-
-<ul>
-<li><p>I found Wordpress.com to be an excellent site in general. When starting off it was very easy to create and get the blog up and running. However you have to use their site to create your posts. Even if you use a text editor you still ultimately have to paste the post into their site, and all subsequent edits have to be done through Wordpress.com. Also the definitive version of the posts are stored in their database.</p>
-
-<p>  I prefer to write my documents in plain text files using a markup language. Previously I&#8217;ve used <a href="http://www.latex-project.org/">Latex</a> and more recently I&#8217;ve started using <a href="http://daringfireball.net/projects/markdown/">Markdown</a>. This has a number of advantages, namely the files can be edited in any editor on any platform and they work very well with source control. Also by separating the content from the typesetting phase, I find that you concentrate better on the actual writing. I hate having to wrestle with formatting in Word; I much prefer leaving that to a program. Donald Knuth &amp; Co. have forgotten more about typesetting than I will ever know.</p>
-
-<p>  Wordpress.com doesn&#8217;t support Markdown so posting involved an extra step of converting the Markdown to HTML. This meant that I had two versions of the blog. One in Markdown on my local machine and another in HTML on Wordpress. For me, it&#8217;s an axiom that whenever you have two versions of the same data, they will get out of sync. One needs to be the main source. I wanted the local Markdown version to be the canonical version of the site and everything else derived from that.</p></li>
-<li><p>I think the default Octopress theme looks really good (I really like the Archive page). I first noticed it on <a href="http://www.mattgemmell.com">Matt Gemmell&#8217;s</a> site and was impressed by how it looked. It also looks well on mobile sites. I have full control of the css using Octopress so I can tweak whatever I want. I liked the <a href="http://theme.wordpress.com/themes/titan/">Titan</a> theme on Wordpress except I hated the crosses using for lists. On Wordpress.com there was no way to change these. However on Octopress I make any kind of style update.</p></li>
-<li><p>I realised that I should get my own domain name instead of using the Wordpress.com address. In future if I need to move my site I can just redirect the domain name and any old links will still work. Whereas I will never own or control the gerardcondon.wordpress.com links. It&#8217;s better to move now, rather than after I create lots of content at a non portable url. Start as you mean to go on.</p></li>
-</ul>
-
-
-<p>The posting workflow is much better now. I write my posts in Markdown on the Mac or on iOS via <a href="http://www.hogbaysoftware.com/products/writeroom">WriteRoom</a>. Then I run a command from the terminal to regenerate the site and deploy it to Github. Edits work in the same way. The Markdown files also get committed to Github ensuring that no matter where I move the blog in future I will always have the content in an accessible file format.</p>
-
-<p>I&#8217;ll add a few posts in future on how I got Octopress, Github and my domain all set up and working together.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -631,6 +640,10 @@ This library is located in /Developer/usr/lib. This folder contains libprofile.a
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/05/19/localizing-ios-apps/">Localizing iOS Apps</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/05/15/starting-with-core-data/">Starting out with Core Data</a>
@@ -666,10 +679,6 @@ This library is located in /Developer/usr/lib. This folder contains libprofile.a
     
       <li class="post">
         <a href="/blog/2012/02/17/adding-code-coverage-to-unit-tests/">Adding Code Coverage to Unit Tests for Xcode 4.2</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/02/16/moving-the-blog-to-octopress/">Moving the blog to Octopress</a>
       </li>
     
   </ul>

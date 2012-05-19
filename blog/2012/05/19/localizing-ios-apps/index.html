@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Code Coverage Updates for Xcode 4.3 - Gerard Condon's Blog</title>
+  <title>Localizing iOS Apps - Gerard Condon's Blog</title>
   <meta name="author" content="Gerard Condon">
 
   
-  <meta name="description" content="In a previous post, I described how I got code coverage up and running in Xcode 4.2. Apple have just released Xcode 4.3 and unfortunatly updating to &hellip;">
-  <meta name="keywords" content="XCode 4.3 Code coverage, libprofile_rt, llvm, gcda">
+  <meta name="description" content="I was looking at a tutorial for creating a settings bundle for my app and it had separate files for different languages. I realised that I hadn&#8217 &hellip;">
+  <meta name="keywords" content="iOS, Localization, Internationalization, Linguan, storyboards">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://www.gerardcondon.com/blog/2012/02/21/code-coverage-updates-for-xcode-4-dot-3">
+  <link rel="canonical" href="http://www.gerardcondon.com/blog/2012/05/19/localizing-ios-apps">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -80,7 +80,7 @@
   
   <header>
     
-      <h1 class="entry-title">Code Coverage Updates for Xcode 4.3</h1>
+      <h1 class="entry-title">Localizing iOS Apps</h1>
     
     
       <p class="meta">
@@ -96,34 +96,40 @@
   
 
 
-<time datetime="2012-02-21T00:02:00+00:00" pubdate data-updated="true">Feb 21<span>st</span>, 2012</time>
+<time datetime="2012-05-19T16:54:00+01:00" pubdate data-updated="true">May 19<span>th</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>In a previous <a href="http://www.gerardcondon.com/blog/2012/02/17/adding-code-coverage-to-unit-tests/">post</a>, I described how I got code coverage up and running in Xcode 4.2. Apple have just released Xcode 4.3 and unfortunatly updating to this has broken my code coverage. The reason is that 4.3 removes the /Developer folder and moves this internally to the Xcode.app package. While this has good consequences - it should be possible to update Xcode from the App Store like a normal app - unfortunately it has also removed the libprofile_rt library from /Developer/usr/lib. I haven&#8217;t been able to find a new version of this library in Xcode 4.3. When I tried using the version from 4.2, I got &#8220;mach-o but wrong architecture&#8221; errors.</p>
+<div class="entry-content"><p>I was looking at a tutorial for creating a settings bundle for my app and it had separate files for different languages. I realised that I hadn&#8217;t a clue how to localize iOS applications. I decided I&#8217;d better look into it now, rather than at the end of development, in case it required me to change existing code. Much better to implement with localization in mind, than retrofit at the end of development.</p>
 
-<p>This means that when building my unit tests with Coverage I get link errors saying that I am missing llvm_gcda functions (llvm_gcda_start_file, llvm_gcda_increment_indirect_counter, llvm_gcda_emit_function, llvm_gcda_emit_arcs). I searched on Google to try and find a solution for 4.3 but it seemed all solutions were for 4.2 so I needed to try to solve this myself. The solution I came up with is fairly hacky. I&#8217;m hoping that as more people upgrade to 4.3, a better solution will be found and I can switch to that.</p>
+<p>I&#8217;m interested to see how many translations I&#8217;ll be able to include in the app. I&#8217;m not sure how easy it will be to do the translation or even how much text there will be to translate. I&#8217;m planning a Chinese translation and for sentimental reasons I&#8217;ll do an Irish translation. I&#8217;ll probably try to get some European languages done also. I think that once I put in the infrastructure to do one language then adding additional ones shouldn&#8217;t be too much bother.</p>
 
-<p>My solution is to take the actual file which contained the gcda functions in libprofile_rt, add it to my own source code and compile it myself. The file in question can be found on llvm.org - <a href="https://llvm.org/svn/llvm-project/llvm/trunk/runtime/libprofile/GCDAProfiling.c">here</a>. To get it to build locally I deleted the win32 and sys includes (lines 27 to 31 inclusive) and replaced the llvm include (line 23) with <code>#include "stdint.h"</code>. This builds fine using the Coverage build configuration and outputs the same gcda and gcno files as before. To make sure that this code doesn&#8217;t end up in the released project by accident, I&#8217;ve included it in the unit test bundle rather than the app bundle. This is fine for me as I only need coverage when running the tests anyway.</p>
+<p>The basics of implementing localization is that you externalize all strings in your application to .strings files and then provide versions of these files for each language you support. The process for creating the basic localization.strings file is outlined <a href="http://userflex.wordpress.com/2011/10/20/localized-strings-xcode4/">here</a>. In your code you can get the localized values for these strings using NSLocalizedString(@&#8221;Externalized String Name&#8221;, @&#8221;&#8220;).</p>
 
-<p><strong>Update:</strong> Some feedback from Tom Black, who emailed me to point out that libprofile_rt can be found in <code>/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/</code>
-However this library did not work for either of us. Instead we got errors like
-<code>The bundle “GCUtilsTests.octest” couldn’t be loaded because it is damaged or missing necessary resources.</code>
-<code>Library not loaded: @executable_path ... libprofile_rt.dylib</code>
-<code>Reason: image not found</code><br/>
-Also this library didn&#8217;t produce .gcda files but instead generated .dia files which didn&#8217;t work in Coverflow.</p>
+<h2>Localization Tools</h2>
 
-<p>What worked for Tom, but not for me, was not to include libprofile at all. This removed these errors and another incompatible binary error. Now however he got the following error.
-<code>Detected an attempt to call a symbol in system libraries that is not present on the iPhone:
-fopen$UNIX2003 called from function llvm_gcda_start_file</code>
-He found the solution to this issue <a href="http://www.infinite-loop.dk/blog/2012/02/code-coverage-and-fopen-unix2003-problems/">here</a>. I still got link errors when I followed this though so I need to stick with my original solution.</p>
+<p>Using this method, we will have to deal with lots of .strings files. Xcode doesn&#8217;t provide much help here so I looked around for third party apps. I bought <a href="http://www.cocoanetics.com/apps/linguan/">Linguan</a> on the Mac App Store and it looks very good. You point it at an Xcode project file and it locates all the .strings files and presents them in a nice table. It can generate text files which you can send on to your translators for them to translate and re-import their translations. I&#8217;m very pleased with it so far.</p>
 
-<p><strong>Update:</strong> Another commenter Rajiv emailed me to say that creating a new target for his project made the coverage work for him. It generated the .gcda and .gcno files when he exited using exit(0). I&#8217;ve tried creating a new simple iOS app and I don&#8217;t get any errors for this when I enable coverage.</p>
+<p>Apart from having .strings files for strings in the code, I also need to localize the app&#8217;s storyboards. Albert Mata has a fantastic tutorial on how to do this <a href="http://www.albertmata.net/articles/introduction-to-internationalization-using-storyboards-on-ios-5.html">here</a>. A big problem with localizing storyboards is that changes in one language&#8217;s storyboards are not propagated to the others. Manually keeping these in sync would be a nightmare. Thankfully there is a handy script <a href="http://code.google.com/p/edim-mobile/source/browse/trunk/ios/IncrementalLocalization/localize.py">here</a> by Ederson Machado, which will update the .strings files for the storyboard and also keep the storyboards in sync. There is a nice video outlining the features of the script <a href="http://www.youtube.com/watch?v=cF1Rf02QvZQ">here</a>. By adding this script as a build run script, we can ensure that our storyboards are always in sync.</p>
 
-<p>One thing which might explain why it still doesn&#8217;t work for some of my projects is the type of project being built. My original project was a static library. I tried to create a new static library project and when I try to enable coverage I get the same link errors as above.</p>
+<h2>Localization Workflow</h2>
+
+<p>My localization workflow is as follows:</p>
+
+<ul>
+<li>First I created multiple storyboards for each language using the Localization area on the sidebar. This will create a language.proj folder for each language.</li>
+<li>I ran the localize.py script on the project. This generated the mainstoryboard.strings files in each of the language folders.</li>
+<li>I manually add these files to Xcode. First I added the English version. Then I clicked the plus button in the Localization sidebar and added the other languages. Xcode is able to find those .strings files and link them to the overall file.</li>
+<li>I create a localization.strings file to deal with the strings in the code and added all languages.</li>
+<li>I ran genstrings but I don&#8217;t think this is needed if you&#8217;re using Linguan.</li>
+<li>When I opened the project in Linguan it was able to find all the strings files, including those from the storyboard.</li>
+</ul>
+
+
+<p>I&#8217;m satisfied now that I have the localization mostly under control. One thing I still need to look at is how does this affect testing. Hopefully any test framework that I used will be able to run the tests in all languages.</p>
 </div>
 
 
@@ -146,21 +152,15 @@ He found the solution to this issue <a href="http://www.infinite-loop.dk/blog/20
   
 
 
-<time datetime="2012-02-21T00:02:00+00:00" pubdate data-updated="true">Feb 21<span>st</span>, 2012</time>
+<time datetime="2012-05-19T16:54:00+01:00" pubdate data-updated="true">May 19<span>th</span>, 2012</time>
       
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/development/'>Development</a>
-  
-</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.gerardcondon.com/blog/2012/02/21/code-coverage-updates-for-xcode-4-dot-3/" data-via="" data-counturl="http://www.gerardcondon.com/blog/2012/02/21/code-coverage-updates-for-xcode-4-dot-3/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.gerardcondon.com/blog/2012/05/19/localizing-ios-apps/" data-via="" data-counturl="http://www.gerardcondon.com/blog/2012/05/19/localizing-ios-apps/" >Tweet</a>
   
   
   
@@ -169,10 +169,8 @@ He found the solution to this issue <a href="http://www.infinite-loop.dk/blog/20
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2012/02/18/apple-new-introduction-to-ios-development/" title="Previous Post: Apple's New Introduction to iOS Development">&laquo; Apple's New Introduction to iOS Development</a>
+        <a class="basic-alignment left" href="/blog/2012/05/15/starting-with-core-data/" title="Previous Post: Starting out with Core Data">&laquo; Starting out with Core Data</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2012/02/22/os-x-mountain-lion/" title="next Post: OS X Mountain Lion">OS X Mountain Lion &raquo;</a>
       
     </p>
   </footer>
