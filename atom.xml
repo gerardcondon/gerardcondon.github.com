@@ -4,7 +4,7 @@
   <title><![CDATA[Gerard Condon's Blog]]></title>
   <link href="http://www.gerardcondon.com/atom.xml" rel="self"/>
   <link href="http://www.gerardcondon.com/"/>
-  <updated>2012-09-16T13:22:44+01:00</updated>
+  <updated>2012-09-16T13:26:15+01:00</updated>
   <id>http://www.gerardcondon.com/</id>
   <author>
     <name><![CDATA[Gerard Condon]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Setting up Jenkins on OS X]]></title>
-    <link href="http://www.gerardcondon.com/blog/2012/09/05/setting-up-jenkins-on-os-x/"/>
-    <updated>2012-09-05T00:10:00+01:00</updated>
-    <id>http://www.gerardcondon.com/blog/2012/09/05/setting-up-jenkins-on-os-x</id>
+    <link href="http://www.gerardcondon.com/blog/2012/09/16/setting-up-jenkins-on-os-x/"/>
+    <updated>2012-09-16T13:24:00+01:00</updated>
+    <id>http://www.gerardcondon.com/blog/2012/09/16/setting-up-jenkins-on-os-x</id>
     <content type="html"><![CDATA[<p>First post in a long time. I didn&#8217;t really do much iOS development over the summer and am only starting to get back into it in the past few weeks. I have some draft posts on my dealings with both Core Data and UITableViews and once those features are complete I&#8217;ll post them.</p>
 
 <p>Along with coding, I&#8217;ve been looking at adding some build infrastructure for my projects. Having seen <a href="http://jenkins-ci.org/">Jenkins</a> used at work, I wanted to get a CI system set up for my builds here at home. I want to use it to kick off a build, run the tests and package up the iPhone app. By using something like Jenkins I can automate my build and testing process and also have a record of previous builds.</p>
