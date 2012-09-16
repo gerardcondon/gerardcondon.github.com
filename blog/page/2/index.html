@@ -9,7 +9,7 @@
   <meta name="author" content="Gerard Condon">
 
   
-  <meta name="description" content="I&#8217;ve decided to switch the blog from Wordpress.com to an Octopress site hosted on Github Pages. From now on there will be no more new posts on &hellip;">
+  <meta name="description" content="If you are going to the effort of having unit tests, then you really need to have code coverage. This will allow you to ensure that your tests are &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +77,79 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/02/17/adding-code-coverage-to-unit-tests/">Adding Code Coverage to Unit Tests for Xcode 4.2</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-17T22:27:00+00:00" pubdate data-updated="true">Feb 17<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>If you are going to the effort of having unit tests, then you really need to have code coverage. This will allow you to ensure that your tests are exercising all your code. It is really easy to spot a missing test when you see a branch of an if-else with no coverage. Code coverage for me is also a way to motivate myself to implement the tests. It&#8217;s like high scores in games - it gives me a target to aim for. Coverage gives feedback that your tests are actually doing something, and with each test you add, you can see the areas of untested code steadily decrease.</p>
+
+<p>To set up code coverage in Xcode 4.2 I used the guide on these blogs - <a href="http://www.infinite-loop.dk/blog/2011/05/covering-it-all-up/">Infinite Loop</a> and <a href="http://mattrajca.com/post/8749868513/llvm-code-coverage-and-xcode-4">Matt Rajca</a>. Originally only the gcc compiler was supported but since then the Clang compiler has had code coverage enabled. This is important as we need to use Clang for ARC and static analysis among other things.</p>
+
+<h3>XCode Build Settings</h3>
+
+<p>Xcode has the concept of build configurations which can have built settings altered independently of each other. The two default configurations are Debug and Release. We want to add a new configuration named Coverage. To do this duplicate the Debug configuration.</p>
+
+<p><img src="/images/codeCoverage/NewBuildConfig.png" title="New Build Configuration" ></p>
+
+<p>In order to specify different settings for configurations in Xcode, hover over the left hand margin directly to the left of the setting we wish to update. An arrow will appear which when clicked will expand to an additional three lines for Debug, Coverage and Release. Editing the top line will alter the setting for all versions. Altering either of the new lines will only update the setting for that version of the build.</p>
+
+<p><img src="/images/codeCoverage/BuildSettings.png" title="Build Settings" ></p>
+
+<ul>
+<li>Open the Build Settings tab for the main target. Under &#8220;Apple LLVM 3.0 compiler - Code Generation&#8221;, enable both
+
+<ul>
+<li>&#8220;Generate Test Coverage Files&#8221;</li>
+<li> &#8220;Instrument Program Flow&#8221;</li>
+</ul>
+</li>
+<li> We now need to add the libprofile_rt library to the build. This will link in the implementations of the coverage functions. If you are seeing link errors like &#8220;_llvm_gcda_increment_indirect_counter&#8221;, referenced from:&#8221;, then you have not done this step.<br/>
+This library is located in /Developer/usr/lib. This folder contains libprofile.a which is a static library and a libprofile.dylib which is a dynamic linked library (similar to a .dll in Windows). To link this open the Build Phases tab for the main target. Expand the &#8220;Link Binary with Libraries&#8221; and click the + button. Click &#8220;Add Other&#8221; and then find libprofile_rt.dylib in the file viewer and add it. (Note that this doesn&#8217;t work for me since Xcode 4.3. I&#8217;ve documented the updates I needed to make <a href="http://www.gerardcondon.com/blog/2012/02/21/code-coverage-updates-for-xcode-4-dot-3/">here</a>).</li>
+</ul>
+
+
+<h3>Executing Tests</h3>
+
+<p>Now your unit tests should run and if you examine the build output files under the DerivedData folder you should find .gcda and .gcno coverage files along with your .o files. To find this folder you can go to the Projects tab in the Organizer and select your project. The path to the Derived Data folder is listed here along with an arrow which will open the folder in the Finder.</p>
+
+<p><img src="/images/codeCoverage/DerivedData.png" title="Derived Data" ></p>
+
+<p>From here the path to the coverage files is Build/Intermediates/${Project Target}.build/Coverage-iphonesimulator/${Project Target}.build/Objects-normal/i386. Replace ${Project Target} with the name of your project target.</p>
+
+<h3>Viewing Coverage Data</h3>
+
+<p>To view the coverage data I used <a href="http://code.google.com/p/coverstory/">CoverStory</a>. Simply open the app and point it at the coverage folder. This will give a nice two pane display showing your files on the left and an editor which shows how often each line of code was hit. Now you can identify untested code and add new tests to cover them.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -561,50 +634,6 @@ The bare option is used as this will just clone the contents of the local .git d
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/01/14/choosing-a-language/">Choosing a Language</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-14T18:00:00+00:00" pubdate data-updated="true">Jan 14<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>My initial thought was that I would obviously use Objective C to program the app. However a work colleague suggested that I look at <a href="http://www.appcelerator.com/">Appcelerator</a> as he had used it to create his app. (The app is for Irish Leaving Certificate students. It allows them to download past exam papers to their iPhone or iPad. If you&#8217;re a 5th or 6th year student check it out at <a href="http://www.jamessugrue.ie/app">http://www.jamessugrue.ie/app</a>.)</p>
-
-<p>The technology basically allows you to use Javascript to create your application. This presumably will hide the lower level implementation details and allow you to create apps faster. Also the apps should be portable across mobile OSes so this would allow for Android ports.</p>
-
-<p>I don&#8217;t think that this is the right approach for me though. I don&#8217;t know Javascript or much HTML5 so either way I&#8217;d have to learn a new language. My thinking is that Apple use Objective C and intend for it to be the official way to write apps. This means that there will be loads of help out there for writing in Objective C, e.g. Apple articles, books, Stack Overflow questions etc. One of my concerns is that when you start hitting road bumps in Appcelerator, I not sure there will be the same level of support available.</p>
-
-<p>Another problem with these type of frameworks is that if Apple add new features, then you have to wait for your framework provider to update their product, to support the new features. In this case I think you&#8217;re better off using the standard language and APIs for the platform rather than a third party solution. Also the iPhone libraries seem fairly similar to the Mac libraries, so in future it should be straightforward enough to learn Mac programming after gaining an iOS foundation.</p>
-
-<p>Given my C/C++ experience I think I will pick up Objective C quicker. I have no intention to support Android at this time so the cross platform support is not of any use to me. I&#8217;d also assume that, as most apps are developed in Objective C, that this will be more in demand by employers in future. So, Objective C it is then. How hard can it be&#8230;</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -620,6 +649,10 @@ The bare option is used as this will just clone the contents of the local .git d
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/09/05/setting-up-jenkins-on-os-x/">Setting up Jenkins on OS X</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/05/19/localizing-ios-apps/">Localizing iOS Apps</a>
@@ -655,10 +688,6 @@ The bare option is used as this will just clone the contents of the local .git d
     
       <li class="post">
         <a href="/blog/2012/02/18/apple-new-introduction-to-ios-development/">Apple&#8217;s New Introduction to iOS Development</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/02/17/adding-code-coverage-to-unit-tests/">Adding Code Coverage to Unit Tests for Xcode 4.2</a>
       </li>
     
   </ul>
