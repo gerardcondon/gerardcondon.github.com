@@ -1,0 +1,328 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Setting up Calabash on iOS - Gerard Condon's Blog</title>
+  <meta name="author" content="Gerard Condon">
+
+  
+  <meta name="description" content="I&#8217;ve been implementing some new features in iOS and in the process refactoring some existing code. As I&#8217;ve been making these changes, I &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://www.gerardcondon.com/blog/2012/10/22/setting-up-calabash-on-ios">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="feed://feeds.feedburner.com/GerardCondonsBlog" rel="alternate" title="Gerard Condon's Blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-29293592-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Gerard Condon's Blog</a></h1>
+  
+    <h2>Journal of an iPhone developer.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="feed://feeds.feedburner.com/GerardCondonsBlog" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:www.gerardcondon.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/about">About</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Setting Up Calabash on iOS</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-22T23:38:00+01:00" pubdate data-updated="true">Oct 22<span>nd</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>I&#8217;ve been implementing some new features in iOS and in the process refactoring some existing code. As I&#8217;ve been making these changes, I began to feel that the code was reaching a tipping point where I was as likely to break existing features as successfully add the new functionality.
+In particular I was experimenting with table view controllers and there are a lot of functions to override depending on what behaviour you want. I was finding that changes for one type of behaviour were impacting functionality that I thought I had solved previously. I hadn&#8217;t been doing much automated testing up to now apart from some unit testing, so I was worried about adding regression bugs.</p>
+
+<p>I decided to take a break from coding in order to implement some proper tests and specifically I wanted to do some UI testing. For this I chose the Calabash framework. This is developed by the people at <a href="http://lesspainful.com">Less Painful</a>. One of them, Karl Krukow, has a detailed <a href="http://blog.lesspainful.com/2012/03/07/Calabash-iOS/">post</a> comparing Calabash to the other automated frameworks out there.</p>
+
+<h1>Cucumber</h1>
+
+<p>Calabash is based on a Ruby test framework called <a href="http://cukes.info">Cucumber</a>. Cucumber allows for tests to be written in high level language called Gherkin. Gherkin is written in natural language and so can be understood by anyone - not just developers. It acts as documentation as well as a test framework. I could see this as being very useful when writing an application for a client. By giving them the Cucumber tests, they can see in plain English what is being implemented and should be able to give constructive feedback. Also the tests are automated and are run from the command line.</p>
+
+<p>While learning Cucumber the two main resources I used were</p>
+
+<ul>
+<li>The <a href="http://cukes.info">Cucumber</a> website which has a number of tutorials and a great wiki.</li>
+<li>The Pragmatic Programmers&#8217; Cucumber <a href="http://pragprog.com/book/hwcuc/the-cucumber-book">book</a>. This is an excellent book. I highly recommend reading this before implementing any tests.</li>
+</ul>
+
+
+<h1>Install</h1>
+
+<p>Cucumber requires Ruby to be installed on your system (I had previously installed it while setting up Octopress). The Calabash install process is documented on their Github <a href="https://github.com/calabash/calabash-ios">page</a>. I used the Fast Track installer using these steps.</p>
+
+<ul>
+<li><code>gem install calabash-cucumber</code></li>
+<li><code>calabash-ios setup</code></li>
+<li><code>calabash-ios sim acc</code></li>
+<li><code>calabash-ios gen</code></li>
+</ul>
+
+
+<p>This created initial test files which you can run from the command line using <code>cucumber</code>.</p>
+
+<p>One thing that worries me about the install process is that it creates a new scheme specifically for Calabash use. I don&#8217;t really like this solution as it breaks DRY and requires keeping the original scheme and the new Calabash scheme in sync. From my experience in programming, anything that is required to be kept manually in sync, won&#8217;t be. I would have preferred for the Calabash libraries to only be included in the Debug target of the main scheme or for a new target to be created on that scheme.</p>
+
+<p>A good blog on the Calabash install and initial test setup is <a href="http://www.moncefbelyamani.com/ios-automated-testing-with-calabash-cucumber-ruby/">here</a>.</p>
+
+<h1>First Steps with Calabash</h1>
+
+<ul>
+<li><p>I think the Calabash <a href="https://github.com/calabash/calabash-ios/wiki/01-Getting-started-guide">wiki</a> is the best starting point for Calabash.</p></li>
+<li><p>The first thing I tried was the console using <code>calabash-ios console</code>. I recommend this to play around and see what objects are visible to Calabash.</p></li>
+<li><p>The command <code>query("view")</code> shows everything on screen. We can isolate specific views by filtering on the accessibility label. In some cases this wasn&#8217;t useful for me. For example, I have a table where each cell has a text field. Each of these has the same accessibility label so instead I filtered using the :text property.</p></li>
+<li><p>We can find out what accessibility labels are visible using <code>label "view"</code>. Once we have a label we can do things like touching or swiping on the view or checking that the view exists using <code>view_with_mark_exists()</code>.</p></li>
+<li><p>The accessibility inspector can be used to identify the classes of UI elements and the on-screen hierarchy. Launch this from XCode under the menu item XCode->Open Developer Tool->Accessibility Inspector.</p></li>
+<li><p>I found that the built-in Calabash <a href="https://github.com/calabash/calabash-ios/blob/master/calabash-cucumber/features/step_definitions/calabash_steps.rb">steps</a> were very useful to base mine on.</p></li>
+<li><p>A problem I had was querying for the currently active textfield from a table of textfields. The issue was that all those textfields had the same placeholder text. To get the correct one I filtered by <code>isUserInteractionEnabled</code>.</p></li>
+<li><p>Errors in the name of the selector passed to the <code>backdoor</code> command show up as connection errors.</p></li>
+<li><p>Initially I struggled with writing the tests at the correct level. The temptation is to be really specific in terms of UI elements e.g. When I touch X button and swipe on Y label. However you really need to describe them at a higher level e.g. when I add a new contact, when I delete an appointment etc.</p></li>
+<li><p>My typical test layout is to use</p>
+
+<ul>
+<li><strong>Given</strong> to put the system in a specific state - this is where I use the backdoor function to set up the app model. I do things like erase all the Core Data objects here (from <a href="http://stackoverflow.com/questions/1077810/delete-reset-all-entries-in-core-data">Stack Overflow</a>) to ensure that each test starts with a clean slate.</li>
+<li><strong>When</strong> to perform an action. These are driven through the app UI.</li>
+<li><strong>Then</strong> to check the results of the actions. I&#8217;ve typically done these using the app UI e.g. checking for the existence of views, the state of the UI etc. As an alternative I could also use the backdoor function to check the model here.</li>
+</ul>
+</li>
+</ul>
+
+
+<h1>Issues with Calabash.</h1>
+
+<p>It wasn&#8217;t all smooth sailing as I did run into a few issues along the way.</p>
+
+<ul>
+<li><p>I was unable to run a backdoor command in the before hook which runs before each test. I had wanted to reset my Core Data database &amp; UI at this time. The reason here is that the Calabash framework itself uses before hooks to connect to the app and I think my hook was being called before theirs. To solve this I added my backdoor reset call to their hook in features/support/launch.rb. I don&#8217;t think that this is a long term solution as the comments in that file says not to rely on it being available when running on lesspainful.com.</p></li>
+<li><p>I wasn&#8217;t able to get it to integrate with Jenkins, although to be honest I didn&#8217;t put much effort into this. I tried to build the new scheme from the command line, like the original scheme, and run the tests but this didn&#8217;t work. For now I can run the tests manually but I should look into automating it in future. It&#8217;s a pity as Cucumber can output in JUnit format so it&#8217;s a perfect fit for Jenkins.</p></li>
+<li><p>I found that Calabash frequently drops the connection to the app and fails the tests as a result. Once a test run starts seeing these errors for a test (<code>Unable to make connection to Calabash Server at http://localhost:37265/</code>) then each following test in the run will show the same error. Rerunning the tests will normally sort it out in the next run or two. This unreliability was the most disappointing part of the tests for me.</p></li>
+</ul>
+
+
+<h1>Initial Impressions &amp; Next Steps</h1>
+
+<p>I have to say that I&#8217;m very impressed with Calabash and indeed Cucumber in general. I think that writing these type of tests beforehand would be helpful for requirements gathering and feature design. The tests themselves are not only useful as tests but also as documentation. Unlike Word docs, we can be guaranteed that these accurately describe the current state of the system, given that they are actually run against it.</p>
+
+<p>My plans for the future</p>
+
+<ul>
+<li>I need to add more tests. I initially tested this with just a single feature and that&#8217;s worked out so well that I&#8217;ll add this to the other features.</li>
+<li>From now on, I also plan to write these type of tests for a feature before implementing it. I think that the Cucumber tests especially with the language they are written in are very effective when thinking through the behaviour of the app. They force you to describe it in high level terms rather than just diving into coding.</li>
+<li>My tests currently have a lot of duplication. Once I have written a lot more of them and I gain more Ruby experience, I will look to refactor them.</li>
+</ul>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Gerard Condon</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-22T23:38:00+01:00" pubdate data-updated="true">Oct 22<span>nd</span>, 2012</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.gerardcondon.com/blog/2012/10/22/setting-up-calabash-on-ios/" data-via="" data-counturl="http://www.gerardcondon.com/blog/2012/10/22/setting-up-calabash-on-ios/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/09/20/further-jenkins-setup-code-signing/" title="Previous Post: Further Jenkins Setup for iOS">&laquo; Further Jenkins Setup for iOS</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/10/22/setting-up-calabash-on-ios/">Setting up Calabash on iOS</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/09/20/further-jenkins-setup-code-signing/">Further Jenkins Setup for iOS</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/09/16/setting-up-jenkins-on-os-x/">Setting up Jenkins on OS X</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/05/19/localizing-ios-apps/">Localizing iOS Apps</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/05/15/starting-with-core-data/">Starting out with Core Data</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/29/joined-the-ios-developer-program/">Joined the iOS Developer program</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/04/02/where-have-all-the-srpgs-gone/">Where have all the SRPGs gone</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/20/start-your-own-business-course/">Start your own Business Course</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/04/setting-up-octopress-and-github/">Setting up a Blog on Octopress and Github</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/22/os-x-mountain-lion/">OS X Mountain Lion</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+<section>
+  <h1>About Me</h1>
+  <p>I'm a software developer based in Cork, Ireland. I use C++ and Java in my day job and have started to create iPhone apps in my spare time.</p>
+  <p>Contact me at gercondonblog (at) gmail (dot) com</p>
+</section>
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Gerard Condon -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

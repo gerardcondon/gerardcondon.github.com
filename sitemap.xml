@@ -100,7 +100,11 @@
     </url>
     <url>
         <loc>http://www.gerardcondon.com/blog/2012/09/20/further-jenkins-setup-code-signing/</loc>
-        <lastmod>2012-09-20T23:11:26+01:00</lastmod>
+        <lastmod>2012-10-22T23:41:25+01:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.gerardcondon.com/blog/2012/10/22/setting-up-calabash-on-ios/</loc>
+        <lastmod>2012-10-23T00:01:10+01:00</lastmod>
     </url>
     <url>
         <loc>http://www.gerardcondon.com/about/</loc>
@@ -108,10 +112,10 @@
     </url>
     <url>
         <loc>http://www.gerardcondon.com/blog/archives/</loc>
-        <lastmod>2012-09-20T23:11:26+01:00</lastmod>
+        <lastmod>2012-10-23T00:01:10+01:00</lastmod>
     </url>
     <url>
         <loc>http://www.gerardcondon.com/</loc>
-        <lastmod>2012-09-20T23:11:26+01:00</lastmod>
+        <lastmod>2012-10-23T00:01:10+01:00</lastmod>
     </url>
 </urlset>
