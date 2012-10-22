@@ -7,7 +7,7 @@ categories:
 keywords: XCode 4.5, jenkins, iOS, build, app
 ---
 
-Last [time]() I went through how I set up jenkins on iOS and built a simple static library. All in all, that process went ok. The next step was to build an actual app. Unfortunately I encountered a lot more issues with this.
+Last [time](http://www.gerardcondon.com/blog/2012/09/16/setting-up-jenkins-on-os-x/) I went through how I set up jenkins on iOS and built a simple static library. All in all, that process went ok. The next step was to build an actual app. Unfortunately I encountered a lot more issues with this.
 
 The first error I got was 
 
