@@ -21,7 +21,7 @@ While learning Cucumber the two main resources I used were
 *   The [Cucumber][] website which has a number of tutorials and a great wiki.
 *   The Pragmatic Programmers' Cucumber [book][PragProg]. This is an excellent book. I highly recommend reading this before implementing any tests. 
 
-# Install
+# Installation
 
 Cucumber requires Ruby to be installed on your system (I had previously installed it while setting up Octopress). The Calabash install process is documented on their Github [page](https://github.com/calabash/calabash-ios). I used the Fast Track installer using these steps.
 
@@ -56,6 +56,19 @@ A good blog on the Calabash install and initial test setup is [here](http://www.
 
 * Initially I struggled with writing the tests at the correct level. The temptation is to be really specific in terms of UI elements e.g. When I touch X button and swipe on Y label. However you really need to describe them at a higher level e.g. when I add a new contact, when I delete an appointment etc.
 
+* Initially I was unable to run a backdoor command in the before hook, which runs before each test. I had wanted to reset my Core Data database & UI at this time. The reason here is that the Calabash framework itself uses before hooks to connect to the app and I think my hook was being called before theirs. To solve this Calabash added support for defining an `on_launch` function which is called after the simulator has started. To implement use the following template in the `hooks.rb` file.  
+
+		class CallbackWorld
+		 include Calabash::Cucumber::Operations
+		 def on_launch
+		   # here I can call backdoor and reset the app state
+		 end
+		end
+
+		World do
+		 CallbackWorld.new
+		end
+
 * My typical test layout is to use 
 	* **Given** to put the system in a specific state - this is where I use the backdoor function to set up the app model. I do things like erase all the Core Data objects here (from [Stack Overflow](http://stackoverflow.com/questions/1077810/delete-reset-all-entries-in-core-data)) to ensure that each test starts with a clean slate.
 	* **When** to perform an action. These are driven through the app UI.
@@ -65,11 +78,11 @@ A good blog on the Calabash install and initial test setup is [here](http://www.
 
 It wasn't all smooth sailing as I did run into a few issues along the way.
 
-* I was unable to run a backdoor command in the before hook which runs before each test. I had wanted to reset my Core Data database & UI at this time. The reason here is that the Calabash framework itself uses before hooks to connect to the app and I think my hook was being called before theirs. To solve this I added my backdoor reset call to their hook in features/support/launch.rb. I don't think that this is a long term solution as the comments in that file says not to rely on it being available when running on lesspainful.com.
+* I wasn't able to get it to integrate with my installation of Jenkins, which is unfortunate as Cucumber can output in JUnit format so it's a perfect fit for Jenkins. The problem here is on my side as lots of users on the Calabash Google Group are running Calabash from their CI system. I think it due to the jenkins user not being able to launch the iOS simulator. I need to investigate further on this.
 
-* I wasn't able to get it to integrate with Jenkins, although to be honest I didn't put much effort into this. I tried to build the new scheme from the command line, like the original scheme, and run the tests but this didn't work. For now I can run the tests manually but I should look into automating it in future. It's a pity as Cucumber can output in JUnit format so it's a perfect fit for Jenkins.
-
-* I found that Calabash frequently drops the connection to the app and fails the tests as a result. Once a test run starts seeing these errors for a test (`Unable to make connection to Calabash Server at http://localhost:37265/`) then each following test in the run will show the same error. Rerunning the tests will normally sort it out in the next run or two. This unreliability was the most disappointing part of the tests for me.
+* I had found that Calabash would frequently drop the connection to the app and fail the tests as a result. Once a test run started seeing these errors for a test (`Unable to make connection to Calabash Server at http://localhost:37265/`) then each following test in the run would show the same error. Rerunning the tests would normally sort it out in the next run or two. Both the app and Calabash would be running fine but just couldn't seem to connect to each other. This unreliability was the most disappointing part of the tests for me.  
+	
+	**Update:** Karl pointed me to the Google Group and I saw some [updates](https://groups.google.com/forum/?fromgroups=#!topic/calabash-ios/NdExaULsHz4) that were needed to work with the new iOS 6 Simulator. I had seen that black screen issue as part of trying to get it working with Jenkins. So I've updated to the latest version of Calabash and on the first test run, everything worked fine. Hopefully this will resolve the issue in future.
 
 # Initial Impressions & Next Steps
 
@@ -80,6 +93,8 @@ My plans for the future
 * I need to add more tests. I initially tested this with just a single feature and that's worked out so well that I'll add this to the other features.
 * From now on, I also plan to write these type of tests for a feature before implementing it. I think that the Cucumber tests especially with the language they are written in are very effective when thinking through the behaviour of the app. They force you to describe it in high level terms rather than just diving into coding.
 * My tests currently have a lot of duplication. Once I have written a lot more of them and I gain more Ruby experience, I will look to refactor them.
+
+**Update:** After my initial post Karl Krukow emailed me with some updates on the issues I was having and I've integrated those into the blog post. He pointed out that there is a [Google Group](https://groups.google.com/forum/?fromgroups#!forum/calabash-ios) for Calabash on iOS where you can ask questions and share information.
 
 [Cucumber]: http://cukes.info
 [Calabash]: http://calaba.sh
