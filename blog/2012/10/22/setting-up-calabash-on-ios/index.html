@@ -120,7 +120,7 @@ In particular I was experimenting with table view controllers and there are a lo
 </ul>
 
 
-<h1>Install</h1>
+<h1>Installation</h1>
 
 <p>Cucumber requires Ruby to be installed on your system (I had previously installed it while setting up Octopress). The Calabash install process is documented on their Github <a href="https://github.com/calabash/calabash-ios">page</a>. I used the Fast Track installer using these steps.</p>
 
@@ -150,6 +150,19 @@ In particular I was experimenting with table view controllers and there are a lo
 <li><p>A problem I had was querying for the currently active textfield from a table of textfields. The issue was that all those textfields had the same placeholder text. To get the correct one I filtered by <code>isUserInteractionEnabled</code>.</p></li>
 <li><p>Errors in the name of the selector passed to the <code>backdoor</code> command show up as connection errors.</p></li>
 <li><p>Initially I struggled with writing the tests at the correct level. The temptation is to be really specific in terms of UI elements e.g. When I touch X button and swipe on Y label. However you really need to describe them at a higher level e.g. when I add a new contact, when I delete an appointment etc.</p></li>
+<li><p>Initially I was unable to run a backdoor command in the before hook, which runs before each test. I had wanted to reset my Core Data database &amp; UI at this time. The reason here is that the Calabash framework itself uses before hooks to connect to the app and I think my hook was being called before theirs. To solve this Calabash added support for defining an <code>on_launch</code> function which is called after the simulator has started. To implement use the following template in the <code>hooks.rb</code> file.</p>
+
+<pre><code>  class CallbackWorld
+   include Calabash::Cucumber::Operations
+   def on_launch
+     # here I can call backdoor and reset the app state
+   end
+  end
+
+  World do
+   CallbackWorld.new
+  end
+</code></pre></li>
 <li><p>My typical test layout is to use</p>
 
 <ul>
@@ -166,9 +179,10 @@ In particular I was experimenting with table view controllers and there are a lo
 <p>It wasn&#8217;t all smooth sailing as I did run into a few issues along the way.</p>
 
 <ul>
-<li><p>I was unable to run a backdoor command in the before hook which runs before each test. I had wanted to reset my Core Data database &amp; UI at this time. The reason here is that the Calabash framework itself uses before hooks to connect to the app and I think my hook was being called before theirs. To solve this I added my backdoor reset call to their hook in features/support/launch.rb. I don&#8217;t think that this is a long term solution as the comments in that file says not to rely on it being available when running on lesspainful.com.</p></li>
-<li><p>I wasn&#8217;t able to get it to integrate with Jenkins, although to be honest I didn&#8217;t put much effort into this. I tried to build the new scheme from the command line, like the original scheme, and run the tests but this didn&#8217;t work. For now I can run the tests manually but I should look into automating it in future. It&#8217;s a pity as Cucumber can output in JUnit format so it&#8217;s a perfect fit for Jenkins.</p></li>
-<li><p>I found that Calabash frequently drops the connection to the app and fails the tests as a result. Once a test run starts seeing these errors for a test (<code>Unable to make connection to Calabash Server at http://localhost:37265/</code>) then each following test in the run will show the same error. Rerunning the tests will normally sort it out in the next run or two. This unreliability was the most disappointing part of the tests for me.</p></li>
+<li><p>I wasn&#8217;t able to get it to integrate with my installation of Jenkins, which is unfortunate as Cucumber can output in JUnit format so it&#8217;s a perfect fit for Jenkins. The problem here is on my side as lots of users on the Calabash Google Group are running Calabash from their CI system. I think it due to the jenkins user not being able to launch the iOS simulator. I need to investigate further on this.</p></li>
+<li><p>I had found that Calabash would frequently drop the connection to the app and fail the tests as a result. Once a test run started seeing these errors for a test (<code>Unable to make connection to Calabash Server at http://localhost:37265/</code>) then each following test in the run would show the same error. Rerunning the tests would normally sort it out in the next run or two. Both the app and Calabash would be running fine but just couldn&#8217;t seem to connect to each other. This unreliability was the most disappointing part of the tests for me.</p>
+
+<p>  <strong>Update:</strong> Karl pointed me to the Google Group and I saw some <a href="https://groups.google.com/forum/?fromgroups=#!topic/calabash-ios/NdExaULsHz4">updates</a> that were needed to work with the new iOS 6 Simulator. I had seen that black screen issue as part of trying to get it working with Jenkins. So I&#8217;ve updated to the latest version of Calabash and on the first test run, everything worked fine. Hopefully this will resolve the issue in future.</p></li>
 </ul>
 
 
@@ -184,6 +198,8 @@ In particular I was experimenting with table view controllers and there are a lo
 <li>My tests currently have a lot of duplication. Once I have written a lot more of them and I gain more Ruby experience, I will look to refactor them.</li>
 </ul>
 
+
+<p><strong>Update:</strong> After my initial post Karl Krukow emailed me with some updates on the issues I was having and I&#8217;ve integrated those into the blog post. He pointed out that there is a <a href="https://groups.google.com/forum/?fromgroups#!forum/calabash-ios">Google Group</a> for Calabash on iOS where you can ask questions and share information.</p>
 </div>
 
 
