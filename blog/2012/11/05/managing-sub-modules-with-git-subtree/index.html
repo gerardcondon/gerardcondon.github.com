@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: Business - Gerard Condon's Blog</title>
+  <title>Managing Sub-Modules with Git Subtree - Gerard Condon's Blog</title>
   <meta name="author" content="Gerard Condon">
 
   
-  <meta name="description" content="Category: Business">
-  
+  <meta name="description" content="I&#8217;ve been using Git for a while now, both at work and also for my iOS projects. I&#8217;m really liking it and have nearly sorted out my &hellip;">
+  <meta name="keywords" content="Git, subtree, submodules, external repositories">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://www.gerardcondon.comblog/categories/business/">
+  <link rel="canonical" href="http://www.gerardcondon.com/blog/2012/11/05/managing-sub-modules-with-git-subtree/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -76,35 +76,101 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Business</h1>
+    
+      <h1 class="entry-title">Managing Sub-Modules With Git Subtree</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-05T23:30:00+00:00" pubdate data-updated="true">Nov 5<span>th</span>, 2012</time>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p>I&#8217;ve been using Git for a while now, both at work and also for my iOS projects. I&#8217;m really liking it and have nearly sorted out my workflow with it. One problem that remains for me though is how to manage external dependencies. If I need to include a library from Github for example, how do I integrate it with my source.</p>
 
-  
-  <h2>2012</h2>
+<p>The main issues that I want to solve are</p>
 
-<article>
-  
-<h1><a href="/blog/2012/03/20/start-your-own-business-course/">Start your own Business Course</a></h1>
-<time datetime="2012-03-20T23:46:00+00:00" pubdate><span class='month'>Mar</span> <span class='day'>20</span> <span class='year'>2012</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/business/'>Business</a></span>
-</footer>
+<ul>
+<li><p>What happens if the external library disappears? This is especially relevant for online sources like Github. Given the brittle nature of the web, I think we can take it as a given that a lot of these Github repositories will be deleted over the coming years. In this scenario I need to have a local copy of the code as a backup.</p></li>
+<li><p>I should be able to update the local code with the latest or a specific tag from the external repository.</p></li>
+<li><p>I want to be able to create common libraries for my own code which I can share between applications.</p></li>
+<li><p>It may be that I will need to modify the code, so how do I maintain those changes. Perhaps I will need to push those changes to the external repository. This seems likely for my own common libraries.</p></li>
+<li><p>I want to be able to check out all the code needed to build an application from the source control using a single checkout/clone command. This means that each application will have a full copy of all the code that is needed to build it.</p></li>
+</ul>
 
 
-</article>
+<p>One solution that I&#8217;ve seen used in other projects is to use git submodule links. A git submodule points to a version of an external repository. The ones I&#8217;ve seen for iOS libraries will usually point to Github. When you run the <code>git submodule init</code> command, git will follow these links and download the source into your project.</p>
 
+<p>However in researching this, other people have reported problems using git submodules. They don&#8217;t seem as simple and as usable as I would need. I&#8217;m seeing issues on <a href="http://codingkilledthecat.wordpress.com/2012/04/28/why-your-company-shouldnt-use-git-submodules/">sites</a> regarding detached heads, branching, different versions etc. I just know that I will hit all these issues and probably a few more besides!</p>
+
+<p>In looking for an alternative I came across git subtrees on Wolf Rentzsch&#8217;s <a href="http://rentzsch.tumblr.com/post/22061209807/apps-i-love-git-subtree">site</a>. This seems to fit all my needs and appears less error prone than git submodules. The code can be downloaded <a href="https://github.com/rentzsch/git-subtree">here</a> and here&#8217;s a good <a href="http://psionides.eu/2010/02/04/sharing-code-between-projects-with-git-subtree/">tutorial</a> on using subtrees.</p>
+
+<p>My basic usage of it, i.e. to integrate a library from Github would be something like
+<code>git subtree add --prefix=GCUtils/External/CocoaLumberjack --squash https://github.com/robbiehanson/CocoaLumberjack.git master</code>
+I use the squash option to compress all the commit history of the library to just one commit message in my repository.</p>
+
+<p>One issue I ran into was adding a project which itself contained submodules. In this situation I search and find all the .gitmodules files and add those manually as subtrees in my repository.</p>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Gerard Condon</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-05T23:30:00+00:00" pubdate data-updated="true">Nov 5<span>th</span>, 2012</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.gerardcondon.com/blog/2012/11/05/managing-sub-modules-with-git-subtree/" data-via="" data-counturl="http://www.gerardcondon.com/blog/2012/11/05/managing-sub-modules-with-git-subtree/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/10/22/setting-up-calabash-on-ios/" title="Previous Post: Setting up Calabash on iOS">&laquo; Setting up Calabash on iOS</a>
+      
+      
+    </p>
+  </footer>
 </article>
 
 </div>

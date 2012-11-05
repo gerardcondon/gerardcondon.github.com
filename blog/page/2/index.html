@@ -9,7 +9,7 @@
   <meta name="author" content="Gerard Condon">
 
   
-  <meta name="description" content="In a previous post, I described how I got code coverage up and running in Xcode 4.2. Apple have just released Xcode 4.3 and unfortunatly updating to &hellip;">
+  <meta name="description" content="Apple has just announced Mountain Lion, the latest update to OS X, and it looks to have some interesting features. The main one I&#8217;m looking &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +77,44 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/02/22/os-x-mountain-lion/">OS X Mountain Lion</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-22T00:06:00+00:00" pubdate data-updated="true">Feb 22<span>nd</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Apple has just announced <a href="http://www.apple.com/macosx/mountain-lion">Mountain Lion</a>, the latest update to OS X, and it looks to have some interesting features. The main one I&#8217;m looking forward to is the addition of <a href="http://www.apple.com/macosx/mountain-lion/features.html#airplay">AirPlay</a> to the Mac. I love being able to stream video from the iPhone to the Apple TV. It&#8217;s really handy for the iTunes U lectures. However for normal videos that I have on the Mac, it&#8217;s annoying to have to convert them via <a href="http://www.inmethod.com/forum/posts/list/4529.page">Air Video Server</a> on the Mac and then use <a href="http://www.inmethod.com/air-video/index.html">Air Video</a> on the iPhone to get them to display on the Apple TV. Having AirPlay on the Mac stream directly to the Apple TV will be very handy. According to the docs, it&#8217;s just for streaming applications and presentations but perhaps they will open it up to interactive applications in future. I wonder what the latency would be like on this and if eventually it would be possible to play games via the Apple TV.</p>
+
+<p>I&#8217;m finding that as I integrate more and more Apple devices into my setup, they all make each other work better. AirPlay is one example of this. Another is iTunes match which really starts to excel when you have multiple devices. Previously it was impossible to keep multiple iTunes in sync. It was a nightmare trying to add new music as it had to be added to each library separately. Now my music library is always in sync everywhere and when I add music to one library, it gets uploaded and is available on all others immediately. I haven&#8217;t always been too impressed with Apple&#8217;s cloud services (i.e. MobileMe was a bit of a disaster) but they&#8217;ve got it right with iTunes Match.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -570,65 +608,6 @@ Otherwise when we refactor code, we end up breaking lots of seemingly unrelated 
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/01/26/version-control-in-xcode-using-git-and-dropbox/">Version Control in Xcode Using Git and Dropbox</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-26T18:00:00+00:00" pubdate data-updated="true">Jan 26<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>When I first created projects in Xcode, I just let it take care of the version control for me by creating a Git local repository for my code. This was working fine for me but I could see that in future I would need more flexibility. I think it’s better to build that (and good programming habits in general) in at the start of a project when the codebase is small rather than refactoring down the line when it becomes a bigger problem.</p>
-
-<p>One issue is that the local Git repository could only be used by one computer. If I wanted to share this code I would need to switch to using remote Git repositories. I also wanted to incorporate some form of remote backup for additional security.</p>
-
-<p><a href="http://www.github.com">Github</a> (recommended to me by <a href="http://au.linkedin.com/pub/ian-hennessy/5/1b4/987">Ian Hennessy</a>) would do the job just fine but the free accounts are limited to public repositories. If I was working with other developers then it would make sense to pay for one of their plans. The collaboration tools e.g. issue tracking, code review look really good. It’s certainly a site I can see myself using in the future.</p>
-
-<p>However for someone like me who is a solo developer, these features don’t add much value. I really just needed the backup functionality. So for this, I looked at storing the repository on <a href="http://www.dropbox.com">Dropbox</a>. It’s private and the free two gigabytes should be more than enough to host my code. Also Dropbox is available on pretty much everything and works well with firewalls. As for backups, it’s bullet proof. I’ve had my Windows PC hard drive fail recently. In the past this would have been a nightmare to deal with. Now I just installed a new drive, reinstalled Dropbox and saw all my documents reappear.</p>
-
-<p>One issue that I think may arise would occur if Dropbox has conflicting edits on the same file from multiple locations. In that case I’d imagine it’s merge resolution would mess up the Git repository. Fortunately I don’t think that this will apply in this situation. I will be the only person with access to the repository and I won’t be editing the same files from two PCs at the same time.</p>
-
-<p>To set up Dropbox I followed the steps on <a href="http://www.cimgf.com/2008/06/03/version-control-makes-you-a-better-programmer/">this</a> post from cimgf.com. This <a href="http://stackoverflow.com/questions/1960799/using-gitdropbox-together-effectively">answer</a> on StackOverflow is also a good reference.</p>
-
-<ul>
-<li>I created the project I wanted in Xcode and allowed it to set up a local Git Repository for me.</li>
-<li>I cloned the repository using the bare keyword to a Dropbox location.
-<code>git clone –-bare . ~/Dropbox/development/repositories/GCUtils/GCUtils.git</code>
-The bare option is used as this will just clone the contents of the local .git directory to Dropbox. We don’t want to create a working copy of the code on Dropbox, as this may lead to Dropbox edit conflicts if that working copy is edited directly. In order to edit the code, a user should have to clone the repository to their machine, work on it locally and then push the changes to the Dropbox repository.</li>
-<li>I created a remote alias.
-<code>git remote add dbGCUtils ~/Dropbox/development/repositories/GCUtils/GCUtils.git</code></li>
-<li>I restarted Xcode and in the repositories tab of the Organizer, it picked up the remote repository automatically.</li>
-</ul>
-
-
-<p>And that’s pretty much it for the initial setup. From here Xcode can manage the commits to the local repository and also the push and pull from the remote repository. The Xcode user guide describes how Xcode can interact with Git <a href="http://developer.apple.com/library/mac/#documentation/ToolsLanguages/Conceptual/Xcode4UserGuide/SCM/SCM.html">here</a>.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -644,6 +623,10 @@ The bare option is used as this will just clone the contents of the local .git d
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/11/05/managing-sub-modules-with-git-subtree/">Managing Sub-Modules with Git Subtree</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/10/22/setting-up-calabash-on-ios/">Setting up Calabash on iOS</a>
@@ -679,10 +662,6 @@ The bare option is used as this will just clone the contents of the local .git d
     
       <li class="post">
         <a href="/blog/2012/03/04/setting-up-octopress-and-github/">Setting up a Blog on Octopress and Github</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/02/22/os-x-mountain-lion/">OS X Mountain Lion</a>
       </li>
     
   </ul>
