@@ -4,7 +4,7 @@ title: "Setting up Calabash on iOS"
 date: 2012-10-22 23:38
 comments: true
 categories: 
-keywords: 
+keywords: Calabash, Cucumber, iOS, Automated Testing
 ---
 
 I've been implementing some new features in iOS and in the process refactoring some existing code. As I've been making these changes, I began to feel that the code was reaching a tipping point where I was as likely to break existing features as successfully add the new functionality. 
