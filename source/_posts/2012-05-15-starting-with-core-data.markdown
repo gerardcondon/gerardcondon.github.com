@@ -3,7 +3,7 @@ layout: post
 title: "Starting out with Core Data"
 date: 2012-05-15 21:59
 comments: true
-categories: 
+categories: Development
 keywords: Core Data, Magical Record, Mogenerator, Parse.com
 ---
 

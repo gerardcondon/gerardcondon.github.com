@@ -3,7 +3,7 @@ layout: post
 title: "Further Jenkins Setup for iOS"
 date: 2012-09-20 01:15
 comments: true
-categories: 
+categories: Development
 keywords: XCode 4.5, jenkins, iOS, build, app
 ---
 

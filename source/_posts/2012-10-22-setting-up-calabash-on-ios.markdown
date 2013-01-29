@@ -3,7 +3,7 @@ layout: post
 title: "Setting up Calabash on iOS"
 date: 2012-10-22 23:38
 comments: true
-categories: 
+categories: Development
 keywords: Calabash, Cucumber, iOS, Automated Testing
 ---
 
@@ -32,7 +32,7 @@ Cucumber requires Ruby to be installed on your system (I had previously installe
 
 This created initial test files which you can run from the command line using `cucumber`.
 
-One thing that worries me about the install process is that it creates a new scheme specifically for Calabash use. I don't really like this solution as it breaks DRY and requires keeping the original scheme and the new Calabash scheme in sync. From my experience in programming, anything that is required to be kept manually in sync, won't be. I would have preferred for the Calabash libraries to only be included in the Debug target of the main scheme or for a new target to be created on that scheme.
+One thing that worries me about the install process is that it creates a new scheme specifically for Calabash use. I don't really like this solution as it breaks DRY and requires keeping the original scheme and the new Calabash scheme in sync. From my experience in programming, anything that is required to be kept manually in sync, won't be. I would have preferred for the Calabash libraries to only be included in the Debug target of the main scheme or for a new target to be created on that scheme. __Update:__ Since I wrote this post Trevor Harmon has been in touch with an alternative approach to just link in the libraries for the Debug build - more info [here](https://groups.google.com/forum/#!topic/calabash-ios/gfDLRvYqIyo/discussion).
 
 A good blog on the Calabash install and initial test setup is [here](http://www.moncefbelyamani.com/ios-automated-testing-with-calabash-cucumber-ruby/).
 

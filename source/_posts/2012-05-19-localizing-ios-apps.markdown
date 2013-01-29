@@ -3,7 +3,7 @@ layout: post
 title: "Localizing iOS Apps"
 date: 2012-05-19 16:54
 comments: true
-categories: 
+categories: Development
 keywords: iOS, Localization, Internationalization, Linguan, storyboards
 ---
 

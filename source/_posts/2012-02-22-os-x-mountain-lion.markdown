@@ -3,7 +3,7 @@ layout: post
 title: "OS X Mountain Lion"
 date: 2012-02-22 00:06
 comments: true
-categories: 
+categories: Apple
 keywords: Mountain Lion, OS X, Mac, Airplay
 ---
 

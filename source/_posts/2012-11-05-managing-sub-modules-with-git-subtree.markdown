@@ -3,7 +3,7 @@ layout: post
 title: "Managing Sub-Modules with Git Subtree"
 date: 2012-11-05 23:30
 comments: true
-categories: 
+categories: Development
 keywords: Git, subtree, submodules, external repositories
 ---
 

@@ -3,7 +3,7 @@ layout: post
 title: "Setting up Jenkins on OS X"
 date: 2012-09-16 13:24
 comments: true
-categories: 
+categories: Development
 keywords: Jenkins, Bitbucket, Altassian, SourceTree, Git, XCode
 ---
 
