@@ -134,7 +134,7 @@ In particular I was experimenting with table view controllers and there are a lo
 
 <p>This created initial test files which you can run from the command line using <code>cucumber</code>.</p>
 
-<p>One thing that worries me about the install process is that it creates a new scheme specifically for Calabash use. I don&#8217;t really like this solution as it breaks DRY and requires keeping the original scheme and the new Calabash scheme in sync. From my experience in programming, anything that is required to be kept manually in sync, won&#8217;t be. I would have preferred for the Calabash libraries to only be included in the Debug target of the main scheme or for a new target to be created on that scheme.</p>
+<p>One thing that worries me about the install process is that it creates a new scheme specifically for Calabash use. I don&#8217;t really like this solution as it breaks DRY and requires keeping the original scheme and the new Calabash scheme in sync. From my experience in programming, anything that is required to be kept manually in sync, won&#8217;t be. I would have preferred for the Calabash libraries to only be included in the Debug target of the main scheme or for a new target to be created on that scheme. <strong>Update:</strong> Since I wrote this post Trevor Harmon has been in touch with an alternative approach to just link in the libraries for the Debug build - more info <a href="https://groups.google.com/forum/#!topic/calabash-ios/gfDLRvYqIyo/discussion">here</a>.</p>
 
 <p>A good blog on the Calabash install and initial test setup is <a href="http://www.moncefbelyamani.com/ios-automated-testing-with-calabash-cucumber-ruby/">here</a>.</p>
 
@@ -225,6 +225,12 @@ In particular I was experimenting with table view controllers and there are a lo
 <time datetime="2012-10-22T23:38:00+01:00" pubdate data-updated="true">Oct 22<span>nd</span>, 2012</time>
       
 
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/development/'>Development</a>
+  
+</span>
+
 
     </p>
     
@@ -255,6 +261,10 @@ In particular I was experimenting with table view controllers and there are a lo
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/01/28/stanford-ios-course-companion-book/">Stanford iOS Course Companion Book</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/11/05/managing-sub-modules-with-git-subtree/">Managing Sub-Modules with Git Subtree</a>
@@ -292,10 +302,6 @@ In particular I was experimenting with table view controllers and there are a lo
         <a href="/blog/2012/03/20/start-your-own-business-course/">Start your own Business Course</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2012/03/04/setting-up-octopress-and-github/">Setting up a Blog on Octopress and Github</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -315,7 +321,7 @@ In particular I was experimenting with table view controllers and there are a lo
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2012 - Gerard Condon -
+  Copyright &copy; 2013 - Gerard Condon -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

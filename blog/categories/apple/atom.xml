@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Apple | Gerard Condon's Blog]]></title>
+  <link href="http://www.gerardcondon.com/blog/categories/apple/atom.xml" rel="self"/>
+  <link href="http://www.gerardcondon.com/"/>
+  <updated>2013-01-29T19:17:41+00:00</updated>
+  <id>http://www.gerardcondon.com/</id>
+  <author>
+    <name><![CDATA[Gerard Condon]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[OS X Mountain Lion]]></title>
+    <link href="http://www.gerardcondon.com/blog/2012/02/22/os-x-mountain-lion/"/>
+    <updated>2012-02-22T00:06:00+00:00</updated>
+    <id>http://www.gerardcondon.com/blog/2012/02/22/os-x-mountain-lion</id>
+    <content type="html"><![CDATA[<p>Apple has just announced <a href="http://www.apple.com/macosx/mountain-lion">Mountain Lion</a>, the latest update to OS X, and it looks to have some interesting features. The main one I'm looking forward to is the addition of <a href="http://www.apple.com/macosx/mountain-lion/features.html#airplay">AirPlay</a> to the Mac. I love being able to stream video from the iPhone to the Apple TV. It's really handy for the iTunes U lectures. However for normal videos that I have on the Mac, it's annoying to have to convert them via <a href="http://www.inmethod.com/forum/posts/list/4529.page">Air Video Server</a> on the Mac and then use <a href="http://www.inmethod.com/air-video/index.html">Air Video</a> on the iPhone to get them to display on the Apple TV. Having AirPlay on the Mac stream directly to the Apple TV will be very handy. According to the docs, it's just for streaming applications and presentations but perhaps they will open it up to interactive applications in future. I wonder what the latency would be like on this and if eventually it would be possible to play games via the Apple TV.</p>
+
+<p>I'm finding that as I integrate more and more Apple devices into my setup, they all make each other work better. AirPlay is one example of this. Another is iTunes match which really starts to excel when you have multiple devices. Previously it was impossible to keep multiple iTunes in sync. It was a nightmare trying to add new music as it had to be added to each library separately. Now my music library is always in sync everywhere and when I add music to one library, it gets uploaded and is available on all others immediately. I haven't always been too impressed with Apple's cloud services (i.e. MobileMe was a bit of a disaster) but they've got it right with iTunes Match.</p>
+]]></content>
+  </entry>
+  
+</feed>

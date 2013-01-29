@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Development | Gerard Condon's Blog]]></title>
   <link href="http://www.gerardcondon.com/blog/categories/development/atom.xml" rel="self"/>
   <link href="http://www.gerardcondon.com/"/>
-  <updated>2012-11-05T23:51:56+00:00</updated>
+  <updated>2013-01-29T19:17:41+00:00</updated>
   <id>http://www.gerardcondon.com/</id>
   <author>
     <name><![CDATA[Gerard Condon]]></name>
@@ -14,110 +14,333 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Joined the iOS Developer program]]></title>
-    <link href="http://www.gerardcondon.com/blog/2012/04/29/joined-the-ios-developer-program/"/>
-    <updated>2012-04-29T21:40:00+01:00</updated>
-    <id>http://www.gerardcondon.com/blog/2012/04/29/joined-the-ios-developer-program</id>
-    <content type="html"><![CDATA[<p>I've been fairly busy with the Start Your Own Business course so I haven't had much time to do iOS programming. It's time to get back into it now though, and so I've just paid my subscription to the iOS developer program. I'm looking forward to being able to run code on an actual device. It's been a bit limiting working on just the simulator and there's nothing like seeing your code running on the final hardware.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Code Coverage Updates for Xcode 4.3]]></title>
-    <link href="http://www.gerardcondon.com/blog/2012/02/21/code-coverage-updates-for-xcode-4-dot-3/"/>
-    <updated>2012-02-21T00:02:00+00:00</updated>
-    <id>http://www.gerardcondon.com/blog/2012/02/21/code-coverage-updates-for-xcode-4-dot-3</id>
-    <content type="html"><![CDATA[<p>In a previous <a href="http://www.gerardcondon.com/blog/2012/02/17/adding-code-coverage-to-unit-tests/">post</a>, I described how I got code coverage up and running in Xcode 4.2. Apple have just released Xcode 4.3 and unfortunatly updating to this has broken my code coverage. The reason is that 4.3 removes the /Developer folder and moves this internally to the Xcode.app package. While this has good consequences - it should be possible to update Xcode from the App Store like a normal app - unfortunately it has also removed the libprofile_rt library from /Developer/usr/lib. I haven't been able to find a new version of this library in Xcode 4.3. When I tried using the version from 4.2, I got "mach-o but wrong architecture" errors.</p>
+    <title type="html"><![CDATA[Managing Sub-Modules with Git Subtree]]></title>
+    <link href="http://www.gerardcondon.com/blog/2012/11/05/managing-sub-modules-with-git-subtree/"/>
+    <updated>2012-11-05T23:30:00+00:00</updated>
+    <id>http://www.gerardcondon.com/blog/2012/11/05/managing-sub-modules-with-git-subtree</id>
+    <content type="html"><![CDATA[<p>I've been using Git for a while now, both at work and also for my iOS projects. I'm really liking it and have nearly sorted out my workflow with it. One problem that remains for me though is how to manage external dependencies. If I need to include a library from Github for example, how do I integrate it with my source.</p>
 
-<p>This means that when building my unit tests with Coverage I get link errors saying that I am missing llvm_gcda functions (llvm_gcda_start_file, llvm_gcda_increment_indirect_counter, llvm_gcda_emit_function, llvm_gcda_emit_arcs). I searched on Google to try and find a solution for 4.3 but it seemed all solutions were for 4.2 so I needed to try to solve this myself. The solution I came up with is fairly hacky. I'm hoping that as more people upgrade to 4.3, a better solution will be found and I can switch to that.</p>
-
-<p>My solution is to take the actual file which contained the gcda functions in libprofile_rt, add it to my own source code and compile it myself. The file in question can be found on llvm.org - <a href="https://llvm.org/svn/llvm-project/llvm/trunk/runtime/libprofile/GCDAProfiling.c">here</a>. To get it to build locally I deleted the win32 and sys includes (lines 27 to 31 inclusive) and replaced the llvm include (line 23) with <code>#include "stdint.h"</code>. This builds fine using the Coverage build configuration and outputs the same gcda and gcno files as before. To make sure that this code doesn't end up in the released project by accident, I've included it in the unit test bundle rather than the app bundle. This is fine for me as I only need coverage when running the tests anyway.</p>
-
-<p><strong>Update:</strong> Some feedback from Tom Black, who emailed me to point out that libprofile_rt can be found in <code>/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/</code>
-However this library did not work for either of us. Instead we got errors like
-<code>The bundle “GCUtilsTests.octest” couldn’t be loaded because it is damaged or missing necessary resources.</code>
-<code>Library not loaded: @executable_path ... libprofile_rt.dylib</code>
-<code>Reason: image not found</code><br/>
-Also this library didn't produce .gcda files but instead generated .dia files which didn't work in Coverflow.</p>
-
-<p>What worked for Tom, but not for me, was not to include libprofile at all. This removed these errors and another incompatible binary error. Now however he got the following error.
-<code>Detected an attempt to call a symbol in system libraries that is not present on the iPhone:
-fopen$UNIX2003 called from function llvm_gcda_start_file</code>
-He found the solution to this issue <a href="http://www.infinite-loop.dk/blog/2012/02/code-coverage-and-fopen-unix2003-problems/">here</a>. I still got link errors when I followed this though so I need to stick with my original solution.</p>
-
-<p><strong>Update:</strong> Another commenter Rajiv emailed me to say that creating a new target for his project made the coverage work for him. It generated the .gcda and .gcno files when he exited using exit(0). I've tried creating a new simple iOS app and I don't get any errors for this when I enable coverage.</p>
-
-<p>One thing which might explain why it still doesn't work for some of my projects is the type of project being built. My original project was a static library. I tried to create a new static library project and when I try to enable coverage I get the same link errors as above.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Apple's New Introduction to iOS Development]]></title>
-    <link href="http://www.gerardcondon.com/blog/2012/02/18/apple-new-introduction-to-ios-development/"/>
-    <updated>2012-02-18T09:44:00+00:00</updated>
-    <id>http://www.gerardcondon.com/blog/2012/02/18/apple-new-introduction-to-ios-development</id>
-    <content type="html"><![CDATA[<p>Apple has posted a <a href="https://developer.apple.com/library/ios/#referencelibrary/GettingStarted/RoadMapiOS/Introduction/Introduction.html">new guide</a> to iOS development which ties together all the various strands of creating an app. (via <a href="http://www.loopinsight.com/2012/02/17/apple-posts-guide-to-start-developing-ios-apps/">Loop Insight</a>). Looks really nice.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Adding Code Coverage to Unit Tests for Xcode 4.2]]></title>
-    <link href="http://www.gerardcondon.com/blog/2012/02/17/adding-code-coverage-to-unit-tests/"/>
-    <updated>2012-02-17T22:27:00+00:00</updated>
-    <id>http://www.gerardcondon.com/blog/2012/02/17/adding-code-coverage-to-unit-tests</id>
-    <content type="html"><![CDATA[<p>If you are going to the effort of having unit tests, then you really need to have code coverage. This will allow you to ensure that your tests are exercising all your code. It is really easy to spot a missing test when you see a branch of an if-else with no coverage. Code coverage for me is also a way to motivate myself to implement the tests. It's like high scores in games - it gives me a target to aim for. Coverage gives feedback that your tests are actually doing something, and with each test you add, you can see the areas of untested code steadily decrease.</p>
-
-<p>To set up code coverage in Xcode 4.2 I used the guide on these blogs - <a href="http://www.infinite-loop.dk/blog/2011/05/covering-it-all-up/">Infinite Loop</a> and <a href="http://mattrajca.com/post/8749868513/llvm-code-coverage-and-xcode-4">Matt Rajca</a>. Originally only the gcc compiler was supported but since then the Clang compiler has had code coverage enabled. This is important as we need to use Clang for ARC and static analysis among other things.</p>
-
-<h3>XCode Build Settings</h3>
-
-<p>Xcode has the concept of build configurations which can have built settings altered independently of each other. The two default configurations are Debug and Release. We want to add a new configuration named Coverage. To do this duplicate the Debug configuration.</p>
-
-<p><img src="/images/codeCoverage/NewBuildConfig.png" title="New Build Configuration" ></p>
-
-<p>In order to specify different settings for configurations in Xcode, hover over the left hand margin directly to the left of the setting we wish to update. An arrow will appear which when clicked will expand to an additional three lines for Debug, Coverage and Release. Editing the top line will alter the setting for all versions. Altering either of the new lines will only update the setting for that version of the build.</p>
-
-<p><img src="/images/codeCoverage/BuildSettings.png" title="Build Settings" ></p>
+<p>The main issues that I want to solve are</p>
 
 <ul>
-<li>Open the Build Settings tab for the main target. Under "Apple LLVM 3.0 compiler - Code Generation", enable both
+<li><p>What happens if the external library disappears? This is especially relevant for online sources like Github. Given the brittle nature of the web, I think we can take it as a given that a lot of these Github repositories will be deleted over the coming years. In this scenario I need to have a local copy of the code as a backup.</p></li>
+<li><p>I should be able to update the local code with the latest or a specific tag from the external repository.</p></li>
+<li><p>I want to be able to create common libraries for my own code which I can share between applications.</p></li>
+<li><p>It may be that I will need to modify the code, so how do I maintain those changes. Perhaps I will need to push those changes to the external repository. This seems likely for my own common libraries.</p></li>
+<li><p>I want to be able to check out all the code needed to build an application from the source control using a single checkout/clone command. This means that each application will have a full copy of all the code that is needed to build it.</p></li>
+</ul>
+
+
+<p>One solution that I've seen used in other projects is to use git submodule links. A git submodule points to a version of an external repository. The ones I've seen for iOS libraries will usually point to Github. When you run the <code>git submodule init</code> command, git will follow these links and download the source into your project.</p>
+
+<p>However in researching this, other people have reported problems using git submodules. They don't seem as simple and as usable as I would need. I'm seeing issues on <a href="http://codingkilledthecat.wordpress.com/2012/04/28/why-your-company-shouldnt-use-git-submodules/">sites</a> regarding detached heads, branching, different versions etc. I just know that I will hit all these issues and probably a few more besides!</p>
+
+<p>In looking for an alternative I came across git subtrees on Wolf Rentzsch's <a href="http://rentzsch.tumblr.com/post/22061209807/apps-i-love-git-subtree">site</a>. This seems to fit all my needs and appears less error prone than git submodules. The code can be downloaded <a href="https://github.com/rentzsch/git-subtree">here</a> and here's a good <a href="http://psionides.eu/2010/02/04/sharing-code-between-projects-with-git-subtree/">tutorial</a> on using subtrees.</p>
+
+<p>My basic usage of it, i.e. to integrate a library from Github would be something like
+<code>git subtree add --prefix=GCUtils/External/CocoaLumberjack --squash https://github.com/robbiehanson/CocoaLumberjack.git master</code>
+I use the squash option to compress all the commit history of the library to just one commit message in my repository.</p>
+
+<p>One issue I ran into was adding a project which itself contained submodules. In this situation I search and find all the .gitmodules files and add those manually as subtrees in my repository.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Setting up Calabash on iOS]]></title>
+    <link href="http://www.gerardcondon.com/blog/2012/10/22/setting-up-calabash-on-ios/"/>
+    <updated>2012-10-22T23:38:00+01:00</updated>
+    <id>http://www.gerardcondon.com/blog/2012/10/22/setting-up-calabash-on-ios</id>
+    <content type="html"><![CDATA[<p>I've been implementing some new features in iOS and in the process refactoring some existing code. As I've been making these changes, I began to feel that the code was reaching a tipping point where I was as likely to break existing features as successfully add the new functionality.
+In particular I was experimenting with table view controllers and there are a lot of functions to override depending on what behaviour you want. I was finding that changes for one type of behaviour were impacting functionality that I thought I had solved previously. I hadn't been doing much automated testing up to now apart from some unit testing, so I was worried about adding regression bugs.</p>
+
+<p>I decided to take a break from coding in order to implement some proper tests and specifically I wanted to do some UI testing. For this I chose the Calabash framework. This is developed by the people at <a href="http://lesspainful.com">Less Painful</a>. One of them, Karl Krukow, has a detailed <a href="http://blog.lesspainful.com/2012/03/07/Calabash-iOS/">post</a> comparing Calabash to the other automated frameworks out there.</p>
+
+<h1>Cucumber</h1>
+
+<p>Calabash is based on a Ruby test framework called <a href="http://cukes.info">Cucumber</a>. Cucumber allows for tests to be written in high level language called Gherkin. Gherkin is written in natural language and so can be understood by anyone - not just developers. It acts as documentation as well as a test framework. I could see this as being very useful when writing an application for a client. By giving them the Cucumber tests, they can see in plain English what is being implemented and should be able to give constructive feedback. Also the tests are automated and are run from the command line.</p>
+
+<p>While learning Cucumber the two main resources I used were</p>
 
 <ul>
-<li>"Generate Test Coverage Files"</li>
-<li> "Instrument Program Flow"</li>
+<li>The <a href="http://cukes.info">Cucumber</a> website which has a number of tutorials and a great wiki.</li>
+<li>The Pragmatic Programmers' Cucumber <a href="http://pragprog.com/book/hwcuc/the-cucumber-book">book</a>. This is an excellent book. I highly recommend reading this before implementing any tests.</li>
+</ul>
+
+
+<h1>Installation</h1>
+
+<p>Cucumber requires Ruby to be installed on your system (I had previously installed it while setting up Octopress). The Calabash install process is documented on their Github <a href="https://github.com/calabash/calabash-ios">page</a>. I used the Fast Track installer using these steps.</p>
+
+<ul>
+<li><code>gem install calabash-cucumber</code></li>
+<li><code>calabash-ios setup</code></li>
+<li><code>calabash-ios sim acc</code></li>
+<li><code>calabash-ios gen</code></li>
+</ul>
+
+
+<p>This created initial test files which you can run from the command line using <code>cucumber</code>.</p>
+
+<p>One thing that worries me about the install process is that it creates a new scheme specifically for Calabash use. I don't really like this solution as it breaks DRY and requires keeping the original scheme and the new Calabash scheme in sync. From my experience in programming, anything that is required to be kept manually in sync, won't be. I would have preferred for the Calabash libraries to only be included in the Debug target of the main scheme or for a new target to be created on that scheme. <strong>Update:</strong> Since I wrote this post Trevor Harmon has been in touch with an alternative approach to just link in the libraries for the Debug build - more info <a href="https://groups.google.com/forum/#!topic/calabash-ios/gfDLRvYqIyo/discussion">here</a>.</p>
+
+<p>A good blog on the Calabash install and initial test setup is <a href="http://www.moncefbelyamani.com/ios-automated-testing-with-calabash-cucumber-ruby/">here</a>.</p>
+
+<h1>First Steps with Calabash</h1>
+
+<ul>
+<li><p>I think the Calabash <a href="https://github.com/calabash/calabash-ios/wiki/01-Getting-started-guide">wiki</a> is the best starting point for Calabash.</p></li>
+<li><p>The first thing I tried was the console using <code>calabash-ios console</code>. I recommend this to play around and see what objects are visible to Calabash.</p></li>
+<li><p>The command <code>query("view")</code> shows everything on screen. We can isolate specific views by filtering on the accessibility label. In some cases this wasn't useful for me. For example, I have a table where each cell has a text field. Each of these has the same accessibility label so instead I filtered using the :text property.</p></li>
+<li><p>We can find out what accessibility labels are visible using <code>label "view"</code>. Once we have a label we can do things like touching or swiping on the view or checking that the view exists using <code>view_with_mark_exists()</code>.</p></li>
+<li><p>The accessibility inspector can be used to identify the classes of UI elements and the on-screen hierarchy. Launch this from XCode under the menu item XCode->Open Developer Tool->Accessibility Inspector.</p></li>
+<li><p>I found that the built-in Calabash <a href="https://github.com/calabash/calabash-ios/blob/master/calabash-cucumber/features/step_definitions/calabash_steps.rb">steps</a> were very useful to base mine on.</p></li>
+<li><p>A problem I had was querying for the currently active textfield from a table of textfields. The issue was that all those textfields had the same placeholder text. To get the correct one I filtered by <code>isUserInteractionEnabled</code>.</p></li>
+<li><p>Errors in the name of the selector passed to the <code>backdoor</code> command show up as connection errors.</p></li>
+<li><p>Initially I struggled with writing the tests at the correct level. The temptation is to be really specific in terms of UI elements e.g. When I touch X button and swipe on Y label. However you really need to describe them at a higher level e.g. when I add a new contact, when I delete an appointment etc.</p></li>
+<li><p>Initially I was unable to run a backdoor command in the before hook, which runs before each test. I had wanted to reset my Core Data database &amp; UI at this time. The reason here is that the Calabash framework itself uses before hooks to connect to the app and I think my hook was being called before theirs. To solve this Calabash added support for defining an <code>on_launch</code> function which is called after the simulator has started. To implement use the following template in the <code>hooks.rb</code> file.</p>
+
+<pre><code>  class CallbackWorld
+   include Calabash::Cucumber::Operations
+   def on_launch
+     # here I can call backdoor and reset the app state
+   end
+  end
+
+  World do
+   CallbackWorld.new
+  end
+</code></pre></li>
+<li><p>My typical test layout is to use</p>
+
+<ul>
+<li><strong>Given</strong> to put the system in a specific state - this is where I use the backdoor function to set up the app model. I do things like erase all the Core Data objects here (from <a href="http://stackoverflow.com/questions/1077810/delete-reset-all-entries-in-core-data">Stack Overflow</a>) to ensure that each test starts with a clean slate.</li>
+<li><strong>When</strong> to perform an action. These are driven through the app UI.</li>
+<li><strong>Then</strong> to check the results of the actions. I've typically done these using the app UI e.g. checking for the existence of views, the state of the UI etc. As an alternative I could also use the backdoor function to check the model here.</li>
 </ul>
 </li>
-<li> We now need to add the libprofile_rt library to the build. This will link in the implementations of the coverage functions. If you are seeing link errors like "_llvm_gcda_increment_indirect_counter", referenced from:", then you have not done this step.<br/>
-This library is located in /Developer/usr/lib. This folder contains libprofile.a which is a static library and a libprofile.dylib which is a dynamic linked library (similar to a .dll in Windows). To link this open the Build Phases tab for the main target. Expand the "Link Binary with Libraries" and click the + button. Click "Add Other" and then find libprofile_rt.dylib in the file viewer and add it. (Note that this doesn't work for me since Xcode 4.3. I've documented the updates I needed to make <a href="http://www.gerardcondon.com/blog/2012/02/21/code-coverage-updates-for-xcode-4-dot-3/">here</a>).</li>
 </ul>
 
 
-<h3>Executing Tests</h3>
+<h1>Issues with Calabash.</h1>
 
-<p>Now your unit tests should run and if you examine the build output files under the DerivedData folder you should find .gcda and .gcno coverage files along with your .o files. To find this folder you can go to the Projects tab in the Organizer and select your project. The path to the Derived Data folder is listed here along with an arrow which will open the folder in the Finder.</p>
+<p>It wasn't all smooth sailing as I did run into a few issues along the way.</p>
 
-<p><img src="/images/codeCoverage/DerivedData.png" title="Derived Data" ></p>
+<ul>
+<li><p>I wasn't able to get it to integrate with my installation of Jenkins, which is unfortunate as Cucumber can output in JUnit format so it's a perfect fit for Jenkins. The problem here is on my side as lots of users on the Calabash Google Group are running Calabash from their CI system. I think it due to the jenkins user not being able to launch the iOS simulator. I need to investigate further on this.</p></li>
+<li><p>I had found that Calabash would frequently drop the connection to the app and fail the tests as a result. Once a test run started seeing these errors for a test (<code>Unable to make connection to Calabash Server at http://localhost:37265/</code>) then each following test in the run would show the same error. Rerunning the tests would normally sort it out in the next run or two. Both the app and Calabash would be running fine but just couldn't seem to connect to each other. This unreliability was the most disappointing part of the tests for me.</p>
 
-<p>From here the path to the coverage files is Build/Intermediates/${Project Target}.build/Coverage-iphonesimulator/${Project Target}.build/Objects-normal/i386. Replace ${Project Target} with the name of your project target.</p>
+<p>  <strong>Update:</strong> Karl pointed me to the Google Group and I saw some <a href="https://groups.google.com/forum/?fromgroups=#!topic/calabash-ios/NdExaULsHz4">updates</a> that were needed to work with the new iOS 6 Simulator. I had seen that black screen issue as part of trying to get it working with Jenkins. So I've updated to the latest version of Calabash and on the first test run, everything worked fine. Hopefully this will resolve the issue in future.</p></li>
+</ul>
 
-<h3>Viewing Coverage Data</h3>
 
-<p>To view the coverage data I used <a href="http://code.google.com/p/coverstory/">CoverStory</a>. Simply open the app and point it at the coverage folder. This will give a nice two pane display showing your files on the left and an editor which shows how often each line of code was hit. Now you can identify untested code and add new tests to cover them.</p>
+<h1>Initial Impressions &amp; Next Steps</h1>
+
+<p>I have to say that I'm very impressed with Calabash and indeed Cucumber in general. I think that writing these type of tests beforehand would be helpful for requirements gathering and feature design. The tests themselves are not only useful as tests but also as documentation. Unlike Word docs, we can be guaranteed that these accurately describe the current state of the system, given that they are actually run against it.</p>
+
+<p>My plans for the future</p>
+
+<ul>
+<li>I need to add more tests. I initially tested this with just a single feature and that's worked out so well that I'll add this to the other features.</li>
+<li>From now on, I also plan to write these type of tests for a feature before implementing it. I think that the Cucumber tests especially with the language they are written in are very effective when thinking through the behaviour of the app. They force you to describe it in high level terms rather than just diving into coding.</li>
+<li>My tests currently have a lot of duplication. Once I have written a lot more of them and I gain more Ruby experience, I will look to refactor them.</li>
+</ul>
+
+
+<p><strong>Update:</strong> After my initial post Karl Krukow emailed me with some updates on the issues I was having and I've integrated those into the blog post. He pointed out that there is a <a href="https://groups.google.com/forum/?fromgroups#!forum/calabash-ios">Google Group</a> for Calabash on iOS where you can ask questions and share information.</p>
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Test Automation]]></title>
-    <link href="http://www.gerardcondon.com/blog/2012/02/13/test-automation/"/>
-    <updated>2012-02-13T18:00:00+00:00</updated>
-    <id>http://www.gerardcondon.com/blog/2012/02/13/test-automation</id>
-    <content type="html"><![CDATA[<p>  Wherever possible I think that automating your testing is essential. For this project there is no way that I can manually rerun the same tests over and over again - the time commitment is just too much. I need to be able to click a button and have a framework run all my tests automatically and report back to me the number of tests passing, failing etc. I know that this won't catch all the bugs in the code and that I'll still need to do some manual testing for each release. However, the more I can push into this automated testing, the more time I'll save on the manual testing later.</p>
+    <title type="html"><![CDATA[Further Jenkins Setup for iOS]]></title>
+    <link href="http://www.gerardcondon.com/blog/2012/09/20/further-jenkins-setup-code-signing/"/>
+    <updated>2012-09-20T01:15:00+01:00</updated>
+    <id>http://www.gerardcondon.com/blog/2012/09/20/further-jenkins-setup-code-signing</id>
+    <content type="html"><![CDATA[<p>Last <a href="http://www.gerardcondon.com/blog/2012/09/16/setting-up-jenkins-on-os-x/">time</a> I went through how I set up jenkins on iOS and built a simple static library. All in all, that process went ok. The next step was to build an actual app. Unfortunately I encountered a lot more issues with this.</p>
 
-<p>Based on my previous <a href="blog/2012/02/10/devising-my-unit-testing-philosophy/">post</a> I've mentally divided up the code into different layers which build on top of each other. The app GUI is one layer. Then we have the model classes which in turn depend on utility classes etc. These different levels of code require different levels of testing.</p>
+<p>The first error I got was</p>
 
-<p>  For the utility and model layers I plan to use an automated unit testing framework such as <a href="http://www.junit.org/">JUnit</a>. Xcode provides <a href="https://developer.apple.com/library/ios/#documentation/DeveloperTools/Conceptual/UnitTesting/03-Writing_Test_Case_Methods/writing_tests.html#//apple_ref/doc/uid/TP40002143-CH4-SW1">OCUnit</a> which is a JUnit like framework for implementing unit tests. This framework provides the usual fail and assert macros and functions. There are some annoying things about running unit tests in Xcode. One is that it doesn't have a separate test runner panel like JUnit has in <a href="http://www.eclipse.org/">Eclipse</a>. Instead it treats the unit test errors as build failures. All the print output for the tests is dumped into the same console output which can make it tricky to identify which output is for which test. Also there is no way to selectively run these tests. You have to rerun them all together every time. There are other frameworks out there e.g. <a href="https://github.com/gabriel/gh-unit">GHUnit</a> but for the moment I'll stick with the default.</p>
+<pre><code>Code Sign error: The identity 'iPhone Developer' doesn't match any valid certificate/private key pair in the default keychain` 
+</code></pre>
 
-<p>For the higher level GUI code, unit testing is not useful so I'll need a different testing approach and toolset. There seem to be number of <a href="http://sgleadow.github.com/blog/2011/10/26/which-automated-ios-testing-tool-to-use/">options</a> out there. I'm not sure what is available and what is the best to use. Apple have an <a href="https://developer.apple.com/library/mac/documentation/developertools/conceptual/InstrumentsUserGuide/Built-InInstruments/Built-InInstruments.html#//apple_ref/doc/uid/TP40004652-CH6-SW75">Instruments</a> application which allows you do perform UI testing using Javascript. I've also seen these <a href="http://www.testingwithfrank.com/">Frank</a> and <a href="http://www.zucchiniframework.org/">Zucchini</a> frameworks. I haven't evaluated any of these yet as I don't have a fully functional app to test it on. Once I get a nearly complete app I can see how much my unit testing provides, compare that to what I have left to test, and then make a judgement on where to go from there.</p>
+<p>This <a href="http://stackoverflow.com/questions/9245149/jenkins-on-os-x-xcodebuild-gives-code-sign-error/9246321#9246321">post</a> on Stack Overflow has a really detailed set of instructions on how best to fix this. Unfortunately as my iPhone developer account is not a business one, I can't add a jenkins user to it. So to solve my problem I added my certificate to the system keychain so that now my local jenkins user can access it.</p>
+
+<p>Once that was out of the way, the next issue to rear its head was a provisioning profile error.</p>
+
+<pre><code>Code Sign error: A valid provisioning profile matching the application's Identifier '...' could not be found
+</code></pre>
+
+<p>I found the solution to this again on <a href="http://stackoverflow.com/questions/10454628/xcodebuild-code-sign-error-provisioning-profile-x-cant-be-found">Stack Overflow</a>.
+I needed to copy my provisioning profile from <code>~/Library/MobileDevice/Provisioning</code> to the jenkins user's folder at <code>/Users/Shared/Jenkins/Home/Library/MobileDevice/Provisioning Profiles</code>.</p>
+
+<p>The next reason for the build failing was that I was invoking xcodebuild using a target instead of a scheme. The target worked fine for the static library but was failing for the app as it was unable to find all the include files. Once I switched to building a scheme, the build worked fine. Building via a scheme or target is easy to configure using the Jenkins XCode plugin. You set the XCode Schema File entry to the name of the XCode build scheme.</p>
+
+<p>Nearly there! Now that the build was working I turned my attention to getting the unit tests running. The <code>TEST_AFTER_BUILD</code> flag that had worked before wasn't working this time. Fortunately I found the solution on Peter Jihoon Kim's <a href="http://www.raingrove.com/2012/03/28/running-ocunit-and-specta-tests-from-command-line.html">blog</a>. I needed to create a new scheme to run my tests. Once that was done I got this error</p>
+
+<pre><code>/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Tools/Tools/RunPlatformUnitTests:95: warning: Skipping tests; the iPhoneSimulator platform does not currently support application-hosted tests (TEST_HOST set).
+</code></pre>
+
+<p>Peter's blog describes the fix for this. You need to patch the <code>RunPlatformUnitTests</code> file in order to remove the warning printout and invoke the tests.</p>
+
+<p>The last error I had to deal with was with the code coverage. I started seeing errors with <code>fopen$UNIX2003</code> and <code>fwrite$UNIX2003</code>. I had seen this issue on other blogs before but hadn't encountered it myself until I tried building an app using the command line. The solution as described <a href="http://stackoverflow.com/questions/8732393/code-coverage-with-xcode-4-2-missing-files">here</a> is to add implementations of these into your application which simply call the standard C functions.</p>
+
+<pre><code>#include &lt;stdio.h&gt;
+
+FILE *fopen$UNIX2003( const char *filename, const char *mode )
+{
+    return fopen(filename, mode);
+}
+
+size_t fwrite$UNIX2003( const void *a, size_t b, size_t c, FILE *d )
+{
+    return fwrite(a, b, c, d);
+}
+</code></pre>
+
+<p>One unresolved issue was that I couldn't get clang scan plugin working for this setup. I think the issue here is that it was using targets instead of schemes. I left this one go as I didn't feel it important enough to get working. XCode runs this while I'm developing anyway. I may come back to it in future once everything else is stable.</p>
+
+<h3>XCode 4.5 Updates</h3>
+
+<p>So, just when I got everything working for XCode 4.4, along comes XCode 4.5. Ever since the 4.2 to 4.3 transition broke code coverage for me, I've been a bit wary of XCode updates. Sure enough after installing 4.5 and trying to build my app, I got an error message saying that the calabash framework was missing a armv7s slice</p>
+
+<pre><code>ld: file is universal (2 slices) but does not contain a(n) armv7s slice: 
+...calabash.framework/calabash for architecture armv7s
+</code></pre>
+
+<p><a href="http://calaba.sh">Calabash</a> is part of an iOS testing framework based on <a href="http://cukes.info">Cucumber</a>. I've just started to implement this form of testing and it looks really nice. Getting back to the build issue, Ash Furrow has a detailed <a href="http://ashfurrow.com/fix-ios-6-sdk-linker-error">post</a> on this issue. We need to remove armv7s (which refers to the new A6 chip in the iPhone 5) from our valid architectures. Once Calabash gets updated to support this architecture, I can reenable it.</p>
+
+<p>Once everything built in XCode, it was time to try the jenkins build. Naturally this broke also. The problem was that the XCode plugin couldn't find the 5.1 simulator.</p>
+
+<pre><code>xcodebuild: error: SDK "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator5.1.sdk" cannot be located.
+</code></pre>
+
+<p>XCode 4.5 had wiped out the simulators for 5.1 so I needed to redownload them. I was able to download these from Preferences->Downloads->Components. XCode also prompted me to download the 6.0 simulator so I got that out of the way while installing 5.1.</p>
+
+<p>Once the simulators were installed I started hitting the same <code>RunPlatformUnitTests</code> error as above. When I opened the script file to reinsert Peter's edits I saw that it had changed slightly. Now the error printout was happening in a function on line 80 which overrode <code>RunTestsForApplication()</code>. I deleted that function and I added back in the original patch at line 118 so that now it looks like</p>
+
+<pre><code>if [ "${TEST_HOST}" != "" ]; then
+    # All applications are tested the same way, by injecting a bundle.
+    # The bundle needs to configure and run the tests itself somehow.
+    export CFFIXED_USER_HOME="${BUILT_PRODUCTS_DIR}/UserHome/"
+    mkdir -p "${CFFIXED_USER_HOME}"
+    mkdir -p "${CFFIXED_USER_HOME}/Library/Caches"
+    mkdir "${CFFIXED_USER_HOME}/Library/Preferences"
+    mkdir "${CFFIXED_USER_HOME}/Documents"
+    export OTHER_TEST_FLAGS="${OTHER_TEST_FLAGS} -RegisterForSystemEvents"
+
+    RunTestsForApplication "${TEST_HOST}" "${TEST_BUNDLE_PATH}"
+else
+    # If no TEST_HOST is specified, assume we're running the test bundle.
+
+    RunTestsForBundle "${TEST_BUNDLE_PATH}"
+fi
+</code></pre>
+
+<p>These changes fixed the 4.5 build issues and now I have a working build and test setup again. Finally!!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Setting up Jenkins on OS X]]></title>
+    <link href="http://www.gerardcondon.com/blog/2012/09/16/setting-up-jenkins-on-os-x/"/>
+    <updated>2012-09-16T13:24:00+01:00</updated>
+    <id>http://www.gerardcondon.com/blog/2012/09/16/setting-up-jenkins-on-os-x</id>
+    <content type="html"><![CDATA[<p>First post in a long time. I didn't really do much iOS development over the summer and am only starting to get back into it in the past few weeks. I have some draft posts on my dealings with both Core Data and UITableViews and once those features are complete I'll post them.</p>
+
+<p>Along with coding, I've been looking at adding some build infrastructure for my projects. Having seen <a href="http://jenkins-ci.org/">Jenkins</a> used at work, I wanted to get a CI system set up for my builds here at home. I want to use it to kick off a build, run the tests and package up the iPhone app. By using something like Jenkins I can automate my build and testing process and also have a record of previous builds.</p>
+
+<h2>Jenkins Install</h2>
+
+<p>The first step was to install Jenkins. They provide a Mac installer - the only annoyance is that it triggers the new OS X Gatekeeper dialog blocking unsigned apps from installing. Then I loaded locahost:8080 in my browser to find that Jenkins wasn't loading and there was no error message telling me what went wrong. D'oh. The issue is that Jenkins requires Java to run but it isn't installed by default on OS X. To install simply type <code>java</code> into a terminal and a message box will appear prompting you to install Java.</p>
+
+<p>Then I followed the user setup from Moritz Haarmann's <a href="http://momo.brauchtman.net/2011/11/12/howto-install-jenkins-on-os-x-and-make-it-build-mac-stuff/">blog</a>. I'm not sure if the jenkins account part is still necessary, as when I got to the stage about changing the user name in the plist file, it had already been set to Jenkins. The changing permissions on the Jenkins home folder was needed though. After that I was able to run ssh-keygen and generate some keys.</p>
+
+<h2>Updating Git Workflow</h2>
+
+<p>I installed the Git and XCode plugins from the Manage Jenkins screen with no issues. I then created a simple project to test it out. I just added a git clone step. This failed for me with the following errors</p>
+
+<pre><code>Failed to connect to repository : Command "git ls-remote -h ..../MyApp.git HEAD" returned status code 128:
+stdout: 
+stderr: fatal: '..../MyApp.git' does not appear to be a git repository
+fatal: The remote end hung up unexpectedly
+</code></pre>
+
+<p>The problem here is that the repository is on my Dropbox account (as described <a href="http://www.gerardcondon.com/blog/2012/01/26/version-control-in-xcode-using-git-and-dropbox/">here</a>). This folder is not visible to the jenkins user. I didn't want to mess around with changing permissions on the Dropbox folder so I looked for an alternative solution. A colleague at work told me about <a href="https://bitbucket.org/">Bitbucket</a> from Atlassian. This is similar to <a href="http://www.github.com">Github</a> but allows for private repositories. As luck would have it, I had already been using another Atlassian product <a href="http://www.sourcetreeapp.com/">SourceTree</a> to manage my git repositories. This tool works seamlessly with Bitbucket. Once I uploaded my ssh key to Bitbucket I could simply add another remote repository to my local repository and push to it, all from within SourceTree.</p>
+
+<p>Now that I had a repository on Bitbucket, it was time to integrate that with Jenkins. This turned out to be fairly easy. I uploaded the ssh key for the jenkins account to Bitbucket. The admin page for the repository showed its ssh address so I added a Git build step to the project using that ssh address. When the project is built now, Jenkins will download the latest code from the repository first and then continue on.</p>
+
+<h2>Jenkins Issues</h2>
+
+<p>While Jenkins is mostly working fine now, there were a few issues I've run into. The git checkout isn't working at all using the Git Plugin. Originally it did but then I started getting the following errors</p>
+
+<pre><code>FATAL: Could not checkout null with start point 02dbc3e456d6aa6079543eeaa8361bdebe8fac9d
+hudson.plugins.git.GitException: Could not checkout null with start point 02dbc3e456d6aa6079543eeaa8361bdebe8fac9d
+    at hudson.plugins.git.GitAPI.checkoutBranch(GitAPI.java:956)
+    ...
+
+Caused by: hudson.plugins.git.GitException: Command "git checkout -f 02dbc3e456d6aa6079543eeaa8361bdebe8fac9d" returned status code 128:
+stdout: 
+stderr: fatal: reference is not a tree: 02dbc3e456d6aa6079543eeaa8361bdebe8fac9d
+</code></pre>
+
+<p>I wasn't able to find a solution to this so I had to stop using the Git plugin and just add an <code>execute shell</code> build step to clone the Bitbucket git repository. As I add more projects to Jenkins, I'll check if I get the same issues there also.</p>
+
+<h2>Build XCode Project</h2>
+
+<p>The <a href="http://www.XXX.com">XCode plugin</a> for Jenkins made it really easy to build once setup. You add an XCode build step and configure it as necessary. I chose to do a clean build each time. The project I tested this on was a static library so I didn't need an IPA built or any of the version number updates but they should be useful when building a proper app.</p>
+
+<p>When I first tried to build I got an error saying <code>You have not agreed to the Xcode license agreements</code>. I needed to run <code>sudo xcodebuild -license</code> in the terminal to fix this.</p>
+
+<p>In order to run the unit tests, the XCode plugin recommends using two build steps, one to build the app and the other to execute the tests. The reason for this is that the test step requires extra parameters i.e. path to the simulator SDK. If you're using the OCTest framework which comes with XCode then the plugin will listen to the test output and generate JUnit compatible xml files. Jenkins can read these and add the to the build results page.</p>
+
+<h2>Set up Coverage</h2>
+
+<p>Setting up code coverage for iOS projects is not an easy task. My gcov setup for XCode 4.3 still worked for me but the problem was to integrate this with Jenkins. Coverstory would not be of use here but I found this <a href="https://software.sandia.gov/trac/fast/wiki/gcovr">gcovr</a> script from the <a href="http://blog.octo.com/en/jenkins-quality-dashboard-ios-development/">Octo Talks</a> blog. Gcovr will convert the gcov output into a <a href="http://cobertura.sourceforge.net/">cobertura</a> xml file which can be read by Jenkins.</p>
+
+<p>One problem I had was that for some reason, gcov wouldn't work on the files in the Jenkins workspace. I was getting <code>gcno:cannot open graph file</code>errors. Coverstory also didn't work on the files in this location. What worked for me was to copy the gcda and gcno files out to a temp folder under /Users/Shared/Jenkins/Home. Passing the original build location as the root parameter to gcovr allowed the cobertura plugin to find the source code in the html report, while also removing system headers from the coverage report. Here is the script.</p>
+
+<pre><code>cp -r ${WORKSPACE}/build/${JOB_NAME}.build/Coverage-iphonesimulator/${JOB_NAME}.build/Objects-normal/i386/*.gc* /Users/shared/Jenkins/tmp/${JOB_NAME}
+cd /Users/shared/Jenkins/tmp/${JOB_NAME}
+gcovr -r $WORKSPACE/$JOB_NAME -x &gt; ${WORKSPACE}/coverage.xml
+</code></pre>
+
+<p>The <a href="http://blog.octo.com/en/jenkins-quality-dashboard-ios-development/">Octo Talks</a> blog also suggested a number of other metrics which could be captured in Jenkins. I added the SLOC Count and the Clang Build Scan. Both of these required installing tools and then Jenkins plugins which used those tools. This instructions on the blog covered this. Ones that I've put on the someday/maybe list are the PMD plugin and OCLint.</p>
+
+<p>At the end of all this, Jenkins is working quite well for my simple test project. Next step is to try it out on my app.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Localizing iOS Apps]]></title>
+    <link href="http://www.gerardcondon.com/blog/2012/05/19/localizing-ios-apps/"/>
+    <updated>2012-05-19T16:54:00+01:00</updated>
+    <id>http://www.gerardcondon.com/blog/2012/05/19/localizing-ios-apps</id>
+    <content type="html"><![CDATA[<p>I was looking at a tutorial for creating a settings bundle for my app and it had separate files for different languages. I realised that I hadn't a clue how to localize iOS applications. I decided I'd better look into it now, rather than at the end of development, in case it required me to change existing code. Much better to implement with localization in mind, than retrofit at the end of development.</p>
+
+<p>I'm interested to see how many translations I'll be able to include in the app. I'm not sure how easy it will be to do the translation or even how much text there will be to translate. I'm planning a Chinese translation and for sentimental reasons I'll do an Irish translation. I'll probably try to get some European languages done also. I think that once I put in the infrastructure to do one language then adding additional ones shouldn't be too much bother.</p>
+
+<p>The basics of implementing localization is that you externalize all strings in your application to .strings files and then provide versions of these files for each language you support. The process for creating the basic localization.strings file is outlined <a href="http://userflex.wordpress.com/2011/10/20/localized-strings-xcode4/">here</a>. In your code you can get the localized values for these strings using <code>NSLocalizedString(@"Externalized String Name", @"")</code>.</p>
+
+<h2>Localization Tools</h2>
+
+<p>Using this method, we will have to deal with lots of .strings files. Xcode doesn't provide much help here so I looked around for third party apps. I bought <a href="http://www.cocoanetics.com/apps/linguan/">Linguan</a> on the Mac App Store and it looks very good. You point it at an Xcode project file and it locates all the .strings files and presents them in a nice table. It can generate text files which you can send on to your translators for them to translate and re-import their translations. I'm very pleased with it so far.</p>
+
+<p>Apart from having .strings files for strings in the code, I also need to localize the app's storyboards. Albert Mata has a fantastic tutorial on how to do this <a href="http://www.albertmata.net/articles/introduction-to-internationalization-using-storyboards-on-ios-5.html">here</a>. A big problem with localizing storyboards is that changes in one language's storyboards are not propagated to the others. Manually keeping these in sync would be a nightmare. Thankfully there is a handy script <a href="http://code.google.com/p/edim-mobile/source/browse/trunk/ios/IncrementalLocalization/localize.py">here</a> by Ederson Machado, which will update the .strings files for the storyboard and also keep the storyboards in sync. There is a nice video outlining the features of the script <a href="http://www.youtube.com/watch?v=cF1Rf02QvZQ">here</a>. By adding this script as a build run script, we can ensure that our storyboards are always in sync.</p>
+
+<h2>Localization Workflow</h2>
+
+<p>My localization workflow is as follows:</p>
+
+<ul>
+<li>First I created multiple storyboards for each language using the Localization area on the sidebar. This will create a language.proj folder for each language.</li>
+<li>I ran the localize.py script on the project. This generated the mainstoryboard.strings files in each of the language folders.</li>
+<li>I manually add these files to Xcode. First I added the English version. Then I clicked the plus button in the Localization sidebar and added the other languages. Xcode is able to find those .strings files and link them to the overall file.</li>
+<li>I create a localization.strings file to deal with the strings in the code and added all languages.</li>
+<li>I ran genstrings but I don't think this is needed if you're using Linguan.</li>
+<li>When I opened the project in Linguan it was able to find all the strings files, including those from the storyboard.</li>
+</ul>
+
+
+<p>I'm satisfied now that I have the localization mostly under control. One thing I still need to look at is how does this affect testing. Hopefully any test framework that I used will be able to run the tests in all languages.</p>
 ]]></content>
   </entry>
   

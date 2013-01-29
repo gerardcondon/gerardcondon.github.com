@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: iOS | Gerard Condon's Blog]]></title>
+  <link href="http://www.gerardcondon.com/blog/categories/ios/atom.xml" rel="self"/>
+  <link href="http://www.gerardcondon.com/"/>
+  <updated>2013-01-29T19:17:41+00:00</updated>
+  <id>http://www.gerardcondon.com/</id>
+  <author>
+    <name><![CDATA[Gerard Condon]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Stanford iOS Course Companion Book]]></title>
+    <link href="http://www.gerardcondon.com/blog/2013/01/28/stanford-ios-course-companion-book/"/>
+    <updated>2013-01-28T23:27:00+00:00</updated>
+    <id>http://www.gerardcondon.com/blog/2013/01/28/stanford-ios-course-companion-book</id>
+    <content type="html"><![CDATA[<p>I previously <a href="http://www.gerardcondon.com/blog/2012/01/29/itunes-u-and-online-learning/">recommended</a> the Stanford iOS course and they now have a companion <a href="http://editorscut.com/Books/003ipadiphone/003ipadiphone-details.html">book</a> available for the iPad through iBooks.</p>
+
+<p>The content of this book is excellent and it really complements the course videos. I really like the code samples and how they are displayed dynamically on the iPad. They have really used the iBooks format well for these. Additionally all the code is available on <a href="https://github.com/editorscut/ec003-ipad-and-iphone-app-development">Github</a>.</p>
+
+<p>I highly recommend the book and I wish it was available when I originally watched the videos. Given the quality of the lectures and the book, Stanford could easily charge for this stuff - it was certainly equal to any introductory programming course I've attended at college. It seems inconceivable to me that this approach won't form the basis of education in the years to come.</p>
+
+<p>It maybe a bit churlish to criticise a free book but still I do have some issues. These concern the format the book was released in and not its content.</p>
+
+<ul>
+<li><p>Firstly it was only released for iPad and not for iPhone. I would have liked to have had a reference version for iPhone.</p></li>
+<li><p>Also I don't like the iBooks lock in. I really want to have this on my Macbook and/or Kindle to have open when programming. Here's where an epub or pdf version would be a lot better. The <a href="http://pragprog.com">Pragmatic Programmers</a> company have shown the way forward with their ebook releases, giving multiple DRM free versions of their books.</p></li>
+</ul>
+
+
+<p>Apart from those minor nits though, this is an essential resource for learning iOS.</p>
+]]></content>
+  </entry>
+  
+</feed>

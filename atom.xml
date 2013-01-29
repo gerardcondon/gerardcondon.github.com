@@ -4,7 +4,7 @@
   <title><![CDATA[Gerard Condon's Blog]]></title>
   <link href="http://www.gerardcondon.com/atom.xml" rel="self"/>
   <link href="http://www.gerardcondon.com/"/>
-  <updated>2012-11-05T23:51:56+00:00</updated>
+  <updated>2013-01-29T19:17:41+00:00</updated>
   <id>http://www.gerardcondon.com/</id>
   <author>
     <name><![CDATA[Gerard Condon]]></name>
@@ -12,6 +12,29 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Stanford iOS Course Companion Book]]></title>
+    <link href="http://www.gerardcondon.com/blog/2013/01/28/stanford-ios-course-companion-book/"/>
+    <updated>2013-01-28T23:27:00+00:00</updated>
+    <id>http://www.gerardcondon.com/blog/2013/01/28/stanford-ios-course-companion-book</id>
+    <content type="html"><![CDATA[<p>I previously <a href="http://www.gerardcondon.com/blog/2012/01/29/itunes-u-and-online-learning/">recommended</a> the Stanford iOS course and they now have a companion <a href="http://editorscut.com/Books/003ipadiphone/003ipadiphone-details.html">book</a> available for the iPad through iBooks.</p>
+
+<p>The content of this book is excellent and it really complements the course videos. I really like the code samples and how they are displayed dynamically on the iPad. They have really used the iBooks format well for these. Additionally all the code is available on <a href="https://github.com/editorscut/ec003-ipad-and-iphone-app-development">Github</a>.</p>
+
+<p>I highly recommend the book and I wish it was available when I originally watched the videos. Given the quality of the lectures and the book, Stanford could easily charge for this stuff - it was certainly equal to any introductory programming course I&#8217;ve attended at college. It seems inconceivable to me that this approach won&#8217;t form the basis of education in the years to come.</p>
+
+<p>It maybe a bit churlish to criticise a free book but still I do have some issues. These concern the format the book was released in and not its content.</p>
+
+<ul>
+<li><p>Firstly it was only released for iPad and not for iPhone. I would have liked to have had a reference version for iPhone.</p></li>
+<li><p>Also I don&#8217;t like the iBooks lock in. I really want to have this on my Macbook and/or Kindle to have open when programming. Here&#8217;s where an epub or pdf version would be a lot better. The <a href="http://pragprog.com">Pragmatic Programmers</a> company have shown the way forward with their ebook releases, giving multiple DRM free versions of their books.</p></li>
+</ul>
+
+
+<p>Apart from those minor nits though, this is an essential resource for learning iOS.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Managing Sub-Modules with Git Subtree]]></title>
@@ -81,7 +104,7 @@ In particular I was experimenting with table view controllers and there are a lo
 
 <p>This created initial test files which you can run from the command line using <code>cucumber</code>.</p>
 
-<p>One thing that worries me about the install process is that it creates a new scheme specifically for Calabash use. I don&#8217;t really like this solution as it breaks DRY and requires keeping the original scheme and the new Calabash scheme in sync. From my experience in programming, anything that is required to be kept manually in sync, won&#8217;t be. I would have preferred for the Calabash libraries to only be included in the Debug target of the main scheme or for a new target to be created on that scheme.</p>
+<p>One thing that worries me about the install process is that it creates a new scheme specifically for Calabash use. I don&#8217;t really like this solution as it breaks DRY and requires keeping the original scheme and the new Calabash scheme in sync. From my experience in programming, anything that is required to be kept manually in sync, won&#8217;t be. I would have preferred for the Calabash libraries to only be included in the Debug target of the main scheme or for a new target to be created on that scheme. <strong>Update:</strong> Since I wrote this post Trevor Harmon has been in touch with an alternative approach to just link in the libraries for the Debug build - more info <a href="https://groups.google.com/forum/#!topic/calabash-ios/gfDLRvYqIyo/discussion">here</a>.</p>
 
 <p>A good blog on the Calabash install and initial test setup is <a href="http://www.moncefbelyamani.com/ios-automated-testing-with-calabash-cucumber-ruby/">here</a>.</p>
 
@@ -739,17 +762,6 @@ Otherwise when we refactor code, we end up breaking lots of seemingly unrelated 
 <p>It&#8217;s still early days but as more and more institutions put their courses up on iTunes U, I hope we start to see them not just put up their existing courses, but instead think about how they create and tailor courses for a wider audience. Although I&#8217;m not sure how likely that will be as currently the app doesn&#8217;t allow for paid courses. Still the free content is more than enough for the time being and I&#8217;ll look forward to see where iTunes U can go in the future.</p>
 
 <p><strong>Update:</strong> Just to clarify. The iTunes U app is separate from the desktop iTunes application. You can just download the iTunes U app on your device and never have to go near iTunes.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Accessorizer for XCode]]></title>
-    <link href="http://www.gerardcondon.com/blog/2012/01/27/accessorizer-for-xcode/"/>
-    <updated>2012-01-27T18:00:00+00:00</updated>
-    <id>http://www.gerardcondon.com/blog/2012/01/27/accessorizer-for-xcode</id>
-    <content type="html"><![CDATA[<p>One thing about Objective C that struck me is the amount of boiler plate code that needs to be written for variables and methods. Ideally Xcode would handle all this but unfortunately it doesn&#8217;t.</p>
-
-<p>An app I found to solve this problem is <a href="http://www.kevincallahan.org/software/accessorizer.html">Accessorizer</a>. It can generate interface and implementation for properties plus a whole range of other code (all that KVO and coding stuff that I haven&#8217;t looked into yet). It&#8217;s only 4 euro on the Mac App Store and it&#8217;s well worth it. There are some videos tutorials on the site which show you how much can be done with the program.</p>
 ]]></content>
   </entry>
   
