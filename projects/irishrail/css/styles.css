@@ -1,4 +1,5 @@
 @import url('bootstrap.css'); 
+@import url('bootstrap-responsive.css'); 
 
 .center { float: none; margin-left: auto; margin-right: auto; 
  width: 960px; }
