@@ -13,6 +13,8 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<link rel="stylesheet" href="css/styles.css">
 
+  <!-- Templates -->
+
   <script type="text/javascript">
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-29293592-1']);
@@ -24,11 +26,40 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  
+  <script type="text/template" id="station-data-departing-template">
+    <div class="stationDataView">
+      <label><strong>Departing in </strong> <%- dueIn %> minutes <strong>at</strong> <%- expectedDeparture %></label>
+      <label><%- origin %> to <%- destination %></label>
+      <% if ( late > 0 ) { %> <label><strong>Status:</strong> <%- late %> minutes late</label> <% } %>
+      <% if ( status != 'No Information' ) { %> <label><%- status %> <%- lastLocation %></label> <% } %>
+      <label><strong>Train Type:</strong> <%- trainType %></label>
+    </div>
+  </script>
+
+  <script type="text/template" id="station-data-arriving-template">
+    <div class="stationDataView">
+      <label><strong>Arriving in </strong> <%- dueIn %> minutes <strong>at</strong> <%- expectedArrival %></label>
+      <label><%- origin %> to <%- destination %></label>
+      <% if ( late > 0 ) { %> <label><strong>Status:</strong> <%- late %> minutes late</label> <% } %>
+      <% if ( status != 'No Information' ) { %> <label><%- status %> <%- lastLocation %></label> <% } %>
+      <label><strong>Train Type:</strong> <%- trainType %></label>
+    </div>
+  </script>
+
+  <script type="text/template" id="station-data-template">
+    <div class="stationDataView">
+      <label><strong>Due in </strong> <%- dueIn %> minutes <strong>at</strong> <%- expectedArrival %></label>
+      <label><strong>From</strong> <%- origin %> <strong>to</strong> <%- destination %></label>
+      <% if ( late > 0 ) { %> <label><strong>Status:</strong> <%- late %> minutes late</label> <% } %>
+      <% if ( status != 'No Information' ) { %> <label><%- status %> <%- lastLocation %></label> <% } %>
+      <label><strong>Train Type:</strong> <%- trainType %></label>
+    </div>
+  </script>
 
 	<script data-main="js/main" src="js/libs/require/require.js"></script>
 </head>
 <body>
-
     <div class="container">
 
       <div class="masthead">
@@ -57,13 +88,17 @@
           </div>
         </div>
 
-        <div id="map_canvas" class="span11 app" style='float-none'></div>
+        <div class="main-panel">
+          <div id="map_canvas" class="span8 app" style='float-none'></div>
+          <div id="main-panel-sidebar" class="sidebar span3"></div>
+        </div>
       </div>
-
+      <hr>
       <div class="footer">
-        <p>&copy; Copyright 2013 <a href="http://www.gerardcondon.com">Gerard Condon</a>. All Rights Reserved</p>
+        <p class="alignleft">&copy; Copyright 2013 <a href="http://www.gerardcondon.com">Gerard Condon</a>. All Rights Reserved</p>
+        <p class="alignright">See code on <a href="https://github.com/gerardcondon/Irish-Rail-Tracker">Github</a></p>
       </div>
-
+      <div style="clear: both;"></div>
     </div> <!-- /container -->
 </body>
 </html>
