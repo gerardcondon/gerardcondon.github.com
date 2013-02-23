@@ -13,7 +13,7 @@ The content of this book is excellent and it really complements the course video
 
 I highly recommend the book and I wish it was available when I originally watched the videos. Given the quality of the lectures and the book, Stanford could easily charge for this stuff - it was certainly equal to any introductory programming course I've attended at college. It seems inconceivable to me that this approach won't form the basis of education in the years to come.
 
-It maybe a bit churlish to criticise a free book but still I do have some issues. These concern the format the book was released in and not its content.
+It's maybe a bit churlish to criticise a free book but still I do have some issues. These concern the format the book was released in and not its content.
 
 * Firstly it was only released for iPad and not for iPhone. I would have liked to have had a reference version for iPhone.
 
