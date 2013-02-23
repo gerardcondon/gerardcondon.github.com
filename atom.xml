@@ -4,7 +4,7 @@
   <title><![CDATA[Gerard Condon's Blog]]></title>
   <link href="http://www.gerardcondon.com/atom.xml" rel="self"/>
   <link href="http://www.gerardcondon.com/"/>
-  <updated>2013-02-23T17:47:37+00:00</updated>
+  <updated>2013-02-23T22:05:12+00:00</updated>
   <id>http://www.gerardcondon.com/</id>
   <author>
     <name><![CDATA[Gerard Condon]]></name>
@@ -12,6 +12,52 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Year Update and Reflections]]></title>
+    <link href="http://www.gerardcondon.com/blog/2013/02/23/year-update-and-reflections/"/>
+    <updated>2013-02-23T21:52:00+00:00</updated>
+    <id>http://www.gerardcondon.com/blog/2013/02/23/year-update-and-reflections</id>
+    <content type="html"><![CDATA[<p>It&#8217;s been a year, give or take, since I started looking into iOS development, and I wanted to write a post to reflect on where I am and what are the next steps.</p>
+
+<h2>Progress on iOS to Date</h2>
+
+<ul>
+<li><p>I spent the first three months of the year learning Objective C and hacking on some small programs.</p></li>
+<li><p>I spent some time experimenting with Core Data and MVC and trying to get an automated testing system up and running.</p></li>
+<li><p>The summer months were quiet due to work commitments. The project I was working on switched to JavaScript which I hadn&#8217;t really used before. Due to this, I spent a lot of time learning JavaScript and web frontend and backend development.</p></li>
+<li><p>After the summer I came back to the app with a better understanding of MVC as implemented in iOS and Core Data and I started working on it again. I read up on TDD and started implemented tests using Cucumber and Calabash. That took me up to about October.</p></li>
+<li><p>Work has stalled on it since then due to a combination of real life commitments from both family life and work. And also Skyrim! Curse you Skyrim and the hours I sank into it :)</p></li>
+</ul>
+
+
+<h2>Current Status</h2>
+
+<p>Here&#8217;s where I am currently</p>
+
+<ul>
+<li><p>App work: I didn&#8217;t get as much done as I had planned at the start of last year. I got diverted in other areas, namely:</p></li>
+<li><p>Testing - TDD &amp; BDD: I hadn&#8217;t planned to look at any of this but ended up spending a lot of time here and learning a great deal. Familiarizing myself with this way of programming was probably the biggest benefit I gained from the last years experimentation. I probably could have completed the app if I didn&#8217;t spend so much time on TDD and tinkering with automated testing setups on Jenkins. However I wouldn&#8217;t have learned anywhere near as much about proper programming techniques if I did.</p></li>
+<li><p>JavaScript: I spent a good deal of time learning proper JavaScript development. The basic syntax is very similar to Java which I already knew. However I wanted to learn how to program using JavaScript correctly i.e. modular code using RequireJS, TDD using Jasmine etc.</p></li>
+<li><p>Ruby and Rails: again I had not planned on researching any of this but I got interested in it while looking at JavaScript. Have done a few tutorials and would like to write a Rails app at some stage.</p></li>
+</ul>
+
+
+<p>I spent a lot of time over the last year becoming proficient in web app and backend development in JavaScript for a work project. I&#8217;ve been really enjoying this. My only previous experience of JavaScript and web development was back in college around 2000 and I wasn&#8217;t too taken with it compared to Java and C development. But looking at it now and in combination with backends like Rails, I&#8217;ve been really impressed. I&#8217;m kind of kicking myself for tuning out on what was happening in web development over the past decade. I plan to branch out and do some posts on what I used to ramp up on this.</p>
+
+<p>On the iOS front I feel that I have a good knowledge of Objective C. However the issue is finding time to finish the app. Any time I was able to set aside a sizable chunk of time I got a lot done but getting that time is the key.</p>
+
+<h2>Reflections</h2>
+
+<p>I think working on this side project has made me expand my horizons more as a developer. I couldn&#8217;t have predicted the areas that I would have become interested in at the start of last year. I don&#8217;t think it&#8217;s a coincidence that as I&#8217;ve started looking at more stuff outside of work, that my work projects have become more interesting. I feel like I&#8217;m able to bring so much more to a project now especially in the areas of TDD and design.</p>
+
+<p>Admittedly I haven&#8217;t pursued the iOS work 100%, but I feel that the other languages I&#8217;ve been exposed to compensate for that. I think it was better to start out with iOS and then divert into other topics rather than not do any side work at all.</p>
+
+<p>However at the end of the day the reality is that I haven&#8217;t shipped anything on iOS yet. I&#8217;ve been justifying this to myself by claiming all these other intangible benefits. Given what I&#8217;ve learned, I don&#8217;t think that I&#8217;ve wasted my time but still I&#8217;d like to get some iOS project finished. Unfortunately given my current life and work commitments I probably won&#8217;t have time to work on it over the next three months. In the meantime, I&#8217;ll post about my JavaScript and TDD experiences.</p>
+
+<p>As regards the blog, looking back I am happy enough with what was posted in the past year. The main thing I&#8217;m not happy with is the regularity of the postings. The same things that have stopped me doing much software work, have also stopped me publishing much. In future I want to maintain a more regular posting rate. I aim to post at least once a fortnight and hopefully once a week.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Stanford iOS Course Companion Book]]></title>
@@ -743,25 +789,6 @@ Otherwise when we refactor code, we end up breaking lots of seemingly unrelated 
 <p>Not only does the class to which you add the category get the new method, but all its subclasses gain the method also. This can be very useful if you are extending a class high up in the hierarchy. For example, another use I made of categories was to add debug methods to the UIView class e.g. to print data about itself and its subviews. Given that lots of the UI widget classes extend UIView this means that everything on screen got my new methods. I find trace methods like these very useful during unit testing and debugging. I tend to prefer adding print code where possible rather than step through the debugger, and for that case the ability to add functionality to existing classes is invaluable.</p>
 
 <p>Naturally like all programming language features categories can be greatly abused. Changing the behaviour of existing functions can break code which assumes the older behaviour. I&#8217;d imaging this would be especially so with system classes such as NSArray etc. However done right, they look like a very useful feature which I&#8217;m sure I&#8217;ll use a great deal.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[iTunes U and Online Learning]]></title>
-    <link href="http://www.gerardcondon.com/blog/2012/01/29/itunes-u-and-online-learning/"/>
-    <updated>2012-01-29T18:00:00+00:00</updated>
-    <id>http://www.gerardcondon.com/blog/2012/01/29/itunes-u-and-online-learning</id>
-    <content type="html"><![CDATA[<p>Apple have just released the <a href="http://itunes.apple.com/ie/app/itunes-u/id490217893?mt=8">iTunes U app</a>. I think this has gotten a little lost compared to the attention on the new iBooks Author and its EULA. The iTunes U app looks to be an excellent app which puts some structure on the courses that were available through iTunes. Now you can watch the videos on your iPhone and iPad, and also download the slides to them. You can also use AirPlay to stream the videos to an Apple TV and the app will sync the progress of the course between devices.</p>
-
-<p>The course I am currently looking at is the <a href="http://itunes.apple.com/ie/course/ipad-iphone-app-development/id495052415">Stanford iOS Programming course</a>. I&#8217;ve only seen the first few lectures but they are of excellent quality. There are about thirty of these new iTunes U courses at present but more should be added in the future.</p>
-
-<p>While the talk was that the iBooks authoring app would revolutionize textbooks, I&#8217;m hopeful that the iTunes U app will do something similar for adult education. I&#8217;ve taken a few evening photography courses locally. These were great for me as a beginner but moving beyond that, it would be great to be able to subscribe to courses given by professionals. Remote learning can offer a wider range of courses than could ever be offered here in Cork. Courses that would be impractical to run locally due to small audiences don&#8217;t face that problem online. Imagine if you could subscribe to a landscape photography course with lectures by a series of landscape photographers. Or Portrait. Or Sports etc. And this would all come with slides that could be viewed afterwards at any time to refresh the memory.</p>
-
-<p>Currently I&#8217;m looking into Graphic Design as I will need to create graphics for my app and I would like to do a course in this. However any real life courses would most likely not be suitable for me. I would need them to run in the evenings after work. Also I want a course that assumes I have lots of experience with computers. However what I&#8217;m more likely to find is a full time course aimed at school leavers which assumes no previous software experience. Remote learning offers the potential that multiple courses can be recorded, each aimed at different levels of experience. I could choose the one more suited to my circumstances and the scheduling would now not be an issue as I can do the course in my own free time.</p>
-
-<p>It&#8217;s still early days but as more and more institutions put their courses up on iTunes U, I hope we start to see them not just put up their existing courses, but instead think about how they create and tailor courses for a wider audience. Although I&#8217;m not sure how likely that will be as currently the app doesn&#8217;t allow for paid courses. Still the free content is more than enough for the time being and I&#8217;ll look forward to see where iTunes U can go in the future.</p>
-
-<p><strong>Update:</strong> Just to clarify. The iTunes U app is separate from the desktop iTunes application. You can just download the iTunes U app on your device and never have to go near iTunes.</p>
 ]]></content>
   </entry>
   
