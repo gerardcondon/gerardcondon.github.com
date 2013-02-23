@@ -3,11 +3,11 @@ define([
     'underscore',
     'backbone',
     'bootstrap',
-    'models/station',
-    'collections/stations'
-    ], function($, _, Backbone, BootStrap, StationModel, StationsCollection){
+    'models/train',
+    'collections/trains'
+    ], function($, _, Backbone, BootStrap, TrainModel, TrainsCollection){
 
-    var StationCollectionView = Backbone.View.extend({
+    var TrainCollectionView = Backbone.View.extend({
 
         initialize:function(options) {
             this.map = options.map;
@@ -21,24 +21,24 @@ define([
             var that = this;
             var onDataHandler = function(collection) {
                 console.log('collection length = ' + collection.length);
-                var validIDs = collection.pluck("id");
+                var validIDs = collection.pluck("code");
 
                 if (that.filterIDs) {
                     validIDs = _.difference(validIDs, that.filterIDs);
                 }
 
-                collection.each(function( station ){
-                    if (_.contains(validIDs, station.id)) {
-                        var stationLatlng = new google.maps.LatLng(station.latitude, station.longitude);
+                collection.each(function( train ){
+                    if (_.contains(validIDs, train.code)) {
+                        var trainLatlng = new google.maps.LatLng(train.latitude, train.longitude);
                         var marker = new google.maps.Marker({
-                            position: stationLatlng,
+                            position: trainLatlng,
                             map: that.map,
-                            title:station.description,
-                            icon: 'http://maps.google.com/mapfiles/ms/icons/' + that.colour + '-dot.png',
+                            title:train.code,
+                            icon: 'http://maps.google.com/mapfiles/ms/icons/' + that.colour + '.png',
                             zIndex: that.zIndex
                         });
                         google.maps.event.addListener(marker, 'click', function() {
-                            that.trigger("marker-click", station);
+                            that.trigger("marker-click", train);
                         });
 
                         that.markers.push(marker);
@@ -47,14 +47,14 @@ define([
                 that.trigger("add-finish", validIDs);
             };
 
-            this.collection = new StationsCollection({type: options.type});
+            this.collection = new TrainsCollection({type: options.type});
             this.collection.fetch({ success : onDataHandler});
 
-            $(this.buttonID).click(function() {that.toggleStations();});
+            $(this.buttonID).click(function() {that.toggleTrains();});
             $(this.buttonID).button('toggle');
         },
 
-        toggleStations: function() {
+        toggleTrains: function() {
             this.visibility = !this.visibility;
             for (var i = 0; i < this.markers.length; i++) {
                 this.markers[i].setVisible(this.visibility);
@@ -62,5 +62,5 @@ define([
         }
     });
 
-    return StationCollectionView;
+    return TrainCollectionView;
 });
