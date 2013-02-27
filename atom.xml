@@ -4,7 +4,7 @@
   <title><![CDATA[Gerard Condon's Blog]]></title>
   <link href="http://www.gerardcondon.com/atom.xml" rel="self"/>
   <link href="http://www.gerardcondon.com/"/>
-  <updated>2013-02-24T23:54:37+00:00</updated>
+  <updated>2013-02-27T23:14:21+00:00</updated>
   <id>http://www.gerardcondon.com/</id>
   <author>
     <name><![CDATA[Gerard Condon]]></name>
@@ -12,6 +12,21 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Destroy All Software Screencasts]]></title>
+    <link href="http://www.gerardcondon.com/blog/2013/02/27/destroy-all-software-screencasts/"/>
+    <updated>2013-02-27T23:14:00+00:00</updated>
+    <id>http://www.gerardcondon.com/blog/2013/02/27/destroy-all-software-screencasts</id>
+    <content type="html"><![CDATA[<p>I recently subscribed to Gary Bernhardt&#8217;s <a href="https://www.destroyallsoftware.com/screencasts">Destroy All Software</a> screencasts. I found these absolutely fantastic. There are only about ten to fifteen minutes each in length so it&#8217;s no hassle to find the time to watch them. However they cover a lot in the short time.</p>
+
+<p>They are mostly Ruby and in particular Rails focused but the topics are applicable to any software programming. For example, I&#8217;ve really learned a great deal about TDD from watching this.</p>
+
+<p>The Github archive is useful, especially the Suck/Rocks Rails app. His Git config file is really handy. I really like his log formatting. I would have liked to see him post a larger sample Rails app to Github (or for the ultimate in wishful thinking - the code for the Destroy All Software site). It would expand upon how his ideas work when confronted with the complexity and messiness of a real world system.</p>
+
+<p>Overall I highly recommend the series for any programmer regardless of what language you are using. Unfortunately I believe he&#8217;s stopping soon but you get access to the entire back catalog with a subscription and they&#8217;re well worth it.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Year Update and Reflections]]></title>
@@ -738,57 +753,6 @@ dirty hybrids. Unclear goal. High maintenance, don’t prove much
 Otherwise when we refactor code, we end up breaking lots of seemingly unrelated hybrid tests. If you change a unit, then its unit tests should change but no other unit tests should.</p></blockquote>
 
 <p>After all that I’ve decided that I want to do some level of unit testing but I realize that I need to focus it on the right areas. I think it will be useful for the utility type code that I write but that I need to do more research into how I want to implement integration testing and UI testing.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Objective C Categories and Monkey Patching]]></title>
-    <link href="http://www.gerardcondon.com/blog/2012/02/04/objective-c-categories-and-monkey-patching/"/>
-    <updated>2012-02-04T18:00:00+00:00</updated>
-    <id>http://www.gerardcondon.com/blog/2012/02/04/objective-c-categories-and-monkey-patching</id>
-    <content type="html"><![CDATA[<p>One of my favorite features of Objective C are <a href="http://developer.apple.com/library/ios/#documentation/cocoa/conceptual/objectivec/chapters/occategories.html">categories</a>. Categories allow you to add your own functionality to existing classes without the need for inheritance. You don&#8217;t even need the source code of the modified class. You are only allowed add extra methods or modify existing methods. Adding extra instance variables is not permitted. This feature is generally known as <a href="http://en.wikipedia.org/wiki/Monkey_patch">monkey patching</a> (what a great name!) in languages such as Ruby.</p>
-
-<p>Creating a category is straightforward. The interface and implementation files look the same as normal interface and implementation files except the category name is placed in brackets after the name of the class we are extending. For example to create a category MyCategory on MyClass the interface file looks like</p>
-
-<figure class='code'><figcaption><span>MyClass+MyCategory.h  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#import &quot;MyClass.h&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">@interface</span> <span class="nc">MyClass</span> <span class="nl">(MyCategory)</span>
-</span><span class='line'>    <span class="c1">// Declare Methods here</span>
-</span><span class='line'><span class="k">@end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>and the implementation like this</p>
-
-<figure class='code'><figcaption><span>MyClass+MyCategory.m  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#import &quot;MyClass+MyCategory.h&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">@implementation</span> <span class="nc">MyClass</span> <span class="nl">(MyCategory)</span>
-</span><span class='line'>    <span class="c1">// Implement methods here</span>
-</span><span class='line'><span class="k">@end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The standard naming convention for category files is ClassToExtend+Category.(h|m). So for the above we would have both MyClass+MyCategory.h and MyClass+MyCategory.m files. The header file needs to be imported in any file that uses the category. For common extensions we can place them in the precompiled header (pch) files.</p>
-
-<p>This has a number of applications. It allows you to add methods to classes (or indeed to alter existing methods) instead of having to create utility classes comprised of static methods. Thus the code is more clearly associated with the class to which it belongs. It allows you to create object-oriented code that favours composition over inheritance.</p>
-
-<p>To give a concrete example, for my current project I wanted to be able to shuffle an array. Instead of having to create a ShuffleableArray subclass or implement an ArrayUtils.shuffle helper method, I was able to add a shuffle method to the NSArray type via a category.</p>
-
-<p>Not only does the class to which you add the category get the new method, but all its subclasses gain the method also. This can be very useful if you are extending a class high up in the hierarchy. For example, another use I made of categories was to add debug methods to the UIView class e.g. to print data about itself and its subviews. Given that lots of the UI widget classes extend UIView this means that everything on screen got my new methods. I find trace methods like these very useful during unit testing and debugging. I tend to prefer adding print code where possible rather than step through the debugger, and for that case the ability to add functionality to existing classes is invaluable.</p>
-
-<p>Naturally like all programming language features categories can be greatly abused. Changing the behaviour of existing functions can break code which assumes the older behaviour. I&#8217;d imaging this would be especially so with system classes such as NSArray etc. However done right, they look like a very useful feature which I&#8217;m sure I&#8217;ll use a great deal.</p>
 ]]></content>
   </entry>
   

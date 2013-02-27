@@ -9,7 +9,7 @@
   <meta name="author" content="Gerard Condon">
 
   
-  <meta name="description" content="Apple have just released the iTunes U app. I think this has gotten a little lost compared to the attention on the new iBooks Author and its EULA. The &hellip;">
+  <meta name="description" content="One of my favorite features of Objective C are categories. Categories allow you to add your own functionality to existing classes without the need &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -78,6 +78,84 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/02/04/objective-c-categories-and-monkey-patching/">Objective C Categories and Monkey Patching</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-04T18:00:00+00:00" pubdate data-updated="true">Feb 4<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>One of my favorite features of Objective C are <a href="http://developer.apple.com/library/ios/#documentation/cocoa/conceptual/objectivec/chapters/occategories.html">categories</a>. Categories allow you to add your own functionality to existing classes without the need for inheritance. You don&#8217;t even need the source code of the modified class. You are only allowed add extra methods or modify existing methods. Adding extra instance variables is not permitted. This feature is generally known as <a href="http://en.wikipedia.org/wiki/Monkey_patch">monkey patching</a> (what a great name!) in languages such as Ruby.</p>
+
+<p>Creating a category is straightforward. The interface and implementation files look the same as normal interface and implementation files except the category name is placed in brackets after the name of the class we are extending. For example to create a category MyCategory on MyClass the interface file looks like</p>
+
+<figure class='code'><figcaption><span>MyClass+MyCategory.h  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#import &quot;MyClass.h&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">@interface</span> <span class="nc">MyClass</span> <span class="nl">(MyCategory)</span>
+</span><span class='line'>    <span class="c1">// Declare Methods here</span>
+</span><span class='line'><span class="k">@end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and the implementation like this</p>
+
+<figure class='code'><figcaption><span>MyClass+MyCategory.m  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#import &quot;MyClass+MyCategory.h&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">@implementation</span> <span class="nc">MyClass</span> <span class="nl">(MyCategory)</span>
+</span><span class='line'>    <span class="c1">// Implement methods here</span>
+</span><span class='line'><span class="k">@end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The standard naming convention for category files is ClassToExtend+Category.(h|m). So for the above we would have both MyClass+MyCategory.h and MyClass+MyCategory.m files. The header file needs to be imported in any file that uses the category. For common extensions we can place them in the precompiled header (pch) files.</p>
+
+<p>This has a number of applications. It allows you to add methods to classes (or indeed to alter existing methods) instead of having to create utility classes comprised of static methods. Thus the code is more clearly associated with the class to which it belongs. It allows you to create object-oriented code that favours composition over inheritance.</p>
+
+<p>To give a concrete example, for my current project I wanted to be able to shuffle an array. Instead of having to create a ShuffleableArray subclass or implement an ArrayUtils.shuffle helper method, I was able to add a shuffle method to the NSArray type via a category.</p>
+
+<p>Not only does the class to which you add the category get the new method, but all its subclasses gain the method also. This can be very useful if you are extending a class high up in the hierarchy. For example, another use I made of categories was to add debug methods to the UIView class e.g. to print data about itself and its subviews. Given that lots of the UI widget classes extend UIView this means that everything on screen got my new methods. I find trace methods like these very useful during unit testing and debugging. I tend to prefer adding print code where possible rather than step through the debugger, and for that case the ability to add functionality to existing classes is invaluable.</p>
+
+<p>Naturally like all programming language features categories can be greatly abused. Changing the behaviour of existing functions can break code which assumes the older behaviour. I&#8217;d imaging this would be especially so with system classes such as NSArray etc. However done right, they look like a very useful feature which I&#8217;m sure I&#8217;ll use a great deal.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -418,6 +496,10 @@ The bare option is used as this will just clone the contents of the local .git d
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/02/27/destroy-all-software-screencasts/">Destroy All Software Screencasts</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/02/23/year-update-and-reflections/">Year Update and Reflections</a>
       </li>
     
@@ -451,10 +533,6 @@ The bare option is used as this will just clone the contents of the local .git d
     
       <li class="post">
         <a href="/blog/2012/04/29/joined-the-ios-developer-program/">Joined the iOS Developer program</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/04/02/where-have-all-the-srpgs-gone/">Where have all the SRPGs gone</a>
       </li>
     
   </ul>
