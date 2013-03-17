@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>iTunes U and Online Learning - Gerard Condon's Blog</title>
+  <title>Controllers in Objective C - Gerard Condon's Blog</title>
   <meta name="author" content="Gerard Condon">
 
   
-  <meta name="description" content="Apple have just released the iTunes U app. I think this has gotten a little lost compared to the attention on the new iBooks Author and its EULA. The &hellip;">
-  <meta name="keywords" content="iTunes U, iBooks">
+  <meta name="description" content="One of the things to learn about iOS is the MVC model. The Cocoa implementation of MVC has some differences compared to the traditional approach. For &hellip;">
+  <meta name="keywords" content="Objective C, MVC, Controllers">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://www.gerardcondon.com/blog/2012/01/29/itunes-u-and-online-learning/">
+  <link rel="canonical" href="http://www.gerardcondon.com/blog/2013/03/17/controllers-in-objective-c/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -81,7 +81,7 @@
   
   <header>
     
-      <h1 class="entry-title">iTunes U and Online Learning</h1>
+      <h1 class="entry-title">Controllers in Objective C</h1>
     
     
       <p class="meta">
@@ -97,24 +97,22 @@
   
 
 
-<time datetime="2012-01-29T18:00:00+00:00" pubdate data-updated="true">Jan 29<span>th</span>, 2012</time>
+<time datetime="2013-03-17T13:52:00+00:00" pubdate data-updated="true">Mar 17<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>Apple have just released the <a href="http://itunes.apple.com/ie/app/itunes-u/id490217893?mt=8">iTunes U app</a>. I think this has gotten a little lost compared to the attention on the new iBooks Author and its EULA. The iTunes U app looks to be an excellent app which puts some structure on the courses that were available through iTunes. Now you can watch the videos on your iPhone and iPad, and also download the slides to them. You can also use AirPlay to stream the videos to an Apple TV and the app will sync the progress of the course between devices.</p>
+<div class="entry-content"><p>One of the things to learn about iOS is the MVC model. The Cocoa implementation of MVC has some <a href="http://developer.apple.com/library/ios/documentation/general/conceptual/CocoaEncyclopedia/Model-View-Controller/Model-View-Controller.html#//apple_ref/doc/uid/TP40010810-CH14-SW9">differences</a> compared to the traditional approach. For example, in Cocoa, views are not aware of the models and don&#8217;t listen for model updates. Instead the all events pass through the controller, i.e. it listens for model changes and then tells the view to update itself.</p>
 
-<p>The course I am currently looking at is the <a href="http://itunes.apple.com/ie/course/ipad-iphone-app-development/id495052415">Stanford iOS Programming course</a>. I&#8217;ve only seen the first few lectures but they are of excellent quality. There are about thirty of these new iTunes U courses at present but more should be added in the future.</p>
+<p>In <a href="http://rubyonrails.org/">Rails</a>, the constant refrain is that controllers should be thin. However on iOS they seem to be absolutely huge. One joke that I saw on Twitter was that on iOS, MVC stood for Massive View Controller. For example, the Recipe sample application from Apple has controllers with hundreds of lines of code with one topping out at 600 LOC.</p>
 
-<p>While the talk was that the iBooks authoring app would revolutionize textbooks, I&#8217;m hopeful that the iTunes U app will do something similar for adult education. I&#8217;ve taken a few evening photography courses locally. These were great for me as a beginner but moving beyond that, it would be great to be able to subscribe to courses given by professionals. Remote learning can offer a wider range of courses than could ever be offered here in Cork. Courses that would be impractical to run locally due to small audiences don&#8217;t face that problem online. Imagine if you could subscribe to a landscape photography course with lectures by a series of landscape photographers. Or Portrait. Or Sports etc. And this would all come with slides that could be viewed afterwards at any time to refresh the memory.</p>
+<p>One of my issues with these view controllers is that they don&#8217;t follow the Single Responsibility Principle, but instead combine multiple functions. They act as delegates for multiple protocols e.g. table data source, fetched results controller delegate etc. I find it hard to distinguish the separate elements of MVC when one class is doing everything. Also in Objective C, once everything is in the same file, it&#8217;s not obvious to which protocol an item belongs. I think this risks breaking the MVC boundaries. For example, during a refactor, if you&#8217;re not careful, you can easily get model variables depending on controller variables and vice-versa.</p>
 
-<p>Currently I&#8217;m looking into Graphic Design as I will need to create graphics for my app and I would like to do a course in this. However any real life courses would most likely not be suitable for me. I would need them to run in the evenings after work. Also I want a course that assumes I have lots of experience with computers. However what I&#8217;m more likely to find is a full time course aimed at school leavers which assumes no previous software experience. Remote learning offers the potential that multiple courses can be recorded, each aimed at different levels of experience. I could choose the one more suited to my circumstances and the scheduling would now not be an issue as I can do the course in my own free time.</p>
+<p>I&#8217;d much prefer it if these controllers were split out into lots of different classes, each with a single job as per the SRP. This would lead to a more composition-based rather than inheritance-based codebase. I also think that this greatly helps with code navigation. Jumping to a small, focused file has the effect of filtering out irrelevant code. I&#8217;ve started using Sublime Text recently and it has great functionality for navigating between files, so I prefer having lots of smaller files rather than a few large monolithic classes.</p>
 
-<p>It&#8217;s still early days but as more and more institutions put their courses up on iTunes U, I hope we start to see them not just put up their existing courses, but instead think about how they create and tailor courses for a wider audience. Although I&#8217;m not sure how likely that will be as currently the app doesn&#8217;t allow for paid courses. Still the free content is more than enough for the time being and I&#8217;ll look forward to see where iTunes U can go in the future.</p>
-
-<p><strong>Update:</strong> Just to clarify. The iTunes U app is separate from the desktop iTunes application. You can just download the iTunes U app on your device and never have to go near iTunes.</p>
+<p>(On a side note this is one thing that really annoys me about XCode. Given a properly nested folder structure with well named files, I think it becomes a lot easier to find your way around the app. For example even after only a few weeks learning Rails, I know exactly where to look to find the controllers, models, db code etc. But XCode is a disaster here. It doesn&#8217;t push the groupings made in the app on to the file system underneath. It requires duplicate effort of organising the code both inside and outside the application to keep the codebase properly organised.)</p>
 </div>
 
 
@@ -137,7 +135,7 @@
   
 
 
-<time datetime="2012-01-29T18:00:00+00:00" pubdate data-updated="true">Jan 29<span>th</span>, 2012</time>
+<time datetime="2013-03-17T13:52:00+00:00" pubdate data-updated="true">Mar 17<span>th</span>, 2013</time>
       
 
 <span class="categories">
@@ -151,7 +149,7 @@
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.gerardcondon.com/blog/2012/01/29/itunes-u-and-online-learning/" data-via="" data-counturl="http://www.gerardcondon.com/blog/2012/01/29/itunes-u-and-online-learning/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.gerardcondon.com/blog/2013/03/17/controllers-in-objective-c/" data-via="" data-counturl="http://www.gerardcondon.com/blog/2013/03/17/controllers-in-objective-c/" >Tweet</a>
   
   
   
@@ -160,10 +158,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2012/01/27/accessorizer-for-xcode/" title="Previous Post: Accessorizer for XCode">&laquo; Accessorizer for XCode</a>
+        <a class="basic-alignment left" href="/blog/2013/02/27/destroy-all-software-screencasts/" title="Previous Post: Destroy All Software Screencasts">&laquo; Destroy All Software Screencasts</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2012/02/04/objective-c-categories-and-monkey-patching/" title="Next Post: Objective C Categories and Monkey Patching">Objective C Categories and Monkey Patching &raquo;</a>
       
     </p>
   </footer>

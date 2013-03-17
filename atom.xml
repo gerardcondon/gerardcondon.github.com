@@ -4,7 +4,7 @@
   <title><![CDATA[Gerard Condon's Blog]]></title>
   <link href="http://www.gerardcondon.com/atom.xml" rel="self"/>
   <link href="http://www.gerardcondon.com/"/>
-  <updated>2013-02-27T23:19:26+00:00</updated>
+  <updated>2013-03-17T13:52:54+00:00</updated>
   <id>http://www.gerardcondon.com/</id>
   <author>
     <name><![CDATA[Gerard Condon]]></name>
@@ -12,6 +12,23 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Controllers in Objective C]]></title>
+    <link href="http://www.gerardcondon.com/blog/2013/03/17/controllers-in-objective-c/"/>
+    <updated>2013-03-17T13:52:00+00:00</updated>
+    <id>http://www.gerardcondon.com/blog/2013/03/17/controllers-in-objective-c</id>
+    <content type="html"><![CDATA[<p>One of the things to learn about iOS is the MVC model. The Cocoa implementation of MVC has some <a href="http://developer.apple.com/library/ios/documentation/general/conceptual/CocoaEncyclopedia/Model-View-Controller/Model-View-Controller.html#//apple_ref/doc/uid/TP40010810-CH14-SW9">differences</a> compared to the traditional approach. For example, in Cocoa, views are not aware of the models and don&#8217;t listen for model updates. Instead the all events pass through the controller, i.e. it listens for model changes and then tells the view to update itself.</p>
+
+<p>In <a href="http://rubyonrails.org/">Rails</a>, the constant refrain is that controllers should be thin. However on iOS they seem to be absolutely huge. One joke that I saw on Twitter was that on iOS, MVC stood for Massive View Controller. For example, the Recipe sample application from Apple has controllers with hundreds of lines of code with one topping out at 600 LOC.</p>
+
+<p>One of my issues with these view controllers is that they don&#8217;t follow the Single Responsibility Principle, but instead combine multiple functions. They act as delegates for multiple protocols e.g. table data source, fetched results controller delegate etc. I find it hard to distinguish the separate elements of MVC when one class is doing everything. Also in Objective C, once everything is in the same file, it&#8217;s not obvious to which protocol an item belongs. I think this risks breaking the MVC boundaries. For example, during a refactor, if you&#8217;re not careful, you can easily get model variables depending on controller variables and vice-versa.</p>
+
+<p>I&#8217;d much prefer it if these controllers were split out into lots of different classes, each with a single job as per the SRP. This would lead to a more composition-based rather than inheritance-based codebase. I also think that this greatly helps with code navigation. Jumping to a small, focused file has the effect of filtering out irrelevant code. I&#8217;ve started using Sublime Text recently and it has great functionality for navigating between files, so I prefer having lots of smaller files rather than a few large monolithic classes.</p>
+
+<p>(On a side note this is one thing that really annoys me about XCode. Given a properly nested folder structure with well named files, I think it becomes a lot easier to find your way around the app. For example even after only a few weeks learning Rails, I know exactly where to look to find the controllers, models, db code etc. But XCode is a disaster here. It doesn&#8217;t push the groupings made in the app on to the file system underneath. It requires duplicate effort of organising the code both inside and outside the application to keep the codebase properly organised.)</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Destroy All Software Screencasts]]></title>
@@ -710,49 +727,6 @@ This library is located in /Developer/usr/lib. This folder contains libprofile.a
 <p>  For the utility and model layers I plan to use an automated unit testing framework such as <a href="http://www.junit.org/">JUnit</a>. Xcode provides <a href="https://developer.apple.com/library/ios/#documentation/DeveloperTools/Conceptual/UnitTesting/03-Writing_Test_Case_Methods/writing_tests.html#//apple_ref/doc/uid/TP40002143-CH4-SW1">OCUnit</a> which is a JUnit like framework for implementing unit tests. This framework provides the usual fail and assert macros and functions. There are some annoying things about running unit tests in Xcode. One is that it doesn&#8217;t have a separate test runner panel like JUnit has in <a href="http://www.eclipse.org/">Eclipse</a>. Instead it treats the unit test errors as build failures. All the print output for the tests is dumped into the same console output which can make it tricky to identify which output is for which test. Also there is no way to selectively run these tests. You have to rerun them all together every time. There are other frameworks out there e.g. <a href="https://github.com/gabriel/gh-unit">GHUnit</a> but for the moment I&#8217;ll stick with the default.</p>
 
 <p>For the higher level GUI code, unit testing is not useful so I&#8217;ll need a different testing approach and toolset. There seem to be number of <a href="http://sgleadow.github.com/blog/2011/10/26/which-automated-ios-testing-tool-to-use/">options</a> out there. I&#8217;m not sure what is available and what is the best to use. Apple have an <a href="https://developer.apple.com/library/mac/documentation/developertools/conceptual/InstrumentsUserGuide/Built-InInstruments/Built-InInstruments.html#//apple_ref/doc/uid/TP40004652-CH6-SW75">Instruments</a> application which allows you do perform UI testing using Javascript. I&#8217;ve also seen these <a href="http://www.testingwithfrank.com/">Frank</a> and <a href="http://www.zucchiniframework.org/">Zucchini</a> frameworks. I haven&#8217;t evaluated any of these yet as I don&#8217;t have a fully functional app to test it on. Once I get a nearly complete app I can see how much my unit testing provides, compare that to what I have left to test, and then make a judgement on where to go from there.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Devising my Unit Testing Philosophy]]></title>
-    <link href="http://www.gerardcondon.com/blog/2012/02/10/devising-my-unit-testing-philosophy/"/>
-    <updated>2012-02-10T18:00:00+00:00</updated>
-    <id>http://www.gerardcondon.com/blog/2012/02/10/devising-my-unit-testing-philosophy</id>
-    <content type="html"><![CDATA[<p>Up to now my approach to unit testing has been dictated by who I was writing the code for. For instance in college I never wrote unit tests. In the real world some of my employers required unit testing, with certain branch and code coverage goals, while other employers didn’t require much in the way of unit testing, as long as other types of testing were carried out. In practice I found that the as the code became more lower level, the demands for unit tests increased.</p>
-
-<p>For this project I need to define for myself what level of testing I will perform. My initial assumption was that of course I would do unit testing. Personally I thought that the benefits of unit testing were</p>
-
-<ul>
-<li>the confidence that it gives me in my code. I know that I can call this piece of code from somewhere else and there is a high probability that it will work as intended.</li>
-<li>by catching errors at an early stage, I spend less time in the debugger later.</li>
-<li>refactoring should go easier as the unit tests will catch a lot of regression issues</li>
-<li>I can be confident that any new bugs will be in the new code rather than the older highly unit tested modules, thus cutting down the amount of code required to search in order to fix the bug.</li>
-</ul>
-
-
-<p>However I read an interesting and thought provoking <a href="http://wilshipley.com/blog/2005/09/unit-testing-is-teh-suck-urr.html" title="">article</a> by Will Shipley outlining why he doesn’t do unit testing. My immediate reaction was astonishment. How can you not have unit tests? However instead of unit tests, he beta tests the product. This finds the type of bugs that the actual end users will find. Also he writes his code in a manner that doesn’t require unit tests.</p>
-
-<blockquote><p>My programming philosophy is “less code is better code.” Unit tests take a lot of code, and in my projects I don’t find that they find very many bugs. Part of this is because I tend not to modify my individual methods much once they’ve been written; if my “append string to string” method works, it’s really not going to get revisited anytime soon unless it has a bug.
-Part of it is because, in fact, I do do integrated testing of a form, and I probably should have talked about that more. Yes, I use “NSAssert” all over the place, and I perform sanity checks and raise errors if there’s a problem.</p></blockquote>
-
-<p>I don’t think I’ve come across “Not modifying methods once they are written” before but looking at it now it makes sense. By not changing existing working methods and treating them as black boxes, we should have fewer regression errors in future. I’m not sure how to reconcile this with refactoring though - it’s something to think about. I’d imagine a coding style that favours smaller, more focused methods would be more suited to this approach.</p>
-
-<p>His use of sanity checks and asserts also struck a chord especially when he says</p>
-
-<blockquote><p>Debugging most errors, once found, should take very little time in a properly-written program, because the error should always be from one of your own sanity checks, and you know where those are in the code, so you just go there and figure out what went wrong.</p></blockquote>
-
-<p>This was eye-opening for me. I’ve never tracked this before so I’m not sure if the bugs I’ve written have evaded my sanity checks and asserts. I would imagine a lot of them did. I’d never have seen that as important before but looking at it now it seems to me that this is a failure on my behalf. Not catching these errors means that I’m not fully aware of how my code can go wrong and what it is doing in all cases. I think a useful analysis I should run on each bug I find is - did this escape my coding checks/asserts and if so why? I should learn from this and in future code should check for this condition.</p>
-
-<p>In a response to Will’s article, a <a href="http://www.friday.com/bbum/2005/09/24/unit-testing">follow up post</a> by bbum shows how unit testing was of great benefit on infrastructure code, in this case the <a href="http://developer.apple.com/macosx/coredata.html">Core Data</a> library. This would suggest to me that the utility and model code would be amenable to unit testing but that it’s not useful for the GUI code.</p>
-
-<p>Another <a href="http://blog.codeville.net/2009/08/24/writing-great-unit-tests-best-and-worst-practises/">article</a> on codeville challenged my assumptions that unit tests were about finding bugs. Instead the type of testing that finds bugs is manual testing or automated integration testing. According to him, unit testing is not about finding bugs (except during refactoring) but more about designing robust software components.</p>
-
-<blockquote><p>TDD is a design process, not a testing process. TDD is a robust way of designing software components (“units”) interactively so that their behaviour is specified through unit tests
-Also it’s not enough to just write unit tests. The tests need to be either true unit tests which design a single component or else integration tests which automate the entire system. Anything in between are
-dirty hybrids. Unclear goal. High maintenance, don’t prove much
-Otherwise when we refactor code, we end up breaking lots of seemingly unrelated hybrid tests. If you change a unit, then its unit tests should change but no other unit tests should.</p></blockquote>
-
-<p>After all that I’ve decided that I want to do some level of unit testing but I realize that I need to focus it on the right areas. I think it will be useful for the utility type code that I write but that I need to do more research into how I want to implement integration testing and UI testing.</p>
 ]]></content>
   </entry>
   
