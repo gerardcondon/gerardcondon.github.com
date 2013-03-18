@@ -6,7 +6,7 @@ define([
     'models/stationData',
     'collections/stationDatas',
     'views/stationDataView',
-    'text!/js/templates/sidebarHeadingTemplate.html'
+    'text!templates/sidebarHeadingTemplate.html'
 
     ], function($, _, Backbone, BootStrap, StationDataModel, StationDatasCollection, StationDataView, headingTemplate){
 

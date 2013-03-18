@@ -5,9 +5,9 @@ define([
     'bootstrap',
     'models/stationData',
     'collections/stationDatas',
-    'text!/js/templates/stationDataTemplate.html',
-    'text!/js/templates/stationDataArrivingTemplate.html',
-    'text!/js/templates/stationDataDepartingTemplate.html'
+    'text!templates/stationDataTemplate.html',
+    'text!templates/stationDataArrivingTemplate.html',
+    'text!templates/stationDataDepartingTemplate.html'
     ], function($, _, Backbone, BootStrap, StationDataModel, StationDatasCollection,
         stationDataTemplate, stationDataArrivingTemplate, stationDataDepartingTemplate){
 

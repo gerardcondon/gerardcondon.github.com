@@ -4,8 +4,8 @@ define([
     'backbone',
     'bootstrap',
     'entities/stationType',
-    'text!/js/templates/stationAccordionGroupTemplate.html',
-    'text!/js/templates/stationAccordionGroupItemTemplate.html'
+    'text!templates/stationAccordionGroupTemplate.html',
+    'text!templates/stationAccordionGroupItemTemplate.html'
     ], function($, _, Backbone, BootStrap, StationType, accordionGroupTemplate, itemTemplate){
 
     var StationAccordionGroupView = Backbone.View.extend({

@@ -5,7 +5,7 @@ define([
     'bootstrap',
     'views/stationAccordionView',
     'views/sideBarView',
-    'text!/js/templates/stationListViewTemplate.html'
+    'text!templates/stationListViewTemplate.html'
     ], function($, _, Backbone, BootStrap, StationAccordionView, StationSideBarView, stationTemplate){
 
     var StationListView = Backbone.View.extend({
