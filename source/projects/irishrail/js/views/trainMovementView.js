@@ -18,8 +18,8 @@ define([
 
         render:function() {
             var template = this.template;
-
-            this.$el.html(template(this.model.toJSON()));
+            var summaryJSON = this.model.summary.toJSON();
+            this.$el.html(template(summaryJSON));
             return this;
         }
     });

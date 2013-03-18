@@ -5,29 +5,56 @@ define([
     'bootstrap',
     'models/stationData',
     'collections/stationDatas',
-    'views/stationDataView'
-    ], function($, _, Backbone, BootStrap, StationDataModel, StationDatasCollection, StationDataView){
+    'views/stationDataView',
+    'text!/js/templates/sidebarHeadingTemplate.html'
+
+    ], function($, _, Backbone, BootStrap, StationDataModel, StationDatasCollection, StationDataView, headingTemplate){
 
     var SideBarView = Backbone.View.extend({
 
-        initialize:function() {
-            $(this.el).append('<p>Click on a station to view train information for that station.</p>');
+        headingTemplate: _.template(headingTemplate),
+
+        initialize:function(options) {
+            this.dispatcher = options.dispatcher;
+
+            _.bindAll(this, 'load');
+            if (this.dispatcher) {
+                this.dispatcher.bind('station-selected', this.load);
+            }
+
+            this.render();
+        },
+
+        renderEmpty:function() {
+            this.$ul.append("<div class='stationDataView'>Click on a station to view train information for that station.<div>");
+        },
+
+        renderUL: function() {
+            this.$ul = $('<ul class="stationDataList"></ul>');
+            this.$el.empty();
+            this.$el.append(this.$ul);
+        },
+
+        render:function() {
+            this.renderUL();
+            this.renderEmpty();
         },
 
         load:function(station) {
-            var $ul = $('<ul class="stationDataList"></ul>');
-            this.collection = new StationDatasCollection({code: station.code});
             var that = this;
-            $(that.el).empty();
-            $(that.el).append("<strong>Timetable Information for " + station.description + "</strong>");
+            this.renderUL();
+            this.collection = new StationDatasCollection([], {code: station.get('code')});
+            this.$el.prepend(this.headingTemplate({heading : station.get('description')}));
 
             var onDataHandler = function(collection) {
-                collection.each(function(stationData){
-                    console.log("Processing " + JSON.stringify(stationData));
-                    var stationDataView = new StationDataView({stationData: stationData});
-                    $ul.append(stationDataView.render().el);
-                    $(that.el).append($ul);
-                });
+                if (collection.length === 0) {
+                    that.$ul.append("<div class='stationDataView'>No trains stopping in the next 90 mins<div>");
+                } else {
+                    collection.each(function(stationData){
+                        var stationDataView = new StationDataView({stationData: stationData});
+                        that.$ul.append(stationDataView.render().el);
+                    });
+                }
             };
             this.collection.fetch({ success : onDataHandler});
         }

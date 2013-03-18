@@ -1,20 +1,28 @@
 define([
-  'underscore',
-  'backbone'
-], function(_, Backbone) {
+  'backbone',
+  'models/locatable'
+], function(Backbone, Locatable) {
 
-    var TrainModel = Backbone.Model.extend({
-        initialize: function( options ) {
-            // TODO Extract these from here and station into a base class
-            this.latitude = options.latitude;
-            this.longitude = options.longitude;
-            this.code = options.code;
+    var TrainModel = Locatable.extend({
+        defaults:{
+            status : "",
+            date : "",
 
-            this.status = options.status;
-            this.date = options.date;
+            message : "",
+            direction : ""
+        },
 
-            this.message = options.message;
-            this.direction = options.direction;
+        initialize: function(attributes, options) {
+            this.constructor.__super__.initialize.apply(this, arguments);
+        }
+    }, {
+        parse: function(xmlNode) {
+            var attributes = Locatable.parse(xmlNode, 'Train');
+            attributes.status = $(xmlNode).find('TrainStatus').text();
+            attributes.date = $(xmlNode).find('TrainDate').text();
+            attributes.message = $(xmlNode).find('PublicMessage').text().replace(/\\n/g, '\n');
+            attributes.direction = $(xmlNode).find('Direction').text();
+            return attributes;
         }
     });
 

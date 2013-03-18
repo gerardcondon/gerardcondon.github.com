@@ -1,21 +1,17 @@
 # Roadmap
-
-## JavaScript
-* Refactor Controllers to extract common behaviour
-* Investigate parse function to make DRY
-
-* Handle case for no station data found
-
+ 
 * Add proper about page
 
-* Refactor stationData to more meaningful objects
-
-* Investigate more event based collection add - look at parse function. why are collection events not firing
+* Investigate more event based collection add
 * Add labels to markers for station names
 * Add pop up on markers
 
-* Refactor models to extract common base class
-* Fix newline in train message
+* Train Summary Implement test & Fix the case when the departure is on the following day
+* Fix train movement for departure and origin stations
+
+* Fix train message - split into component parts
+
+* Add a retry count to the YQL query
 
 ## HTML & CSS
 * add proper footer
@@ -35,8 +31,12 @@
 * Make Sidebar pretty
 
 ## JASMINE
-* Complete Model Tests
 * Add Collection Tests
 * Add View Tests
 * Invs stubbing out google maps
 * Invs mocking the network api data - anything like ruby vcr?
+
+## Build
+* Split up CSS into separate files.
+* Add a build step to compile CSS files into one file
+* Investigate splitting HTML file and building from partials

@@ -1,26 +1,34 @@
 define([
-  'underscore',
-  'backbone'
-], function(_, Backbone) {
+  'backbone',
+  'models/locatable'
+], function(Backbone, Locatable) {
 
-  var StationModel = Backbone.Model.extend({
+    var StationModel = Locatable.extend({
+        defaults: {
+            description : "",
+            alias : "",
+            id : 0,
+            type : ""
+        },
 
-    initialize: function( options ) {
-        this.description = options.description; 
-        this.alias = options.alias; 
-        this.latitude = options.latitude; 
-        this.longitude = options.longitude; 
-        this.code = options.code; 
-        this.id = options.id;
-        this.type = options.type;
-	}
-  });
+        initialize: function(attributes, options) {
+            this.constructor.__super__.initialize.apply(this, arguments);
+        }
+    }, {
+        parse: function(xmlNode) {
+            var attributes = Locatable.parse(xmlNode, 'Station');
+            attributes.description = $(xmlNode).find('StationDesc').text();
+            attributes.alias = $(xmlNode).find('StationAlias').text();
+            attributes.id = $(xmlNode).find('StationId').text();
+            return attributes;
+        }
+    });
 
-  StationModel.constants = {};
-  StationModel.constants.DART = "D";
-  StationModel.constants.MAINLINE = "M";
-  StationModel.constants.SUBURBAN = "S";
-  StationModel.constants.ALL = "A";
+    StationModel.constants = {};
+    StationModel.constants.DART = "D";
+    StationModel.constants.MAINLINE = "M";
+    StationModel.constants.SUBURBAN = "S";
+    StationModel.constants.ALL = "A";
 
-  return StationModel;
+    return StationModel;
 });
