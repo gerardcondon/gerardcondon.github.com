@@ -180,7 +180,13 @@ In particular I was experimenting with table view controllers and there are a lo
 <p>It wasn&#8217;t all smooth sailing as I did run into a few issues along the way.</p>
 
 <ul>
-<li><p>I wasn&#8217;t able to get it to integrate with my installation of Jenkins, which is unfortunate as Cucumber can output in JUnit format so it&#8217;s a perfect fit for Jenkins. The problem here is on my side as lots of users on the Calabash Google Group are running Calabash from their CI system. I think it due to the jenkins user not being able to launch the iOS simulator. I need to investigate further on this.</p></li>
+<li><p>I wasn&#8217;t able to get it to integrate with my installation of Jenkins, which is unfortunate as Cucumber can output in JUnit format so it&#8217;s a perfect fit for Jenkins. The problem here is on my side as lots of users on the Calabash Google Group are running Calabash from their CI system. I think it due to the jenkins user not being able to launch the iOS simulator. I need to investigate further on this.</p>
+
+<p>  <strong>Update:</strong> Ru Cindrea emailed me to suggest another way of running Jenkins which may fix this problem.</p>
+
+<blockquote><p>I used to launch Jenkins like this: &#8220;sudo launchctl load /Library/LaunchDaemons/org.jenkins-ci.plist&#8221; - which seems to be the recommended way on a lot of sites I have found.</p>
+
+<p>However, I now launch it under my own user, using &#8220;nohup java -jar /Applications/Jenkins/jenkins.war &#8211;httpPort=8080&#8221; - and everything works perfectly! I can simply use &#8220;cucumber -f junit -o results -f pretty&#8221; to start the simulator, run the tests and get my JUnit report.</p></blockquote></li>
 <li><p>I had found that Calabash would frequently drop the connection to the app and fail the tests as a result. Once a test run started seeing these errors for a test (<code>Unable to make connection to Calabash Server at http://localhost:37265/</code>) then each following test in the run would show the same error. Rerunning the tests would normally sort it out in the next run or two. Both the app and Calabash would be running fine but just couldn&#8217;t seem to connect to each other. This unreliability was the most disappointing part of the tests for me.</p>
 
 <p>  <strong>Update:</strong> Karl pointed me to the Google Group and I saw some <a href="https://groups.google.com/forum/?fromgroups=#!topic/calabash-ios/NdExaULsHz4">updates</a> that were needed to work with the new iOS 6 Simulator. I had seen that black screen issue as part of trying to get it working with Jenkins. So I&#8217;ve updated to the latest version of Calabash and on the first test run, everything worked fine. Hopefully this will resolve the issue in future.</p></li>
