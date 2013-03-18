@@ -80,6 +80,13 @@ It wasn't all smooth sailing as I did run into a few issues along the way.
 
 * I wasn't able to get it to integrate with my installation of Jenkins, which is unfortunate as Cucumber can output in JUnit format so it's a perfect fit for Jenkins. The problem here is on my side as lots of users on the Calabash Google Group are running Calabash from their CI system. I think it due to the jenkins user not being able to launch the iOS simulator. I need to investigate further on this.
 
+	**Update:** Ru Cindrea emailed me to suggest another way of running Jenkins which may fix this problem.
+
+	> I used to launch Jenkins like this: "sudo launchctl load /Library/LaunchDaemons/org.jenkins-ci.plist" - which seems to be the recommended way on a lot of sites I have found. 
+
+	> However, I now launch it under my own user, using "nohup java -jar /Applications/Jenkins/jenkins.war --httpPort=8080" - and everything works perfectly! I can simply use "cucumber -f junit -o results -f pretty" to start the simulator, run the tests and get my JUnit report.
+
+
 * I had found that Calabash would frequently drop the connection to the app and fail the tests as a result. Once a test run started seeing these errors for a test (`Unable to make connection to Calabash Server at http://localhost:37265/`) then each following test in the run would show the same error. Rerunning the tests would normally sort it out in the next run or two. Both the app and Calabash would be running fine but just couldn't seem to connect to each other. This unreliability was the most disappointing part of the tests for me.  
 	
 	**Update:** Karl pointed me to the Google Group and I saw some [updates](https://groups.google.com/forum/?fromgroups=#!topic/calabash-ios/NdExaULsHz4) that were needed to work with the new iOS 6 Simulator. I had seen that black screen issue as part of trying to get it working with Jenkins. So I've updated to the latest version of Calabash and on the first test run, everything worked fine. Hopefully this will resolve the issue in future.
