@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Start your own Business Course - Gerard Condon's Blog</title>
+  <title>Side Project: Irish Rail Tracker - Gerard Condon's Blog</title>
   <meta name="author" content="Gerard Condon">
 
   
-  <meta name="description" content="I&#8217;ve signed up for a Start Your Own Business course which is being run by the South Cork Enterprise Board. It&#8217;s an eight week course &hellip;">
-  <meta name="keywords" content="Start business, South Cork Enterprise Board">
+  <meta name="description" content="I&#8217;ve been working on a side project for the last month in order to learn about front-end web development. While not complete by any means, I &hellip;">
+  <meta name="keywords" content="HTML, Backbone, Irish Rail, CSS, REST">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://www.gerardcondon.com/blog/2012/03/20/start-your-own-business-course/">
+  <link rel="canonical" href="http://www.gerardcondon.com/blog/2013/03/18/side-project-irish-rail-tracker/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -81,7 +81,7 @@
   
   <header>
     
-      <h1 class="entry-title">Start Your Own Business Course</h1>
+      <h1 class="entry-title">Side Project: Irish Rail Tracker</h1>
     
     
       <p class="meta">
@@ -97,16 +97,31 @@
   
 
 
-<time datetime="2012-03-20T23:46:00+00:00" pubdate data-updated="true">Mar 20<span>th</span>, 2012</time>
+<time datetime="2013-03-18T10:56:00+00:00" pubdate data-updated="true">Mar 18<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>I&#8217;ve signed up for a Start Your Own Business <a href="http://www.sceb.ie/Online-Booking#Start-Your-Own-Business">course</a> which is being run by the <a href="http://www.sceb.ie">South Cork Enterprise Board</a>. It&#8217;s an eight week course taking three hours every Thursday. I&#8217;ve no intention of leaving my current job but if I&#8217;m going to be doing this on the side, then I&#8217;d like to know how to do it properly and what type of supports are out there.</p>
+<div class="entry-content"><p>I&#8217;ve been working on a <a href="http://www.gerardcondon.com/projects/irishrail/index.html">side project</a> for the last month in order to learn about front-end web development. While not complete by any means, I think it&#8217;s good enough to release as a beta. I plan to add features, improve the UI and refactor the code in future.</p>
 
-<p>I&#8217;ve gone to three nights already and I&#8217;m finding it very useful. I think that the process of creating a business plan focuses your mind on what you want to achieve. I&#8217;ve asked myself more questions about what I want to do with this app development in the past few weeks than in the previous two months. It&#8217;s also interesting meeting people there who are setting up non software businesses and seeing what common problems and tasks we have. It&#8217;s good to step outside the software/computing world for a bit and get a wider perspective on things. I hope to come out of this with a clear idea of where I want to take the app work and what I need to do to accomplish this.</p>
+<p>The motivation behind it was that I wanted to do a project using one of the JavaScript <a href="http://addyosmani.github.com/todomvc/">MVC Frameworks</a> - for this one I chose <a href="http://backbonejs.org">Backbone</a>. Also I&#8217;ll be working more with HTML and CSS in work over the coming year and I need to ramp up on these.</p>
+
+<p><a href="http://www.irishrail.ie">Iarnród Éireann</a> (the Irish Rail company) has a REST API which provides details of the stations in its network and the current status of its trains. My <a href="http://www.gerardcondon.com/projects/irishrail/index.html">webpage</a> plots these stations and trains on a Google Map and shows upcoming train information for each station.</p>
+
+<p>I plan to write a series of posts on how I implemented this and the lessons I learned along the way.</p>
+
+<p>The project is available <a href="http://www.gerardcondon.com/projects/irishrail/index.html">here</a> and the code is available on <a href="https://github.com/gerardcondon/Irish-Rail-Tracker">Github</a> under the MIT licence. The roadmap.md document is where I&#8217;m tracking future work that needs to be done on the project. Any feedback would be much appreciated.</p>
+
+<p>As far as the code goes:</p>
+
+<ul>
+<li>I&#8217;m happy enough with the Backbone model and collection code. The Backbone view code still needs some refactoring to remove duplication and use proper Backbone idioms.</li>
+<li>There are some JavaScript <a href="http://pivotal.github.com/jasmine/">Jasmine</a> tests - mostly for the model. I&#8217;m still figuring out the best way to test the UI - I have some Jasmine tests but also some Ruby <a href="https://github.com/jnicklas/capybara">Capybara</a> tests for the browser.</li>
+<li>The HTML and CSS code are functional rather than elegant. I&#8217;m hoping to improve these as time goes by and as I get more experience with these languages.</li>
+</ul>
+
 </div>
 
 
@@ -129,21 +144,15 @@
   
 
 
-<time datetime="2012-03-20T23:46:00+00:00" pubdate data-updated="true">Mar 20<span>th</span>, 2012</time>
+<time datetime="2013-03-18T10:56:00+00:00" pubdate data-updated="true">Mar 18<span>th</span>, 2013</time>
       
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/business/'>Business</a>
-  
-</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.gerardcondon.com/blog/2012/03/20/start-your-own-business-course/" data-via="" data-counturl="http://www.gerardcondon.com/blog/2012/03/20/start-your-own-business-course/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.gerardcondon.com/blog/2013/03/18/side-project-irish-rail-tracker/" data-via="" data-counturl="http://www.gerardcondon.com/blog/2013/03/18/side-project-irish-rail-tracker/" >Tweet</a>
   
   
   
@@ -152,10 +161,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2012/03/04/setting-up-octopress-and-github/" title="Previous Post: Setting up a Blog on Octopress and Github">&laquo; Setting up a Blog on Octopress and Github</a>
+        <a class="basic-alignment left" href="/blog/2013/03/17/controllers-in-objective-c/" title="Previous Post: Controllers in Objective C">&laquo; Controllers in Objective C</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2012/04/02/where-have-all-the-srpgs-gone/" title="Next Post: Where have all the SRPGs gone">Where have all the SRPGs gone &raquo;</a>
       
     </p>
   </footer>

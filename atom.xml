@@ -4,7 +4,7 @@
   <title><![CDATA[Gerard Condon's Blog]]></title>
   <link href="http://www.gerardcondon.com/atom.xml" rel="self"/>
   <link href="http://www.gerardcondon.com/"/>
-  <updated>2013-03-18T10:06:36+00:00</updated>
+  <updated>2013-03-18T11:21:12+00:00</updated>
   <id>http://www.gerardcondon.com/</id>
   <author>
     <name><![CDATA[Gerard Condon]]></name>
@@ -12,6 +12,32 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Side Project: Irish Rail Tracker]]></title>
+    <link href="http://www.gerardcondon.com/blog/2013/03/18/side-project-irish-rail-tracker/"/>
+    <updated>2013-03-18T10:56:00+00:00</updated>
+    <id>http://www.gerardcondon.com/blog/2013/03/18/side-project-irish-rail-tracker</id>
+    <content type="html"><![CDATA[<p>I&#8217;ve been working on a <a href="http://www.gerardcondon.com/projects/irishrail/index.html">side project</a> for the last month in order to learn about front-end web development. While not complete by any means, I think it&#8217;s good enough to release as a beta. I plan to add features, improve the UI and refactor the code in future.</p>
+
+<p>The motivation behind it was that I wanted to do a project using one of the JavaScript <a href="http://addyosmani.github.com/todomvc/">MVC Frameworks</a> - for this one I chose <a href="http://backbonejs.org">Backbone</a>. Also I&#8217;ll be working more with HTML and CSS in work over the coming year and I need to ramp up on these.</p>
+
+<p><a href="http://www.irishrail.ie">Iarnród Éireann</a> (the Irish Rail company) has a REST API which provides details of the stations in its network and the current status of its trains. My <a href="http://www.gerardcondon.com/projects/irishrail/index.html">webpage</a> plots these stations and trains on a Google Map and shows upcoming train information for each station.</p>
+
+<p>I plan to write a series of posts on how I implemented this and the lessons I learned along the way.</p>
+
+<p>The project is available <a href="http://www.gerardcondon.com/projects/irishrail/index.html">here</a> and the code is available on <a href="https://github.com/gerardcondon/Irish-Rail-Tracker">Github</a> under the MIT licence. The roadmap.md document is where I&#8217;m tracking future work that needs to be done on the project. Any feedback would be much appreciated.</p>
+
+<p>As far as the code goes:</p>
+
+<ul>
+<li>I&#8217;m happy enough with the Backbone model and collection code. The Backbone view code still needs some refactoring to remove duplication and use proper Backbone idioms.</li>
+<li>There are some JavaScript <a href="http://pivotal.github.com/jasmine/">Jasmine</a> tests - mostly for the model. I&#8217;m still figuring out the best way to test the UI - I have some Jasmine tests but also some Ruby <a href="https://github.com/jnicklas/capybara">Capybara</a> tests for the browser.</li>
+<li>The HTML and CSS code are functional rather than elegant. I&#8217;m hoping to improve these as time goes by and as I get more experience with these languages.</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Controllers in Objective C]]></title>
@@ -712,21 +738,6 @@ This library is located in /Developer/usr/lib. This folder contains libprofile.a
 <p>The posting workflow is much better now. I write my posts in Markdown on the Mac or on iOS via <a href="http://www.hogbaysoftware.com/products/writeroom">WriteRoom</a>. Then I run a command from the terminal to regenerate the site and deploy it to Github. Edits work in the same way. The Markdown files also get committed to Github ensuring that no matter where I move the blog in future I will always have the content in an accessible file format.</p>
 
 <p>I&#8217;ll add a few posts in future on how I got Octopress, Github and my domain all set up and working together.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Test Automation]]></title>
-    <link href="http://www.gerardcondon.com/blog/2012/02/13/test-automation/"/>
-    <updated>2012-02-13T18:00:00+00:00</updated>
-    <id>http://www.gerardcondon.com/blog/2012/02/13/test-automation</id>
-    <content type="html"><![CDATA[<p>  Wherever possible I think that automating your testing is essential. For this project there is no way that I can manually rerun the same tests over and over again - the time commitment is just too much. I need to be able to click a button and have a framework run all my tests automatically and report back to me the number of tests passing, failing etc. I know that this won&#8217;t catch all the bugs in the code and that I&#8217;ll still need to do some manual testing for each release. However, the more I can push into this automated testing, the more time I&#8217;ll save on the manual testing later.</p>
-
-<p>Based on my previous <a href="blog/2012/02/10/devising-my-unit-testing-philosophy/">post</a> I&#8217;ve mentally divided up the code into different layers which build on top of each other. The app GUI is one layer. Then we have the model classes which in turn depend on utility classes etc. These different levels of code require different levels of testing.</p>
-
-<p>  For the utility and model layers I plan to use an automated unit testing framework such as <a href="http://www.junit.org/">JUnit</a>. Xcode provides <a href="https://developer.apple.com/library/ios/#documentation/DeveloperTools/Conceptual/UnitTesting/03-Writing_Test_Case_Methods/writing_tests.html#//apple_ref/doc/uid/TP40002143-CH4-SW1">OCUnit</a> which is a JUnit like framework for implementing unit tests. This framework provides the usual fail and assert macros and functions. There are some annoying things about running unit tests in Xcode. One is that it doesn&#8217;t have a separate test runner panel like JUnit has in <a href="http://www.eclipse.org/">Eclipse</a>. Instead it treats the unit test errors as build failures. All the print output for the tests is dumped into the same console output which can make it tricky to identify which output is for which test. Also there is no way to selectively run these tests. You have to rerun them all together every time. There are other frameworks out there e.g. <a href="https://github.com/gabriel/gh-unit">GHUnit</a> but for the moment I&#8217;ll stick with the default.</p>
-
-<p>For the higher level GUI code, unit testing is not useful so I&#8217;ll need a different testing approach and toolset. There seem to be number of <a href="http://sgleadow.github.com/blog/2011/10/26/which-automated-ios-testing-tool-to-use/">options</a> out there. I&#8217;m not sure what is available and what is the best to use. Apple have an <a href="https://developer.apple.com/library/mac/documentation/developertools/conceptual/InstrumentsUserGuide/Built-InInstruments/Built-InInstruments.html#//apple_ref/doc/uid/TP40004652-CH6-SW75">Instruments</a> application which allows you do perform UI testing using Javascript. I&#8217;ve also seen these <a href="http://www.testingwithfrank.com/">Frank</a> and <a href="http://www.zucchiniframework.org/">Zucchini</a> frameworks. I haven&#8217;t evaluated any of these yet as I don&#8217;t have a fully functional app to test it on. Once I get a nearly complete app I can see how much my unit testing provides, compare that to what I have left to test, and then make a judgement on where to go from there.</p>
 ]]></content>
   </entry>
   
