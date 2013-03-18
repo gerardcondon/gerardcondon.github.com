@@ -20,7 +20,6 @@ define([
 
             var that = this;
             var onDataHandler = function(collection) {
-                console.log('collection length = ' + collection.length);
                 var validIDs = collection.pluck("id");
 
                 if (that.filterIDs) {
@@ -28,12 +27,12 @@ define([
                 }
 
                 collection.each(function( station ){
-                    if (_.contains(validIDs, station.id)) {
-                        var stationLatlng = new google.maps.LatLng(station.latitude, station.longitude);
+                    if (_.contains(validIDs, station.get('id'))) {
+                        var stationLatlng = new google.maps.LatLng(station.get('latitude'), station.get('longitude'));
                         var marker = new google.maps.Marker({
                             position: stationLatlng,
                             map: that.map,
-                            title:station.description,
+                            title:station.get('description'),
                             icon: 'http://maps.google.com/mapfiles/ms/icons/' + that.colour + '-dot.png',
                             zIndex: that.zIndex
                         });
@@ -47,7 +46,7 @@ define([
                 that.trigger("add-finish", validIDs);
             };
 
-            this.collection = new StationsCollection({type: options.type});
+            this.collection = new StationsCollection({}, {type: options.type});
             this.collection.fetch({ success : onDataHandler});
 
             $(this.buttonID).click(function() {that.toggleStations();});

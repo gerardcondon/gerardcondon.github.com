@@ -3,10 +3,21 @@ define([
 ], function(Backbone) {
 
     var LocatableModel = Backbone.Model.extend({
-        initialize: function( options ) {
-            this.latitude = options.latitude;
-            this.longitude = options.longitude;
-            this.code = options.code;
+        defaults: {
+            latitude : "",
+            longitude : "",
+            code : ""
+        }
+    }, {
+        parse: function(xmlNode, prefix) {
+            var attributes = {};
+            prefix = prefix || "";
+
+            attributes.latitude = $(xmlNode).find(prefix + 'Latitude').text();
+            attributes.longitude = $(xmlNode).find(prefix + 'Longitude').text();
+            attributes.code = $(xmlNode).find(prefix + 'Code').text();
+
+            return attributes;
         }
     });
 

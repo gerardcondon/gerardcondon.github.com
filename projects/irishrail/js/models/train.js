@@ -4,14 +4,25 @@ define([
 ], function(Backbone, Locatable) {
 
     var TrainModel = Locatable.extend({
-        initialize: function( options ) {
+        defaults:{
+            status : "",
+            date : "",
+
+            message : "",
+            direction : ""
+        },
+
+        initialize: function(attributes, options) {
             this.constructor.__super__.initialize.apply(this, arguments);
-
-            this.status = options.status;
-            this.date = options.date;
-
-            this.message = options.message;
-            this.direction = options.direction;
+        }
+    }, {
+        parse: function(xmlNode) {
+            var attributes = Locatable.parse(xmlNode, 'Train');
+            attributes.status = $(xmlNode).find('TrainStatus').text();
+            attributes.date = $(xmlNode).find('TrainDate').text();
+            attributes.message = $(xmlNode).find('PublicMessage').text().replace(/\\n/g, '\n');
+            attributes.direction = $(xmlNode).find('Direction').text();
+            return attributes;
         }
     });
 
