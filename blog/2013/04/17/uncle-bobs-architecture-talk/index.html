@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Beginning with Xcode - Gerard Condon's Blog</title>
+  <title>Uncle Bob's "Architecture The Lost Years" Talk - Gerard Condon's Blog</title>
   <meta name="author" content="Gerard Condon">
 
   
-  <meta name="description" content="The main application for developing apps is Xcode. I&#8217;m not sure if there are any alternatives but at the moment I don&#8217;t think I really &hellip;">
-  <meta name="keywords" content="iOS Development, XCode">
+  <meta name="description" content="I found this talk by Uncle Bob Martin to be really enjoyable and thought provoking. In it he talks about decoupling your application from the &hellip;">
+  <meta name="keywords" content="architecture, Bob Martin, hexagonal">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://www.gerardcondon.com/blog/2012/01/18/beginning-with-xcode/">
+  <link rel="canonical" href="http://www.gerardcondon.com/blog/2013/04/17/uncle-bobs-architecture-talk/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -81,7 +81,7 @@
   
   <header>
     
-      <h1 class="entry-title">Beginning With Xcode</h1>
+      <h1 class="entry-title">Uncle Bob's "Architecture the Lost Years" Talk</h1>
     
     
       <p class="meta">
@@ -97,18 +97,20 @@
   
 
 
-<time datetime="2012-01-18T21:58:00+00:00" pubdate data-updated="true">Jan 18<span>th</span>, 2012</time>
+<time datetime="2013-04-17T22:46:00+01:00" pubdate data-updated="true">Apr 17<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>The main application for developing apps is Xcode. I&#8217;m not sure if there are any alternatives but at the moment I don&#8217;t think I really need any. Xcode is free, installs from the app store. What more do I need?</p>
+<div class="entry-content"><p>I found this <a href="http://confreaks.com/videos/759-rubymidwest2011-keynote-architecture-the-lost-years">talk</a> by Uncle Bob Martin to be really enjoyable and thought provoking. In it he talks about decoupling your application from the database and the web. It&#8217;s ostensibly a Rails talk but I think it applies to every language.</p>
 
-<p>Ok, so first I installed Xcode. Or rather I installed an installer for Xcode. Seems a bit odd. I&#8217;m not sure how that will work with updates from the Mac Store. At first glance it looked the same as most other editors. Text area for writing code, tree navigator for files etc. My initial impressions are that it should be straightforward to learn to use.</p>
+<p>It really crystalized the issues I&#8217;ve been having with developing Objective-C applications i.e. the intermixing of the database (specifically Core Data) and UI code. After viewing this, I was able to come to iOS development with a whole new perspective. It&#8217;s so much clearer to me now how to architect applications, where code belongs and what interfaces are needed. After completely separating Core Data and UI code, the whole application has gotten a lot simpler and is much easier to unit test.</p>
 
-<p>Onto learning how to create apps. My first stop was the tutorials on Ray Wenderlich&#8217;s <a href="http://www.raywenderlich.com/tutorials">site</a>. They&#8217;re really comprehensive and I really recommend them. I began with the iOS Apprentice free tutorial which teaches you how to create a game called Bullseye. From that I think I gained enough knowledge to find my way around Xcode. From here, time for the next step i.e. learning Objective C.</p>
+<p>It also introduced me to Alistair Cockburn&#8217;s <a href="http://alistair.cockburn.us/Hexagonal+architecture">Hexagonal Architecture</a>. This is a really nice architecture for isolating the application from external entities such as the GUI or database. I&#8217;ve seen this crop up more and more on various Rails blogs under the term &#8216;Hexagonal Rails&#8217;.</p>
+
+<p>As a reference, <a href="http://blog.8thlight.com/uncle-bob/2011/11/22/Clean-Architecture.html">here</a> and <a href="http://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html">here</a> are a couple of other links from Bob Martin&#8217;s blog talking about &#8220;clean architecture&#8221;.</p>
 </div>
 
 
@@ -131,12 +133,12 @@
   
 
 
-<time datetime="2012-01-18T21:58:00+00:00" pubdate data-updated="true">Jan 18<span>th</span>, 2012</time>
+<time datetime="2013-04-17T22:46:00+01:00" pubdate data-updated="true">Apr 17<span>th</span>, 2013</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/development/'>Development</a>
+    <a class='category' href='/blog/categories/architecture/'>architecture</a>
   
 </span>
 
@@ -145,7 +147,7 @@
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.gerardcondon.com/blog/2012/01/18/beginning-with-xcode/" data-via="" data-counturl="http://www.gerardcondon.com/blog/2012/01/18/beginning-with-xcode/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.gerardcondon.com/blog/2013/04/17/uncle-bobs-architecture-talk/" data-via="" data-counturl="http://www.gerardcondon.com/blog/2013/04/17/uncle-bobs-architecture-talk/" >Tweet</a>
   
   
   
@@ -154,10 +156,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2012/01/14/choosing-a-language/" title="Previous Post: Choosing a language">&laquo; Choosing a language</a>
+        <a class="basic-alignment left" href="/blog/2013/03/18/side-project-irish-rail-tracker/" title="Previous Post: Side Project: Irish Rail Tracker">&laquo; Side Project: Irish Rail Tracker</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2012/01/21/learning-objective-c/" title="Next Post: Learning Objective C">Learning Objective C &raquo;</a>
       
     </p>
   </footer>

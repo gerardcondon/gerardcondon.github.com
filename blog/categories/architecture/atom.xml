@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: architecture | Gerard Condon's Blog]]></title>
+  <link href="http://www.gerardcondon.com/blog/categories/architecture/atom.xml" rel="self"/>
+  <link href="http://www.gerardcondon.com/"/>
+  <updated>2013-04-17T23:46:23+01:00</updated>
+  <id>http://www.gerardcondon.com/</id>
+  <author>
+    <name><![CDATA[Gerard Condon]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Uncle Bob's "Architecture The Lost Years" Talk]]></title>
+    <link href="http://www.gerardcondon.com/blog/2013/04/17/uncle-bobs-architecture-talk/"/>
+    <updated>2013-04-17T22:46:00+01:00</updated>
+    <id>http://www.gerardcondon.com/blog/2013/04/17/uncle-bobs-architecture-talk</id>
+    <content type="html"><![CDATA[<p>I found this <a href="http://confreaks.com/videos/759-rubymidwest2011-keynote-architecture-the-lost-years">talk</a> by Uncle Bob Martin to be really enjoyable and thought provoking. In it he talks about decoupling your application from the database and the web. It's ostensibly a Rails talk but I think it applies to every language.</p>
+
+<p>It really crystalized the issues I've been having with developing Objective-C applications i.e. the intermixing of the database (specifically Core Data) and UI code. After viewing this, I was able to come to iOS development with a whole new perspective. It's so much clearer to me now how to architect applications, where code belongs and what interfaces are needed. After completely separating Core Data and UI code, the whole application has gotten a lot simpler and is much easier to unit test.</p>
+
+<p>It also introduced me to Alistair Cockburn's <a href="http://alistair.cockburn.us/Hexagonal+architecture">Hexagonal Architecture</a>. This is a really nice architecture for isolating the application from external entities such as the GUI or database. I've seen this crop up more and more on various Rails blogs under the term 'Hexagonal Rails'.</p>
+
+<p>As a reference, <a href="http://blog.8thlight.com/uncle-bob/2011/11/22/Clean-Architecture.html">here</a> and <a href="http://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html">here</a> are a couple of other links from Bob Martin's blog talking about "clean architecture".</p>
+]]></content>
+  </entry>
+  
+</feed>

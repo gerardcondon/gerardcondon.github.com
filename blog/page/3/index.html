@@ -9,7 +9,7 @@
   <meta name="author" content="Gerard Condon">
 
   
-  <meta name="description" content="Wherever possible I think that automating your testing is essential. For this project there is no way that I can manually rerun the same tests over &hellip;">
+  <meta name="description" content="I&#8217;ve decided to switch the blog from Wordpress.com to an Octopress site hosted on Github Pages. From now on there will be no more new posts on &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -78,6 +78,59 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/02/16/moving-the-blog-to-octopress/">Moving the Blog to Octopress</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-16T20:11:00+00:00" pubdate data-updated="true">Feb 16<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&#8217;ve decided to switch the blog from <a href="http://www.wordpress.com">Wordpress.com</a> to an <a href="http://www.octopress.org">Octopress</a> site hosted on <a href="http://pages.github.com">Github Pages</a>. From now on there will be no more new posts on Wordpress. I&#8217;ve also registered the domain <a href="http://www.gerardcondon.com">gerardcondon.com</a> and will be using this address for the blog in future.</p>
+
+<p>I have a few reasons for switching</p>
+
+<ul>
+<li><p>I found Wordpress.com to be an excellent site in general. When starting off it was very easy to create and get the blog up and running. However you have to use their site to create your posts. Even if you use a text editor you still ultimately have to paste the post into their site, and all subsequent edits have to be done through Wordpress.com. Also the definitive version of the posts are stored in their database.</p>
+
+<p>  I prefer to write my documents in plain text files using a markup language. Previously I&#8217;ve used <a href="http://www.latex-project.org/">Latex</a> and more recently I&#8217;ve started using <a href="http://daringfireball.net/projects/markdown/">Markdown</a>. This has a number of advantages, namely the files can be edited in any editor on any platform and they work very well with source control. Also by separating the content from the typesetting phase, I find that you concentrate better on the actual writing. I hate having to wrestle with formatting in Word; I much prefer leaving that to a program. Donald Knuth &amp; Co. have forgotten more about typesetting than I will ever know.</p>
+
+<p>  Wordpress.com doesn&#8217;t support Markdown so posting involved an extra step of converting the Markdown to HTML. This meant that I had two versions of the blog. One in Markdown on my local machine and another in HTML on Wordpress. For me, it&#8217;s an axiom that whenever you have two versions of the same data, they will get out of sync. One needs to be the main source. I wanted the local Markdown version to be the canonical version of the site and everything else derived from that.</p></li>
+<li><p>I think the default Octopress theme looks really good (I really like the Archive page). I first noticed it on <a href="http://www.mattgemmell.com">Matt Gemmell&#8217;s</a> site and was impressed by how it looked. It also looks well on mobile sites. I have full control of the css using Octopress so I can tweak whatever I want. I liked the <a href="http://theme.wordpress.com/themes/titan/">Titan</a> theme on Wordpress except I hated the crosses using for lists. On Wordpress.com there was no way to change these. However on Octopress I make any kind of style update.</p></li>
+<li><p>I realised that I should get my own domain name instead of using the Wordpress.com address. In future if I need to move my site I can just redirect the domain name and any old links will still work. Whereas I will never own or control the gerardcondon.wordpress.com links. It&#8217;s better to move now, rather than after I create lots of content at a non portable url. Start as you mean to go on.</p></li>
+</ul>
+
+
+<p>The posting workflow is much better now. I write my posts in Markdown on the Mac or on iOS via <a href="http://www.hogbaysoftware.com/products/writeroom">WriteRoom</a>. Then I run a command from the terminal to regenerate the site and deploy it to Github. Edits work in the same way. The Markdown files also get committed to Github ensuring that no matter where I move the blog in future I will always have the content in an accessible file format.</p>
+
+<p>I&#8217;ll add a few posts in future on how I got Octopress, Github and my domain all set up and working together.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -553,47 +606,9 @@ The bare option is used as this will just clone the contents of the local .git d
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/01/08/7/">Initial Post</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-08T18:00:00+00:00" pubdate data-updated="true">Jan 8<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Here&#8217;s my initial blog post. I&#8217;m creating this blog as I&#8217;ve decided to create iOS apps in my spare time. Up to now I&#8217;ve been working as a programmer for eight years in Java, C++ and C. I&#8217;ve never written an Objective C application before nor programmed on the Mac. Also I&#8217;ve never blogged before so this is a totally new experience for me.</p>
-
-<p>Given the time of year, there is a lot of advice regarding New Year Resolutions and how to stick with them. One of the ideas is that by telling your resolution to other people, this acts as positive reinforcement to actually carry it out. My version of that is this blog. I am making a commitment to create and publish an app to the app store. After that, we&#8217;ll see.</p>
-
-<p>I want to use this blog to document my journey to learn not only the technical aspects e.g. learning Objective C and Xcode, but also the other non software activities that come with creating and publishing software. This will no doubt change with time as (hopefully) I start to release apps but will do for a starting point.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
+    
+      <a class="prev" href="/blog/page/4/">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
@@ -606,6 +621,10 @@ The bare option is used as this will just clone the contents of the local .git d
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/04/17/uncle-bobs-architecture-talk/">Uncle Bob&#8217;s &#8220;Architecture The Lost Years&#8221; Talk</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/03/18/side-project-irish-rail-tracker/">Side Project: Irish Rail Tracker</a>
@@ -641,10 +660,6 @@ The bare option is used as this will just clone the contents of the local .git d
     
       <li class="post">
         <a href="/blog/2012/09/16/setting-up-jenkins-on-os-x/">Setting up Jenkins on OS X</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/05/19/localizing-ios-apps/">Localizing iOS Apps</a>
       </li>
     
   </ul>

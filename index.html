@@ -9,7 +9,7 @@
   <meta name="author" content="Gerard Condon">
 
   
-  <meta name="description" content="I&#8217;ve been working on a side project for the last month in order to learn about front-end web development. While not complete by any means, I &hellip;">
+  <meta name="description" content="I found this talk by Uncle Bob Martin to be really enjoyable and thought provoking. In it he talks about decoupling your application from the &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -78,6 +78,48 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/04/17/uncle-bobs-architecture-talk/">Uncle Bob&#8217;s &#8220;Architecture the Lost Years&#8221; Talk</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-17T22:46:00+01:00" pubdate data-updated="true">Apr 17<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I found this <a href="http://confreaks.com/videos/759-rubymidwest2011-keynote-architecture-the-lost-years">talk</a> by Uncle Bob Martin to be really enjoyable and thought provoking. In it he talks about decoupling your application from the database and the web. It&#8217;s ostensibly a Rails talk but I think it applies to every language.</p>
+
+<p>It really crystalized the issues I&#8217;ve been having with developing Objective-C applications i.e. the intermixing of the database (specifically Core Data) and UI code. After viewing this, I was able to come to iOS development with a whole new perspective. It&#8217;s so much clearer to me now how to architect applications, where code belongs and what interfaces are needed. After completely separating Core Data and UI code, the whole application has gotten a lot simpler and is much easier to unit test.</p>
+
+<p>It also introduced me to Alistair Cockburn&#8217;s <a href="http://alistair.cockburn.us/Hexagonal+architecture">Hexagonal Architecture</a>. This is a really nice architecture for isolating the application from external entities such as the GUI or database. I&#8217;ve seen this crop up more and more on various Rails blogs under the term &#8216;Hexagonal Rails&#8217;.</p>
+
+<p>As a reference, <a href="http://blog.8thlight.com/uncle-bob/2011/11/22/Clean-Architecture.html">here</a> and <a href="http://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html">here</a> are a couple of other links from Bob Martin&#8217;s blog talking about &#8220;clean architecture&#8221;.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -751,68 +793,6 @@ gcovr -r $WORKSPACE/$JOB_NAME -x &gt; ${WORKSPACE}/coverage.xml
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/05/19/localizing-ios-apps/">Localizing iOS Apps</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-05-19T16:54:00+01:00" pubdate data-updated="true">May 19<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I was looking at a tutorial for creating a settings bundle for my app and it had separate files for different languages. I realised that I hadn&#8217;t a clue how to localize iOS applications. I decided I&#8217;d better look into it now, rather than at the end of development, in case it required me to change existing code. Much better to implement with localization in mind, than retrofit at the end of development.</p>
-
-<p>I&#8217;m interested to see how many translations I&#8217;ll be able to include in the app. I&#8217;m not sure how easy it will be to do the translation or even how much text there will be to translate. I&#8217;m planning a Chinese translation and for sentimental reasons I&#8217;ll do an Irish translation. I&#8217;ll probably try to get some European languages done also. I think that once I put in the infrastructure to do one language then adding additional ones shouldn&#8217;t be too much bother.</p>
-
-<p>The basics of implementing localization is that you externalize all strings in your application to .strings files and then provide versions of these files for each language you support. The process for creating the basic localization.strings file is outlined <a href="http://userflex.wordpress.com/2011/10/20/localized-strings-xcode4/">here</a>. In your code you can get the localized values for these strings using <code>NSLocalizedString(@"Externalized String Name", @"")</code>.</p>
-
-<h2>Localization Tools</h2>
-
-<p>Using this method, we will have to deal with lots of .strings files. Xcode doesn&#8217;t provide much help here so I looked around for third party apps. I bought <a href="http://www.cocoanetics.com/apps/linguan/">Linguan</a> on the Mac App Store and it looks very good. You point it at an Xcode project file and it locates all the .strings files and presents them in a nice table. It can generate text files which you can send on to your translators for them to translate and re-import their translations. I&#8217;m very pleased with it so far.</p>
-
-<p>Apart from having .strings files for strings in the code, I also need to localize the app&#8217;s storyboards. Albert Mata has a fantastic tutorial on how to do this <a href="http://www.albertmata.net/articles/introduction-to-internationalization-using-storyboards-on-ios-5.html">here</a>. A big problem with localizing storyboards is that changes in one language&#8217;s storyboards are not propagated to the others. Manually keeping these in sync would be a nightmare. Thankfully there is a handy script <a href="http://code.google.com/p/edim-mobile/source/browse/trunk/ios/IncrementalLocalization/localize.py">here</a> by Ederson Machado, which will update the .strings files for the storyboard and also keep the storyboards in sync. There is a nice video outlining the features of the script <a href="http://www.youtube.com/watch?v=cF1Rf02QvZQ">here</a>. By adding this script as a build run script, we can ensure that our storyboards are always in sync.</p>
-
-<h2>Localization Workflow</h2>
-
-<p>My localization workflow is as follows:</p>
-
-<ul>
-<li>First I created multiple storyboards for each language using the Localization area on the sidebar. This will create a language.proj folder for each language.</li>
-<li>I ran the localize.py script on the project. This generated the mainstoryboard.strings files in each of the language folders.</li>
-<li>I manually add these files to Xcode. First I added the English version. Then I clicked the plus button in the Localization sidebar and added the other languages. Xcode is able to find those .strings files and link them to the overall file.</li>
-<li>I create a localization.strings file to deal with the strings in the code and added all languages.</li>
-<li>I ran genstrings but I don&#8217;t think this is needed if you&#8217;re using Linguan.</li>
-<li>When I opened the project in Linguan it was able to find all the strings files, including those from the storyboard.</li>
-</ul>
-
-
-<p>I&#8217;m satisfied now that I have the localization mostly under control. One thing I still need to look at is how does this affect testing. Hopefully any test framework that I used will be able to run the tests in all languages.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -826,6 +806,10 @@ gcovr -r $WORKSPACE/$JOB_NAME -x &gt; ${WORKSPACE}/coverage.xml
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/04/17/uncle-bobs-architecture-talk/">Uncle Bob&#8217;s &#8220;Architecture The Lost Years&#8221; Talk</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/03/18/side-project-irish-rail-tracker/">Side Project: Irish Rail Tracker</a>
@@ -861,10 +845,6 @@ gcovr -r $WORKSPACE/$JOB_NAME -x &gt; ${WORKSPACE}/coverage.xml
     
       <li class="post">
         <a href="/blog/2012/09/16/setting-up-jenkins-on-os-x/">Setting up Jenkins on OS X</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/05/19/localizing-ios-apps/">Localizing iOS Apps</a>
       </li>
     
   </ul>
