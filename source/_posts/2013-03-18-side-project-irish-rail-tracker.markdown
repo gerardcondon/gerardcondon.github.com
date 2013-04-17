@@ -3,7 +3,7 @@ layout: post
 title: "Side Project: Irish Rail Tracker"
 date: 2013-03-18 10:56
 comments: true
-categories: 
+categories: Projects
 keywords: HTML, Backbone, Irish Rail, CSS, REST
 ---
 
