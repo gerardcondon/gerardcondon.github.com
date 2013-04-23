@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Development | Gerard Condon's Blog]]></title>
+  <title><![CDATA[Category: development | Gerard Condon's Blog]]></title>
   <link href="http://www.gerardcondon.com/blog/categories/development/atom.xml" rel="self"/>
   <link href="http://www.gerardcondon.com/"/>
-  <updated>2013-04-17T23:46:23+01:00</updated>
+  <updated>2013-04-23T23:32:39+01:00</updated>
   <id>http://www.gerardcondon.com/</id>
   <author>
     <name><![CDATA[Gerard Condon]]></name>
@@ -14,223 +14,21 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Controllers in Objective C]]></title>
-    <link href="http://www.gerardcondon.com/blog/2013/03/17/controllers-in-objective-c/"/>
-    <updated>2013-03-17T13:52:00+00:00</updated>
-    <id>http://www.gerardcondon.com/blog/2013/03/17/controllers-in-objective-c</id>
-    <content type="html"><![CDATA[<p>One of the things to learn about iOS is the MVC model. The Cocoa implementation of MVC has some <a href="http://developer.apple.com/library/ios/documentation/general/conceptual/CocoaEncyclopedia/Model-View-Controller/Model-View-Controller.html#//apple_ref/doc/uid/TP40010810-CH14-SW9">differences</a> compared to the traditional approach. For example, in Cocoa, views are not aware of the models and don't listen for model updates. Instead the all events pass through the controller, i.e. it listens for model changes and then tells the view to update itself.</p>
+    <title type="html"><![CDATA[Irish Rail's RealTime API]]></title>
+    <link href="http://www.gerardcondon.com/blog/2013/04/23/irish-rail-realtime-api/"/>
+    <updated>2013-04-23T23:03:00+01:00</updated>
+    <id>http://www.gerardcondon.com/blog/2013/04/23/irish-rail-realtime-api</id>
+    <content type="html"><![CDATA[<p>I spent a lot of time in my childhood and early twenties travelling on the Irish Rail Network. Mostly this seemed to involve waiting for ages at Limerick Junction or barely finding a space to stand on a packed train from Dublin. Those experiences didn't exactly leave me with a great impression of <a href="http://www.irishrail.ie">Iarnród Éireann</a>.</p>
 
-<p>In <a href="http://rubyonrails.org/">Rails</a>, the constant refrain is that controllers should be thin. However on iOS they seem to be absolutely huge. One joke that I saw on Twitter was that on iOS, MVC stood for Massive View Controller. For example, the Recipe sample application from Apple has controllers with hundreds of lines of code with one topping out at 600 LOC.</p>
+<p>Given this, I was amazed to find out recently, that Iarnród Éireann have an <a href="http://api.irishrail.ie/realtime/index.htm">XML API</a> for accessing realtime data about the trains running on their network. Credit where credit is due, this is an excellent idea and I wish more companies would implement something similar.</p>
 
-<p>One of my issues with these view controllers is that they don't follow the Single Responsibility Principle, but instead combine multiple functions. They act as delegates for multiple protocols e.g. table data source, fetched results controller delegate etc. I find it hard to distinguish the separate elements of MVC when one class is doing everything. Also in Objective C, once everything is in the same file, it's not obvious to which protocol an item belongs. I think this risks breaking the MVC boundaries. For example, during a refactor, if you're not careful, you can easily get model variables depending on controller variables and vice-versa.</p>
+<p>The API provides functionality for getting a list of the stations and what trains are due at those stations in the next ninety minutes. It also gives a list of all trains active on the network. It can filter by DART, Suburban or Mainline trains (that leaves some trains in an 'other' category - I'm not too sure what these actually are).</p>
 
-<p>I'd much prefer it if these controllers were split out into lots of different classes, each with a single job as per the SRP. This would lead to a more composition-based rather than inheritance-based codebase. I also think that this greatly helps with code navigation. Jumping to a small, focused file has the effect of filtering out irrelevant code. I've started using Sublime Text recently and it has great functionality for navigating between files, so I prefer having lots of smaller files rather than a few large monolithic classes.</p>
+<p>I used this API as part of a Backbone learning <a href="http://www.gerardcondon.com/projects/irishrail/index.html">project</a>. It was quite fun to do. The API returns lattitude and longitude coordinates for each station and train, allowing them to be plotted on a Google Map widget. I never realised there were so many stations in Ireland until I saw them plotted on the map.</p>
 
-<p>(On a side note this is one thing that really annoys me about XCode. Given a properly nested folder structure with well named files, I think it becomes a lot easier to find your way around the app. For example even after only a few weeks learning Rails, I know exactly where to look to find the controllers, models, db code etc. But XCode is a disaster here. It doesn't push the groupings made in the app on to the file system underneath. It requires duplicate effort of organising the code both inside and outside the application to keep the codebase properly organised.)</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Destroy All Software Screencasts]]></title>
-    <link href="http://www.gerardcondon.com/blog/2013/02/27/destroy-all-software-screencasts/"/>
-    <updated>2013-02-27T23:14:00+00:00</updated>
-    <id>http://www.gerardcondon.com/blog/2013/02/27/destroy-all-software-screencasts</id>
-    <content type="html"><![CDATA[<p>I recently subscribed to Gary Bernhardt's <a href="https://www.destroyallsoftware.com/screencasts">Destroy All Software</a> screencasts. I found these absolutely fantastic. There are only about ten to fifteen minutes each in length so it's no hassle to find the time to watch them. However they cover a lot in the short time.</p>
+<p>One issue I ran into was testing the application with live data. Given that I was programming this at night after work, you'd soon reach a time when there are very few trains left on the network!</p>
 
-<p>They are mostly Ruby and in particular Rails focused but the topics are applicable to any software programming. For example, I've really learned a great deal about TDD from watching this.</p>
-
-<p>The Github <a href="https://github.com/garybernhardt/destroy-all-software-extras">archive</a> is useful, especially the <a href="https://github.com/garybernhardt/sucks-rocks">Suck/Rocks</a> Rails app. His <a href="https://github.com/garybernhardt/dotfiles">Git</a> config file is also really handy and I really like his log formatting. I would have liked to see him post a larger sample Rails app to Github (or for the ultimate in wishful thinking - the code for the Destroy All Software site). It would expand upon how his ideas work when confronted with the complexity and messiness of a real world system.</p>
-
-<p>Overall I highly recommend the series for any programmer regardless of what language you are using. Unfortunately I believe he's stopping soon but you get access to the entire back catalog with a subscription and they're well worth it.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Year Update and Reflections]]></title>
-    <link href="http://www.gerardcondon.com/blog/2013/02/23/year-update-and-reflections/"/>
-    <updated>2013-02-23T21:52:00+00:00</updated>
-    <id>http://www.gerardcondon.com/blog/2013/02/23/year-update-and-reflections</id>
-    <content type="html"><![CDATA[<p>It's been a year, give or take, since I started looking into iOS development, and I wanted to write a post to reflect on where I am and what are the next steps.</p>
-
-<h2>Progress on iOS to Date</h2>
-
-<ul>
-<li><p>I spent the first three months of the year learning Objective C and hacking on some small programs.</p></li>
-<li><p>I spent some time experimenting with Core Data and MVC and trying to get an automated testing system up and running.</p></li>
-<li><p>The summer months were quiet due to work commitments. The project I was working on switched to JavaScript which I hadn't really used before. Due to this, I spent a lot of time learning JavaScript and web frontend and backend development.</p></li>
-<li><p>After the summer I came back to the app with a better understanding of MVC as implemented in iOS and Core Data and I started working on it again. I read up on TDD and started implemented tests using Cucumber and Calabash. That took me up to about October.</p></li>
-<li><p>Work has stalled on it since then due to a combination of real life commitments from both family life and work. And also Skyrim! Curse you Skyrim and the hours I sank into it :)</p></li>
-</ul>
-
-
-<h2>Current Status</h2>
-
-<p>Here's where I am currently</p>
-
-<ul>
-<li><p>App work: I didn't get as much done as I had planned at the start of last year. I got diverted in other areas, namely:</p></li>
-<li><p>Testing - TDD &amp; BDD: I hadn't planned to look at any of this but ended up spending a lot of time here and learning a great deal. Familiarizing myself with this way of programming was probably the biggest benefit I gained from the last years experimentation. I probably could have completed the app if I didn't spend so much time on TDD and tinkering with automated testing setups on Jenkins. However I wouldn't have learned anywhere near as much about proper programming techniques if I did.</p></li>
-<li><p>JavaScript: I spent a good deal of time learning proper JavaScript development. The basic syntax is very similar to Java which I already knew. However I wanted to learn how to program using JavaScript correctly i.e. modular code using RequireJS, TDD using Jasmine etc.</p></li>
-<li><p>Ruby and Rails: again I had not planned on researching any of this but I got interested in it while looking at JavaScript. Have done a few tutorials and would like to write a Rails app at some stage.</p></li>
-</ul>
-
-
-<p>I spent a lot of time over the last year becoming proficient in web app and backend development in JavaScript for a work project. I've been really enjoying this. My only previous experience of JavaScript and web development was back in college around 2000 and I wasn't too taken with it compared to Java and C development. But looking at it now and in combination with backends like Rails, I've been really impressed. I'm kind of kicking myself for tuning out on what was happening in web development over the past decade. I plan to branch out and do some posts on what I used to ramp up on this.</p>
-
-<p>On the iOS front I feel that I have a good knowledge of Objective C. However the issue is finding time to finish the app. Any time I was able to set aside a sizable chunk of time I got a lot done but getting that time is the key.</p>
-
-<h2>Reflections</h2>
-
-<p>I think working on this side project has made me expand my horizons more as a developer. I couldn't have predicted the areas that I would have become interested in at the start of last year. I don't think it's a coincidence that as I've started looking at more stuff outside of work, that my work projects have become more interesting. I feel like I'm able to bring so much more to a project now especially in the areas of TDD and design.</p>
-
-<p>Admittedly I haven't pursued the iOS work 100%, but I feel that the other languages I've been exposed to compensate for that. I think it was better to start out with iOS and then divert into other topics rather than not do any side work at all.</p>
-
-<p>However at the end of the day the reality is that I haven't shipped anything on iOS yet. I've been justifying this to myself by claiming all these other intangible benefits. Given what I've learned, I don't think that I've wasted my time but still I'd like to get some iOS project finished. Unfortunately given my current life and work commitments I probably won't have time to work on it over the next three months. In the meantime, I'll post about my JavaScript and TDD experiences.</p>
-
-<p>As regards the blog, looking back I am happy enough with what was posted in the past year. The main thing I'm not happy with is the regularity of the postings. The same things that have stopped me doing much software work, have also stopped me publishing much. In future I want to maintain a more regular posting rate. I aim to post at least once a fortnight and hopefully once a week.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Managing Sub-Modules with Git Subtree]]></title>
-    <link href="http://www.gerardcondon.com/blog/2012/11/05/managing-sub-modules-with-git-subtree/"/>
-    <updated>2012-11-05T23:30:00+00:00</updated>
-    <id>http://www.gerardcondon.com/blog/2012/11/05/managing-sub-modules-with-git-subtree</id>
-    <content type="html"><![CDATA[<p>I've been using Git for a while now, both at work and also for my iOS projects. I'm really liking it and have nearly sorted out my workflow with it. One problem that remains for me though is how to manage external dependencies. If I need to include a library from Github for example, how do I integrate it with my source.</p>
-
-<p>The main issues that I want to solve are</p>
-
-<ul>
-<li><p>What happens if the external library disappears? This is especially relevant for online sources like Github. Given the brittle nature of the web, I think we can take it as a given that a lot of these Github repositories will be deleted over the coming years. In this scenario I need to have a local copy of the code as a backup.</p></li>
-<li><p>I should be able to update the local code with the latest or a specific tag from the external repository.</p></li>
-<li><p>I want to be able to create common libraries for my own code which I can share between applications.</p></li>
-<li><p>It may be that I will need to modify the code, so how do I maintain those changes. Perhaps I will need to push those changes to the external repository. This seems likely for my own common libraries.</p></li>
-<li><p>I want to be able to check out all the code needed to build an application from the source control using a single checkout/clone command. This means that each application will have a full copy of all the code that is needed to build it.</p></li>
-</ul>
-
-
-<p>One solution that I've seen used in other projects is to use git submodule links. A git submodule points to a version of an external repository. The ones I've seen for iOS libraries will usually point to Github. When you run the <code>git submodule init</code> command, git will follow these links and download the source into your project.</p>
-
-<p>However in researching this, other people have reported problems using git submodules. They don't seem as simple and as usable as I would need. I'm seeing issues on <a href="http://codingkilledthecat.wordpress.com/2012/04/28/why-your-company-shouldnt-use-git-submodules/">sites</a> regarding detached heads, branching, different versions etc. I just know that I will hit all these issues and probably a few more besides!</p>
-
-<p>In looking for an alternative I came across git subtrees on Wolf Rentzsch's <a href="http://rentzsch.tumblr.com/post/22061209807/apps-i-love-git-subtree">site</a>. This seems to fit all my needs and appears less error prone than git submodules. The code can be downloaded <a href="https://github.com/rentzsch/git-subtree">here</a> and here's a good <a href="http://psionides.eu/2010/02/04/sharing-code-between-projects-with-git-subtree/">tutorial</a> on using subtrees.</p>
-
-<p>My basic usage of it, i.e. to integrate a library from Github would be something like
-<code>git subtree add --prefix=GCUtils/External/CocoaLumberjack --squash https://github.com/robbiehanson/CocoaLumberjack.git master</code>
-I use the squash option to compress all the commit history of the library to just one commit message in my repository.</p>
-
-<p>One issue I ran into was adding a project which itself contained submodules. In this situation I search and find all the .gitmodules files and add those manually as subtrees in my repository.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Setting up Calabash on iOS]]></title>
-    <link href="http://www.gerardcondon.com/blog/2012/10/22/setting-up-calabash-on-ios/"/>
-    <updated>2012-10-22T23:38:00+01:00</updated>
-    <id>http://www.gerardcondon.com/blog/2012/10/22/setting-up-calabash-on-ios</id>
-    <content type="html"><![CDATA[<p>I've been implementing some new features in iOS and in the process refactoring some existing code. As I've been making these changes, I began to feel that the code was reaching a tipping point where I was as likely to break existing features as successfully add the new functionality.
-In particular I was experimenting with table view controllers and there are a lot of functions to override depending on what behaviour you want. I was finding that changes for one type of behaviour were impacting functionality that I thought I had solved previously. I hadn't been doing much automated testing up to now apart from some unit testing, so I was worried about adding regression bugs.</p>
-
-<p>I decided to take a break from coding in order to implement some proper tests and specifically I wanted to do some UI testing. For this I chose the Calabash framework. This is developed by the people at <a href="http://lesspainful.com">Less Painful</a>. One of them, Karl Krukow, has a detailed <a href="http://blog.lesspainful.com/2012/03/07/Calabash-iOS/">post</a> comparing Calabash to the other automated frameworks out there.</p>
-
-<h1>Cucumber</h1>
-
-<p>Calabash is based on a Ruby test framework called <a href="http://cukes.info">Cucumber</a>. Cucumber allows for tests to be written in high level language called Gherkin. Gherkin is written in natural language and so can be understood by anyone - not just developers. It acts as documentation as well as a test framework. I could see this as being very useful when writing an application for a client. By giving them the Cucumber tests, they can see in plain English what is being implemented and should be able to give constructive feedback. Also the tests are automated and are run from the command line.</p>
-
-<p>While learning Cucumber the two main resources I used were</p>
-
-<ul>
-<li>The <a href="http://cukes.info">Cucumber</a> website which has a number of tutorials and a great wiki.</li>
-<li>The Pragmatic Programmers' Cucumber <a href="http://pragprog.com/book/hwcuc/the-cucumber-book">book</a>. This is an excellent book. I highly recommend reading this before implementing any tests.</li>
-</ul>
-
-
-<h1>Installation</h1>
-
-<p>Cucumber requires Ruby to be installed on your system (I had previously installed it while setting up Octopress). The Calabash install process is documented on their Github <a href="https://github.com/calabash/calabash-ios">page</a>. I used the Fast Track installer using these steps.</p>
-
-<ul>
-<li><code>gem install calabash-cucumber</code></li>
-<li><code>calabash-ios setup</code></li>
-<li><code>calabash-ios sim acc</code></li>
-<li><code>calabash-ios gen</code></li>
-</ul>
-
-
-<p>This created initial test files which you can run from the command line using <code>cucumber</code>.</p>
-
-<p>One thing that worries me about the install process is that it creates a new scheme specifically for Calabash use. I don't really like this solution as it breaks DRY and requires keeping the original scheme and the new Calabash scheme in sync. From my experience in programming, anything that is required to be kept manually in sync, won't be. I would have preferred for the Calabash libraries to only be included in the Debug target of the main scheme or for a new target to be created on that scheme. <strong>Update:</strong> Since I wrote this post Trevor Harmon has been in touch with an alternative approach to just link in the libraries for the Debug build - more info <a href="https://groups.google.com/forum/#!topic/calabash-ios/gfDLRvYqIyo/discussion">here</a>.</p>
-
-<p>A good blog on the Calabash install and initial test setup is <a href="http://www.moncefbelyamani.com/ios-automated-testing-with-calabash-cucumber-ruby/">here</a>.</p>
-
-<h1>First Steps with Calabash</h1>
-
-<ul>
-<li><p>I think the Calabash <a href="https://github.com/calabash/calabash-ios/wiki/01-Getting-started-guide">wiki</a> is the best starting point for Calabash.</p></li>
-<li><p>The first thing I tried was the console using <code>calabash-ios console</code>. I recommend this to play around and see what objects are visible to Calabash.</p></li>
-<li><p>The command <code>query("view")</code> shows everything on screen. We can isolate specific views by filtering on the accessibility label. In some cases this wasn't useful for me. For example, I have a table where each cell has a text field. Each of these has the same accessibility label so instead I filtered using the :text property.</p></li>
-<li><p>We can find out what accessibility labels are visible using <code>label "view"</code>. Once we have a label we can do things like touching or swiping on the view or checking that the view exists using <code>view_with_mark_exists()</code>.</p></li>
-<li><p>The accessibility inspector can be used to identify the classes of UI elements and the on-screen hierarchy. Launch this from XCode under the menu item XCode->Open Developer Tool->Accessibility Inspector.</p></li>
-<li><p>I found that the built-in Calabash <a href="https://github.com/calabash/calabash-ios/blob/master/calabash-cucumber/features/step_definitions/calabash_steps.rb">steps</a> were very useful to base mine on.</p></li>
-<li><p>A problem I had was querying for the currently active textfield from a table of textfields. The issue was that all those textfields had the same placeholder text. To get the correct one I filtered by <code>isUserInteractionEnabled</code>.</p></li>
-<li><p>Errors in the name of the selector passed to the <code>backdoor</code> command show up as connection errors.</p></li>
-<li><p>Initially I struggled with writing the tests at the correct level. The temptation is to be really specific in terms of UI elements e.g. When I touch X button and swipe on Y label. However you really need to describe them at a higher level e.g. when I add a new contact, when I delete an appointment etc.</p></li>
-<li><p>Initially I was unable to run a backdoor command in the before hook, which runs before each test. I had wanted to reset my Core Data database &amp; UI at this time. The reason here is that the Calabash framework itself uses before hooks to connect to the app and I think my hook was being called before theirs. To solve this Calabash added support for defining an <code>on_launch</code> function which is called after the simulator has started. To implement use the following template in the <code>hooks.rb</code> file.</p>
-
-<pre><code>  class CallbackWorld
-   include Calabash::Cucumber::Operations
-   def on_launch
-     # here I can call backdoor and reset the app state
-   end
-  end
-
-  World do
-   CallbackWorld.new
-  end
-</code></pre></li>
-<li><p>My typical test layout is to use</p>
-
-<ul>
-<li><strong>Given</strong> to put the system in a specific state - this is where I use the backdoor function to set up the app model. I do things like erase all the Core Data objects here (from <a href="http://stackoverflow.com/questions/1077810/delete-reset-all-entries-in-core-data">Stack Overflow</a>) to ensure that each test starts with a clean slate.</li>
-<li><strong>When</strong> to perform an action. These are driven through the app UI.</li>
-<li><strong>Then</strong> to check the results of the actions. I've typically done these using the app UI e.g. checking for the existence of views, the state of the UI etc. As an alternative I could also use the backdoor function to check the model here.</li>
-</ul>
-</li>
-</ul>
-
-
-<h1>Issues with Calabash.</h1>
-
-<p>It wasn't all smooth sailing as I did run into a few issues along the way.</p>
-
-<ul>
-<li><p>I wasn't able to get it to integrate with my installation of Jenkins, which is unfortunate as Cucumber can output in JUnit format so it's a perfect fit for Jenkins. The problem here is on my side as lots of users on the Calabash Google Group are running Calabash from their CI system. I think it due to the jenkins user not being able to launch the iOS simulator. I need to investigate further on this.</p>
-
-<p>  <strong>Update:</strong> Ru Cindrea emailed me to suggest another way of running Jenkins which may fix this problem.</p>
-
-<blockquote><p>I used to launch Jenkins like this: "sudo launchctl load /Library/LaunchDaemons/org.jenkins-ci.plist" - which seems to be the recommended way on a lot of sites I have found.</p>
-
-<p>However, I now launch it under my own user, using "nohup java -jar /Applications/Jenkins/jenkins.war --httpPort=8080" - and everything works perfectly! I can simply use "cucumber -f junit -o results -f pretty" to start the simulator, run the tests and get my JUnit report.</p></blockquote></li>
-<li><p>I had found that Calabash would frequently drop the connection to the app and fail the tests as a result. Once a test run started seeing these errors for a test (<code>Unable to make connection to Calabash Server at http://localhost:37265/</code>) then each following test in the run would show the same error. Rerunning the tests would normally sort it out in the next run or two. Both the app and Calabash would be running fine but just couldn't seem to connect to each other. This unreliability was the most disappointing part of the tests for me.</p>
-
-<p>  <strong>Update:</strong> Karl pointed me to the Google Group and I saw some <a href="https://groups.google.com/forum/?fromgroups=#!topic/calabash-ios/NdExaULsHz4">updates</a> that were needed to work with the new iOS 6 Simulator. I had seen that black screen issue as part of trying to get it working with Jenkins. So I've updated to the latest version of Calabash and on the first test run, everything worked fine. Hopefully this will resolve the issue in future.</p></li>
-</ul>
-
-
-<h1>Initial Impressions &amp; Next Steps</h1>
-
-<p>I have to say that I'm very impressed with Calabash and indeed Cucumber in general. I think that writing these type of tests beforehand would be helpful for requirements gathering and feature design. The tests themselves are not only useful as tests but also as documentation. Unlike Word docs, we can be guaranteed that these accurately describe the current state of the system, given that they are actually run against it.</p>
-
-<p>My plans for the future</p>
-
-<ul>
-<li>I need to add more tests. I initially tested this with just a single feature and that's worked out so well that I'll add this to the other features.</li>
-<li>From now on, I also plan to write these type of tests for a feature before implementing it. I think that the Cucumber tests especially with the language they are written in are very effective when thinking through the behaviour of the app. They force you to describe it in high level terms rather than just diving into coding.</li>
-<li>My tests currently have a lot of duplication. Once I have written a lot more of them and I gain more Ruby experience, I will look to refactor them.</li>
-</ul>
-
-
-<p><strong>Update:</strong> After my initial post Karl Krukow emailed me with some updates on the issues I was having and I've integrated those into the blog post. He pointed out that there is a <a href="https://groups.google.com/forum/?fromgroups#!forum/calabash-ios">Google Group</a> for Calabash on iOS where you can ask questions and share information.</p>
+<p>One technical detail about the API is that it is in XML rather than JSON. This means that I can't use Ajax or JSONP to get the data, due to the same origin policy. Instead I had to bounce the results through <a href="http://developer.yahoo.com/yql/">YQL</a>. YQL exposes a SQL like interface to web data. I'm only using a basic 'select all' query here but looking at their site you can do lots of cool and complex stuff. I found a good <a href="http://www.cypressnorth.com/blog/programming/cross-domain-ajax-request-with-xml-response-for-iefirefoxchrome-safari-jquery/">tutorial</a> from Cypress North on how to use YQL in your code to consume an XML API.</p>
 ]]></content>
   </entry>
   
