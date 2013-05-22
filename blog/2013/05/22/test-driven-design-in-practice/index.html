@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Apple's New Introduction to iOS Development - Gerard Condon's Blog</title>
+  <title>Test Driven Design in practice - Gerard Condon's Blog</title>
   <meta name="author" content="Gerard Condon">
 
   
-  <meta name="description" content="Apple has posted a new guide to iOS development which ties together all the various strands of creating an app. (via Loop Insight). Looks really nice &hellip;">
-  <meta name="keywords" content="Apple, iOS, Development">
+  <meta name="description" content="I recently tried implementing a JavaScript project at work using the testing methods I&#8217;ve learned from the Destroy All Software Screencast. It &hellip;">
+  <meta name="keywords" content="TDD, JavaScript">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://www.gerardcondon.com/blog/2012/02/18/apple-new-introduction-to-ios-development/">
+  <link rel="canonical" href="http://www.gerardcondon.com/blog/2013/05/22/test-driven-design-in-practice/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -82,7 +82,7 @@
   
   <header>
     
-      <h1 class="entry-title">Apple's New Introduction to iOS Development</h1>
+      <h1 class="entry-title">Test Driven Design in Practice</h1>
     
     
       <p class="meta">
@@ -98,14 +98,18 @@
   
 
 
-<time datetime="2012-02-18T09:44:00+00:00" pubdate data-updated="true">Feb 18<span>th</span>, 2012</time>
+<time datetime="2013-05-22T21:35:00+01:00" pubdate data-updated="true">May 22<span>nd</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>Apple has posted a <a href="https://developer.apple.com/library/ios/#referencelibrary/GettingStarted/RoadMapiOS/Introduction/Introduction.html">new guide</a> to iOS development which ties together all the various strands of creating an app. (via <a href="http://www.loopinsight.com/2012/02/17/apple-posts-guide-to-start-developing-ios-apps/">Loop Insight</a>). Looks really nice.</p>
+<div class="entry-content"><p>I recently tried implementing a JavaScript project at work using the testing methods I&#8217;ve learned from the <a href="http://www.destroyallsoftware.com">Destroy All Software</a> Screencast. It ended up being some of the best code I&#8217;ve written. The interfaces grew neatly, it wasn&#8217;t not over designed and it was completely covered by tests. It&#8217;s the project that I have the most confidence in its correctnesss. It&#8217;s nice to know that despite any modifications in future, as long as all the tests pass it will pretty much always work first time.</p>
+
+<p>Anywhere I&#8217;ve worked up to now, testing was always seen as something that you implemented after the fact. Code coverage was the main driver of the testing. However this approach completely misses the input that TDD has on the design of the application. By writing applications so that they can be tested easily, they turn out to be much better designed. They are less coupled and all the dependencies are visible. Having the design emerge from the growing system is better than imposing over elaborate architecture and patterns top down.</p>
+
+<p>I found a couple of good resources recently on testing and the impact it has on your code. This is a good <a href="http://vimeo.com/15007792">talk</a> by Michael Feathers on the synergy between testing and design. He shows how testing problems are indicative of design problems. Misko Hevery&#8217;s <a href="http://misko.hevery.com">site</a> has some great presentations and resources on how to design code that is testable.</p>
 </div>
 
 
@@ -128,12 +132,12 @@
   
 
 
-<time datetime="2012-02-18T09:44:00+00:00" pubdate data-updated="true">Feb 18<span>th</span>, 2012</time>
+<time datetime="2013-05-22T21:35:00+01:00" pubdate data-updated="true">May 22<span>nd</span>, 2013</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/development/'>Development</a>
+    <a class='category' href='/blog/categories/development/'>development</a>
   
 </span>
 
@@ -142,7 +146,7 @@
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.gerardcondon.com/blog/2012/02/18/apple-new-introduction-to-ios-development/" data-via="" data-counturl="http://www.gerardcondon.com/blog/2012/02/18/apple-new-introduction-to-ios-development/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.gerardcondon.com/blog/2013/05/22/test-driven-design-in-practice/" data-via="" data-counturl="http://www.gerardcondon.com/blog/2013/05/22/test-driven-design-in-practice/" >Tweet</a>
   
   
   
@@ -151,10 +155,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2012/02/17/adding-code-coverage-to-unit-tests/" title="Previous Post: Adding Code Coverage to Unit Tests for Xcode 4.2">&laquo; Adding Code Coverage to Unit Tests for Xcode 4.2</a>
+        <a class="basic-alignment left" href="/blog/2013/05/05/learning-javascript/" title="Previous Post: Learning JavaScript">&laquo; Learning JavaScript</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2012/02/21/code-coverage-updates-for-xcode-4-dot-3/" title="Next Post: Code Coverage Updates for Xcode 4.3">Code Coverage Updates for Xcode 4.3 &raquo;</a>
       
     </p>
   </footer>

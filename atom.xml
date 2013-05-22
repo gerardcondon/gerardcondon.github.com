@@ -4,7 +4,7 @@
   <title><![CDATA[Gerard Condon's Blog]]></title>
   <link href="http://www.gerardcondon.com/atom.xml" rel="self"/>
   <link href="http://www.gerardcondon.com/"/>
-  <updated>2013-05-12T23:32:56+01:00</updated>
+  <updated>2013-05-22T23:29:30+01:00</updated>
   <id>http://www.gerardcondon.com/</id>
   <author>
     <name><![CDATA[Gerard Condon]]></name>
@@ -12,6 +12,19 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Test Driven Design in practice]]></title>
+    <link href="http://www.gerardcondon.com/blog/2013/05/22/test-driven-design-in-practice/"/>
+    <updated>2013-05-22T21:35:00+01:00</updated>
+    <id>http://www.gerardcondon.com/blog/2013/05/22/test-driven-design-in-practice</id>
+    <content type="html"><![CDATA[<p>I recently tried implementing a JavaScript project at work using the testing methods I&#8217;ve learned from the <a href="http://www.destroyallsoftware.com">Destroy All Software</a> Screencast. It ended up being some of the best code I&#8217;ve written. The interfaces grew neatly, it wasn&#8217;t not over designed and it was completely covered by tests. It&#8217;s the project that I have the most confidence in its correctnesss. It&#8217;s nice to know that despite any modifications in future, as long as all the tests pass it will pretty much always work first time.</p>
+
+<p>Anywhere I&#8217;ve worked up to now, testing was always seen as something that you implemented after the fact. Code coverage was the main driver of the testing. However this approach completely misses the input that TDD has on the design of the application. By writing applications so that they can be tested easily, they turn out to be much better designed. They are less coupled and all the dependencies are visible. Having the design emerge from the growing system is better than imposing over elaborate architecture and patterns top down.</p>
+
+<p>I found a couple of good resources recently on testing and the impact it has on your code. This is a good <a href="http://vimeo.com/15007792">talk</a> by Michael Feathers on the synergy between testing and design. He shows how testing problems are indicative of design problems. Misko Hevery&#8217;s <a href="http://misko.hevery.com">site</a> has some great presentations and resources on how to design code that is testable.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Learning JavaScript]]></title>
@@ -690,35 +703,6 @@ gcovr -r $WORKSPACE/$JOB_NAME -x &gt; ${WORKSPACE}/coverage.xml
     <content type="html"><![CDATA[<p>Apple has just announced <a href="http://www.apple.com/macosx/mountain-lion">Mountain Lion</a>, the latest update to OS X, and it looks to have some interesting features. The main one I&#8217;m looking forward to is the addition of <a href="http://www.apple.com/macosx/mountain-lion/features.html#airplay">AirPlay</a> to the Mac. I love being able to stream video from the iPhone to the Apple TV. It&#8217;s really handy for the iTunes U lectures. However for normal videos that I have on the Mac, it&#8217;s annoying to have to convert them via <a href="http://www.inmethod.com/forum/posts/list/4529.page">Air Video Server</a> on the Mac and then use <a href="http://www.inmethod.com/air-video/index.html">Air Video</a> on the iPhone to get them to display on the Apple TV. Having AirPlay on the Mac stream directly to the Apple TV will be very handy. According to the docs, it&#8217;s just for streaming applications and presentations but perhaps they will open it up to interactive applications in future. I wonder what the latency would be like on this and if eventually it would be possible to play games via the Apple TV.</p>
 
 <p>I&#8217;m finding that as I integrate more and more Apple devices into my setup, they all make each other work better. AirPlay is one example of this. Another is iTunes match which really starts to excel when you have multiple devices. Previously it was impossible to keep multiple iTunes in sync. It was a nightmare trying to add new music as it had to be added to each library separately. Now my music library is always in sync everywhere and when I add music to one library, it gets uploaded and is available on all others immediately. I haven&#8217;t always been too impressed with Apple&#8217;s cloud services (i.e. MobileMe was a bit of a disaster) but they&#8217;ve got it right with iTunes Match.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Code Coverage Updates for Xcode 4.3]]></title>
-    <link href="http://www.gerardcondon.com/blog/2012/02/21/code-coverage-updates-for-xcode-4-dot-3/"/>
-    <updated>2012-02-21T00:02:00+00:00</updated>
-    <id>http://www.gerardcondon.com/blog/2012/02/21/code-coverage-updates-for-xcode-4-dot-3</id>
-    <content type="html"><![CDATA[<p>In a previous <a href="http://www.gerardcondon.com/blog/2012/02/17/adding-code-coverage-to-unit-tests/">post</a>, I described how I got code coverage up and running in Xcode 4.2. Apple have just released Xcode 4.3 and unfortunatly updating to this has broken my code coverage. The reason is that 4.3 removes the /Developer folder and moves this internally to the Xcode.app package. While this has good consequences - it should be possible to update Xcode from the App Store like a normal app - unfortunately it has also removed the libprofile_rt library from /Developer/usr/lib. I haven&#8217;t been able to find a new version of this library in Xcode 4.3. When I tried using the version from 4.2, I got &#8220;mach-o but wrong architecture&#8221; errors.</p>
-
-<p>This means that when building my unit tests with Coverage I get link errors saying that I am missing llvm_gcda functions (llvm_gcda_start_file, llvm_gcda_increment_indirect_counter, llvm_gcda_emit_function, llvm_gcda_emit_arcs). I searched on Google to try and find a solution for 4.3 but it seemed all solutions were for 4.2 so I needed to try to solve this myself. The solution I came up with is fairly hacky. I&#8217;m hoping that as more people upgrade to 4.3, a better solution will be found and I can switch to that.</p>
-
-<p>My solution is to take the actual file which contained the gcda functions in libprofile_rt, add it to my own source code and compile it myself. The file in question can be found on llvm.org - <a href="https://llvm.org/svn/llvm-project/llvm/trunk/runtime/libprofile/GCDAProfiling.c">here</a>. To get it to build locally I deleted the win32 and sys includes (lines 27 to 31 inclusive) and replaced the llvm include (line 23) with <code>#include "stdint.h"</code>. This builds fine using the Coverage build configuration and outputs the same gcda and gcno files as before. To make sure that this code doesn&#8217;t end up in the released project by accident, I&#8217;ve included it in the unit test bundle rather than the app bundle. This is fine for me as I only need coverage when running the tests anyway.</p>
-
-<p><strong>Update:</strong> Some feedback from Tom Black, who emailed me to point out that libprofile_rt can be found in <code>/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/</code>
-However this library did not work for either of us. Instead we got errors like
-<code>The bundle “GCUtilsTests.octest” couldn’t be loaded because it is damaged or missing necessary resources.</code>
-<code>Library not loaded: @executable_path ... libprofile_rt.dylib</code>
-<code>Reason: image not found</code><br/>
-Also this library didn&#8217;t produce .gcda files but instead generated .dia files which didn&#8217;t work in Coverflow.</p>
-
-<p>What worked for Tom, but not for me, was not to include libprofile at all. This removed these errors and another incompatible binary error. Now however he got the following error.
-<code>Detected an attempt to call a symbol in system libraries that is not present on the iPhone:
-fopen$UNIX2003 called from function llvm_gcda_start_file</code>
-He found the solution to this issue <a href="http://www.infinite-loop.dk/blog/2012/02/code-coverage-and-fopen-unix2003-problems/">here</a>. I still got link errors when I followed this though so I need to stick with my original solution.</p>
-
-<p><strong>Update:</strong> Another commenter Rajiv emailed me to say that creating a new target for his project made the coverage work for him. It generated the .gcda and .gcno files when he exited using exit(0). I&#8217;ve tried creating a new simple iOS app and I don&#8217;t get any errors for this when I enable coverage.</p>
-
-<p>One thing which might explain why it still doesn&#8217;t work for some of my projects is the type of project being built. My original project was a static library. I tried to create a new static library project and when I try to enable coverage I get the same link errors as above.</p>
 ]]></content>
   </entry>
   
