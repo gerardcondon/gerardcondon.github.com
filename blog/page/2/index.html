@@ -9,7 +9,7 @@
   <meta name="author" content="Gerard Condon">
 
   
-  <meta name="description" content="I&#8217;ve been implementing some new features in iOS and in the process refactoring some existing code. As I&#8217;ve been making these changes, I &hellip;">
+  <meta name="description" content="I&#8217;ve been using Git for a while now, both at work and also for my iOS projects. I&#8217;m really liking it and have nearly sorted out my &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -79,6 +79,65 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/11/05/managing-sub-modules-with-git-subtree/">Managing Sub-Modules With Git Subtree</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-05T23:30:00+00:00" pubdate data-updated="true">Nov 5<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&#8217;ve been using Git for a while now, both at work and also for my iOS projects. I&#8217;m really liking it and have nearly sorted out my workflow with it. One problem that remains for me though is how to manage external dependencies. If I need to include a library from Github for example, how do I integrate it with my source.</p>
+
+<p>The main issues that I want to solve are</p>
+
+<ul>
+<li><p>What happens if the external library disappears? This is especially relevant for online sources like Github. Given the brittle nature of the web, I think we can take it as a given that a lot of these Github repositories will be deleted over the coming years. In this scenario I need to have a local copy of the code as a backup.</p></li>
+<li><p>I should be able to update the local code with the latest or a specific tag from the external repository.</p></li>
+<li><p>I want to be able to create common libraries for my own code which I can share between applications.</p></li>
+<li><p>It may be that I will need to modify the code, so how do I maintain those changes. Perhaps I will need to push those changes to the external repository. This seems likely for my own common libraries.</p></li>
+<li><p>I want to be able to check out all the code needed to build an application from the source control using a single checkout/clone command. This means that each application will have a full copy of all the code that is needed to build it.</p></li>
+</ul>
+
+
+<p>One solution that I&#8217;ve seen used in other projects is to use git submodule links. A git submodule points to a version of an external repository. The ones I&#8217;ve seen for iOS libraries will usually point to Github. When you run the <code>git submodule init</code> command, git will follow these links and download the source into your project.</p>
+
+<p>However in researching this, other people have reported problems using git submodules. They don&#8217;t seem as simple and as usable as I would need. I&#8217;m seeing issues on <a href="http://codingkilledthecat.wordpress.com/2012/04/28/why-your-company-shouldnt-use-git-submodules/">sites</a> regarding detached heads, branching, different versions etc. I just know that I will hit all these issues and probably a few more besides!</p>
+
+<p>In looking for an alternative I came across git subtrees on Wolf Rentzsch&#8217;s <a href="http://rentzsch.tumblr.com/post/22061209807/apps-i-love-git-subtree">site</a>. This seems to fit all my needs and appears less error prone than git submodules. The code can be downloaded <a href="https://github.com/rentzsch/git-subtree">here</a> and here&#8217;s a good <a href="http://psionides.eu/2010/02/04/sharing-code-between-projects-with-git-subtree/">tutorial</a> on using subtrees.</p>
+
+<p>My basic usage of it, i.e. to integrate a library from Github would be something like
+<code>git subtree add --prefix=GCUtils/External/CocoaLumberjack --squash https://github.com/robbiehanson/CocoaLumberjack.git master</code>
+I use the squash option to compress all the commit history of the library to just one commit message in my repository.</p>
+
+<p>One issue I ran into was adding a project which itself contained submodules. In this situation I search and find all the .gitmodules files and add those manually as subtrees in my repository.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -777,44 +836,6 @@ gcovr -r $WORKSPACE/$JOB_NAME -x &gt; ${WORKSPACE}/coverage.xml
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/02/22/os-x-mountain-lion/">OS X Mountain Lion</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-22T00:06:00+00:00" pubdate data-updated="true">Feb 22<span>nd</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Apple has just announced <a href="http://www.apple.com/macosx/mountain-lion">Mountain Lion</a>, the latest update to OS X, and it looks to have some interesting features. The main one I&#8217;m looking forward to is the addition of <a href="http://www.apple.com/macosx/mountain-lion/features.html#airplay">AirPlay</a> to the Mac. I love being able to stream video from the iPhone to the Apple TV. It&#8217;s really handy for the iTunes U lectures. However for normal videos that I have on the Mac, it&#8217;s annoying to have to convert them via <a href="http://www.inmethod.com/forum/posts/list/4529.page">Air Video Server</a> on the Mac and then use <a href="http://www.inmethod.com/air-video/index.html">Air Video</a> on the iPhone to get them to display on the Apple TV. Having AirPlay on the Mac stream directly to the Apple TV will be very handy. According to the docs, it&#8217;s just for streaming applications and presentations but perhaps they will open it up to interactive applications in future. I wonder what the latency would be like on this and if eventually it would be possible to play games via the Apple TV.</p>
-
-<p>I&#8217;m finding that as I integrate more and more Apple devices into my setup, they all make each other work better. AirPlay is one example of this. Another is iTunes match which really starts to excel when you have multiple devices. Previously it was impossible to keep multiple iTunes in sync. It was a nightmare trying to add new music as it had to be added to each library separately. Now my music library is always in sync everywhere and when I add music to one library, it gets uploaded and is available on all others immediately. I haven&#8217;t always been too impressed with Apple&#8217;s cloud services (i.e. MobileMe was a bit of a disaster) but they&#8217;ve got it right with iTunes Match.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -830,6 +851,10 @@ gcovr -r $WORKSPACE/$JOB_NAME -x &gt; ${WORKSPACE}/coverage.xml
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/06/04/the-design-of-icloud/">The Design of iCloud</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/05/22/test-driven-design-in-practice/">Test Driven Design in practice</a>
@@ -867,10 +892,6 @@ gcovr -r $WORKSPACE/$JOB_NAME -x &gt; ${WORKSPACE}/coverage.xml
         <a href="/blog/2013/01/28/stanford-ios-course-companion-book/">Stanford iOS Course Companion Book</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2012/11/05/managing-sub-modules-with-git-subtree/">Managing Sub-Modules with Git Subtree</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -881,7 +902,14 @@ gcovr -r $WORKSPACE/$JOB_NAME -x &gt; ${WORKSPACE}/coverage.xml
 <section>
   <h1>About Me</h1>
   <p>I&#8217;m a software developer based in Cork, Ireland. I use JavaScript, C++ and Java in my day job and have started to create iPhone apps in my spare time.</p>
-  <p>Contact me at gercondonblog (at) gmail (dot) com</p>
+
+  <strong>Contact Details:</strong>
+
+  <ul>
+    <li><strong>Email:</strong> gercondonblog (at) gmail (dot) com</li>
+    <li><strong>Google Plus:</strong> <a href="https://plus.google.com/100711646677802807822?rel=author">Gerard Condon</a></li>
+    <li><strong>Twitter:</strong> <a href="https://twitter.com/gercondon">gercondon</a></li>
+</ul>
 </section>
   
 </aside>
