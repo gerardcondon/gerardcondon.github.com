@@ -4,7 +4,7 @@
   <title><![CDATA[Category: development | Gerard Condon's Blog]]></title>
   <link href="http://www.gerardcondon.com/blog/categories/development/atom.xml" rel="self"/>
   <link href="http://www.gerardcondon.com/"/>
-  <updated>2013-06-04T23:16:10+01:00</updated>
+  <updated>2013-07-10T23:53:41+01:00</updated>
   <id>http://www.gerardcondon.com/</id>
   <author>
     <name><![CDATA[Gerard Condon]]></name>
@@ -12,6 +12,24 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Automating Jasmine Unit Tests]]></title>
+    <link href="http://www.gerardcondon.com/blog/2013/07/10/automating-javascript-jasmine-unit-tests/"/>
+    <updated>2013-07-10T23:48:00+01:00</updated>
+    <id>http://www.gerardcondon.com/blog/2013/07/10/automating-javascript-jasmine-unit-tests</id>
+    <content type="html"><![CDATA[<p>For the first cut at automating my JavaScript unit testing, I started running them from the command line via <a href="http://phantomjs.org/">PhantomJS</a>. PhantomJS is a headless browser so it will render my HTML &amp; CSS and execute the JavaScript, but will not display it on the screen. The steps I followed were:</p>
+
+<ul>
+<li><p>I installed phantomjs from <a href="http://phantomjs.org/download.html">here</a> using homebrew <code>brew install phantomjs</code>.</p></li>
+<li><p>I got the command for running Phantom.js <a href="http://kilon.org/blog/2013/01/running-jasmine-tests-with-phantomjs/">here</a>.</p></li>
+<li><p>I found the default output from Phantom.js to be lacking in detail. I came across a good link <a href="http://blog.jphpsf.com/2012/10/31/running-Jasmine-tests-with-Phantom-js-or-Webdriver">here</a> which shows how to add stack traces on failure and how to add colours to the output using a console reporter.</p></li>
+</ul>
+
+
+<p>In future, I'd like to add this to a build system which will run jshint on my code and also do whatever minfication/optimizations are needed. It's looking like <a href="http://gruntjs.com/">Grunt</a> is a good tool for this so will investigate that further.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[The Design of iCloud]]></title>

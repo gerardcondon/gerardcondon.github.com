@@ -9,7 +9,7 @@
   <meta name="author" content="Gerard Condon">
 
   
-  <meta name="description" content="There&#8217;s been a lot of blog posts from developers recently about the problems with iCloud syncing. The Verge has a great summary here. There are &hellip;">
+  <meta name="description" content="For the first cut at automating my JavaScript unit testing, I started running them from the command line via PhantomJS. PhantomJS is a headless &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -50,7 +50,7 @@
   <header role="banner"><hgroup>
   <h1><a href="/">Gerard Condon's Blog</a></h1>
   
-    <h2>Journal of an software developer.</h2>
+    <h2>Journal of a software developer.</h2>
   
 </hgroup>
 
@@ -79,6 +79,51 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/07/10/automating-javascript-jasmine-unit-tests/">Automating Jasmine Unit Tests</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-10T23:48:00+01:00" pubdate data-updated="true">Jul 10<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>For the first cut at automating my JavaScript unit testing, I started running them from the command line via <a href="http://phantomjs.org/">PhantomJS</a>. PhantomJS is a headless browser so it will render my HTML &amp; CSS and execute the JavaScript, but will not display it on the screen. The steps I followed were:</p>
+
+<ul>
+<li><p>I installed phantomjs from <a href="http://phantomjs.org/download.html">here</a> using homebrew <code>brew install phantomjs</code>.</p></li>
+<li><p>I got the command for running Phantom.js <a href="http://kilon.org/blog/2013/01/running-jasmine-tests-with-phantomjs/">here</a>.</p></li>
+<li><p>I found the default output from Phantom.js to be lacking in detail. I came across a good link <a href="http://blog.jphpsf.com/2012/10/31/running-Jasmine-tests-with-Phantom-js-or-Webdriver">here</a> which shows how to add stack traces on failure and how to add colours to the output using a console reporter.</p></li>
+</ul>
+
+
+<p>In future, I&#8217;d like to add this to a build system which will run jshint on my code and also do whatever minfication/optimizations are needed. It&#8217;s looking like <a href="http://gruntjs.com/">Grunt</a> is a good tool for this so will investigate that further.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -513,56 +558,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/01/28/stanford-ios-course-companion-book/">Stanford iOS Course Companion Book</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-28T23:27:00+00:00" pubdate data-updated="true">Jan 28<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I previously <a href="http://www.gerardcondon.com/blog/2012/01/29/itunes-u-and-online-learning/">recommended</a> the Stanford iOS course and they now have a companion <a href="http://editorscut.com/Books/003ipadiphone/003ipadiphone-details.html">book</a> available for the iPad through iBooks.</p>
-
-<p>The content of this book is excellent and it really complements the course videos. I really like the code samples and how they are displayed dynamically on the iPad. They have really used the iBooks format well for these. Additionally all the code is available on <a href="https://github.com/editorscut/ec003-ipad-and-iphone-app-development">Github</a>.</p>
-
-<p>I highly recommend the book and I wish it was available when I originally watched the videos. Given the quality of the lectures and the book, Stanford could easily charge for this stuff - it was certainly equal to any introductory programming course I&#8217;ve attended at college. It seems inconceivable to me that this approach won&#8217;t form the basis of education in the years to come.</p>
-
-<p>It&#8217;s maybe a bit churlish to criticise a free book but still I do have some issues. These concern the format the book was released in and not its content.</p>
-
-<ul>
-<li><p>Firstly it was only released for iPad and not for iPhone. I would have liked to have had a reference version for iPhone.</p></li>
-<li><p>Also I don&#8217;t like the iBooks lock in. I really want to have this on my Macbook and/or Kindle to have open when programming. Here&#8217;s where an epub or pdf version would be a lot better. The <a href="http://pragprog.com">Pragmatic Programmers</a> company have shown the way forward with their ebook releases, giving multiple DRM free versions of their books.</p></li>
-</ul>
-
-
-<p>Apart from those minor nits though, this is an essential resource for learning iOS.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -576,6 +571,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/07/10/automating-javascript-jasmine-unit-tests/">Automating Jasmine Unit Tests</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/06/04/the-design-of-icloud/">The Design of iCloud</a>
@@ -611,10 +610,6 @@
     
       <li class="post">
         <a href="/blog/2013/02/23/year-update-and-reflections/">Year Update and Reflections</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/01/28/stanford-ios-course-companion-book/">Stanford iOS Course Companion Book</a>
       </li>
     
   </ul>
