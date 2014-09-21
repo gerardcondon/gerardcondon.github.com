@@ -4,7 +4,7 @@
   <title><![CDATA[Gerard Condon's Blog]]></title>
   <link href="http://www.gerardcondon.com/atom.xml" rel="self"/>
   <link href="http://www.gerardcondon.com/"/>
-  <updated>2013-07-10T23:53:41+01:00</updated>
+  <updated>2014-09-21T23:55:49+01:00</updated>
   <id>http://www.gerardcondon.com/</id>
   <author>
     <name><![CDATA[Gerard Condon]]></name>
@@ -12,6 +12,92 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Working With Typescript]]></title>
+    <link href="http://www.gerardcondon.com/blog/2014/09/19/working-with-typescript/"/>
+    <updated>2014-09-19T01:24:00+01:00</updated>
+    <id>http://www.gerardcondon.com/blog/2014/09/19/working-with-typescript</id>
+    <content type="html"><![CDATA[<p>For the past year and a half, my team at work have been using <a href="http://www.typescriptlang.com">TypeScript</a> to implement a large single page application in <a href="http://www.backbonejs.org">Backbone</a>. We&#8217;re over three quarters of the way through the project, closing in our our first release and here are my thoughts on using TypeScript to date.</p>
+
+<p>This is my first major foray into web development, so it also required ramping up on HTML, CSS and REST. Previously I had used JavaScript to implement the client side of a websocket API, but that project was non-GUI work.</p>
+
+<h2>Reasons for choosing TypeScript</h2>
+
+<p>The company has settled on TypeScript for web programming due to a number of factors.</p>
+
+<ul>
+<li><p>Firstly is the additional security/peace of mind provided by type checking. For example, this prevents a lot of mistakes in calling functions with the wrong parameters. It makes some refactorings easier, as the compiler can tell you when you&#8217;re calling functions that no longer exist or are passing the wrong types to a function.</p></li>
+<li><p>TypeScript adds classical Object-Oriented constructs to JavaScript e.g. interfaces, classes with inheritance. Rather than having to chose a library to implement inheritance, it is instead a first class language feature. I find this, along with having a proper super keyword to be much more usable in practice than prototypical inheritance.</p>
+
+<p>A nice feature is that TypeScript has support for implicit interfaces. The compiler will figure out if a class implements an interface rather than requiring that the class declares a list of implements X clauses in its definition. This reduces the friction of dealing with the type system.</p></li>
+<li><p>TypeScript is compatible with JavaScript so any library out there can be used with our code with no problems.</p></li>
+<li><p>Better tooling. The idea behind this was that, given that TypeScript has a proper type system, this would allow better tooling such as Intellisense. The theory was that programming in TypeScript would be a better experience because the IDE would be better.</p>
+
+<p>As an aside, I would question the value of Intellisense and the type of code it leads to. Take Java for example. When you combine Intellisense with modern IDEs&#8217; ability to automatically import files, you greatly lower the barrier to coupling. It is no problem to include remote files, grab the inevitable Singleton instance, and execute large Law of Demeter busting method chains on them.</p>
+
+<pre><code>  GlobalSingletonReference.getInstance().getSomethingElse().andItsChild()
+      .lawOfWhatExactlyNow().pleaseStopSoon().noTheresMore().invoke()
+</code></pre>
+
+<p>I think Java tools have given the ability to create larger programs than can be properly maintained.</p></li>
+</ul>
+
+
+<p>These features were seen as key to creating a more maintainable source code base especially at large scale.</p>
+
+<h2>My Experience with TypeScript</h2>
+
+<p>We had written a JavaScript prototype in Backbone and we ported that to TypeScript, so that we could compare and see how it went. I tried to use TypeScript as much as possible to be fair to the experiment. You can get away with basically writing JavaScript and passing it through the TypeScript compiler but that&#8217;s no good to anyone really.</p>
+
+<p>I found it made my code look more like Java or C#. This was especially the case with class definitions. Defining a class hierarchy in JavaScript is terrible - needing to set the prototype to the parent&#8217;s prototype, manually defining super etc. The TypeScript version is very familiar to a Java or C# coder. Our group of TypeScript programmers were converted Java/C++ programmers so this was a huge bonus.</p>
+
+<p>Having interfaces was great. They&#8217;re very useful in defining APIs and especially so for documenting external APIs. One thing I hate about JavaScript, is having to read documentation or readme files for third party libraries in order to find out their API. An interface definition in the language itself is far superior, as it is a lot more concise and guaranteed to be correct, having gone through the compiler.</p>
+
+<p>In the end, the code had the same classes with the same class names but the class implementations were far more readable due to the OO nature of TypeScript and the ability to define and program to interfaces.</p>
+
+<p>I did find that refactoring was easier - operations like adding additional parameters to functions were trivial compared to JavaScript. For the JavaScript code, I had to rely on my unit tests to assure me that my refactorings were correct but here I could offload a lot of those tests to the compiler.</p>
+
+<p>When we started on TypeScript it was version 0.8. The compiler was a bit rough then and crashed on some invalid input rather than reporting errors. It has been steadily improved since then and version 1.0 is perfectly fine for us, reporting the correct errors for all the previously crashing cases. Also the language has been added to and improved over time.</p>
+
+<h2>Things I didn&#8217;t like about TypeScript</h2>
+
+<p>On the flip side there are a lot of things that I don&#8217;t really like about TypeScript.
+Some features of JavaScript e.g. different return types, can&#8217;t be represented in TypeScript. In these circumstances you find yourself using the &#8220;any&#8221; type - the equivalent of using Object in Java. The problem with this is that using it completely circumvents the type checker. Thus the more complex code ends up being the code with less type checking.</p>
+
+<p>Other JavaScript features such as mixins have such horrible syntax in TypeScript (see <a href="https://typescript.codeplex.com/wikipage?title=Mixins%20in%20TypeScript">here</a>) that they&#8217;re basically unusable. Mixins in particular require repeated boilerplate code to get past the compiler. That was a pattern with a lot of the issues I had with TypeScript. As you try to do the more dynamic JavaScript stuff, you end up writing and repeating declarations to get the compiler off your back. Ideally there would be some way to say to the TypeScript compiler that we are going to implement this interface dynamically - the implementation may not be here now but it will be at runtime. We ended up generating a lot of this boilerplate code using Ruby and Erb (a topic for another blog post).</p>
+
+<p>I tried debugging with source maps in Chrome but I wasn&#8217;t a fan of the experience. Breakpoints would always get shifted a few lines and it was hard to get them to break on a function. I was constantly wondering if I had the correct version rather than a cached sourcemap and did the TypeScript match up to the JavaScript. I ended up just using the compiled JavaScript for debugging.</p>
+
+<p>Continuing with the last point, with some TypeScript features, you need to know what type of code was generated e.g. did a variable assignment get generated in the constructor or on the prototype. For example, this is necessary when integrating with Backbone. Instance variables in TypeScript are not defined on the prototype but instead in the constructor after the call to super. This means that they are not defined by the time the Backbone constructor is called. The Microsoft <a href="https://github.com/Microsoft/TypeScriptSamples/blob/master/todomvc/js/todos.ts">solution</a> is to put the call to super in the middle of the constructor but this looks wrong to any Java programmer and I could see them inadvertently breaking the code by moving super to the top of the constructor.</p>
+
+<p>TypeScript&#8217;s support for Generics was almost good but again there are some issues. The main one I ran into is that you can&#8217;t create a new instance of the generic type e.g. for a generic type T you can&#8217;t do <code>var x = new T()</code>. There are ways around this by passing in functions that create objects but the code they lead to is fairly bad.</p>
+
+<p>The idea that types would lead to better tooling didn&#8217;t pan out for us. Taking IDEs first, I think the main tool that supports TypeScript is <a href="http://msdn.microsoft.com/en-us/vstudio/aa718325.aspx">Visual Studio</a>. There is also JetBrains&#8217; <a href="http://www.jetbrains.com/webstorm/">WebStorm</a>. As IDEs go these seem perfectly fine. It&#8217;s a bit hard for me to evaluate this as I&#8217;m not a fan of large IDEs. One issue with these is that, especially in the case of Visual Studio, they require large license fees. I don&#8217;t like criticising tools on cost issues, as I feel that companies should treat these as a required cost of hiring programmers. Unfortunately, a lot of companies don&#8217;t, so if I&#8217;m required to buy a personal license, I much prefer to buy a license for a tool like <a href="http://www.sublimetext.com">Sublime Text</a>.</p>
+
+<p>TypeScript files import other files by means of a reference path at the top of the file. This is almost like Java except unfortunately the compiler does not enforce these, thus requiring them to be manually maintained. This is impossible to get right for a large project. The only essential ones are those for your base classes but if you leave out the others then IDEs have problems locating type declarations. If you have extraneous references that are not technically needed then this can lead to the TypeScript compiler generating invalid code that defines subclasses before their parent classes. When run, these cause runtime exceptions. Not a great situation.</p>
+
+<p>There aren&#8217;t a great number of TypeScript plugins for Sublime Text and there is no official one from Microsoft. Also there are no code quality tools such as linters. It&#8217;s not much use running the JavaScript versions as the only thing they can run on is the compiled code. The set of tools available for JavaScript is much larger and more mature. Even where you would think that having types would allow for newer tools e.g. static analysis or dependency graph generators, there is nothing.</p>
+
+<p>From a language point of view I wonder if trying to make all valid JavaScript code be valid TypeScript code is harming them? Would they be better going for a more C# like language and mandating that any JavaScript should be in separate files? That&#8217;s what we ended up doing anyway - we didn&#8217;t want to mix our JavaScript and TypeScript codebase.</p>
+
+<h3>Integration with Third Party Code.</h3>
+
+<p>In order to use external JavaScript files in TypeScript, you must first create a definition file for the JavaScript API. This declares, in a manner similar to Java interfaces, the functions, classes and interfaces that the JavaScript code exposes. These files can be a pain to locate and maintain. There is a Github repository <a href="https://github.com/borisyankov/DefinitelyTyped">Definitely Typed</a> which maintains a collection of .d.ts files for popular JavaScript libraries. These are typically of a high standard but we have had to add missing functions to some Backbone .d.ts files. If there is none online you have to write one yourself which can involve reverse engineering the API and types of the library.</p>
+
+<p>I think there is a large risk in using these, given that they are neither maintained by the library owners in question or by Microsoft themselves. It is problematic to update the libraries as now you have to also update the .d.ts. files. Everything going well, the Definitely Typed version will be updated to the latest version but there are no guarantees. What happens if the maintainer of this repository gets fed up and stops updating the files?</p>
+
+<p>However once they are found, these .d.ts files can be extremely useful. When working with websockets, the TypeScript lib.d.ts file was the best documentation I found on the subject. I think the interface/protocol concept is a great addition to any programming language. It is especially useful for documenting APIs and it harms Ruby and JavaScript not to have such a construct.</p>
+
+<p>It can be a bit tricky to integrate your TypeScript code with existing JavaScript libraries. As outlined above with Backbone, some libraries need to have code that&#8217;s on the prototype so you need to know the code that TypeScript generates. Also where in the hierarchy does the library go? We found it best to have the JavaScript classes at the top of the inheritance tree and TypeScript in the subclasses.</p>
+
+<h2>Conclusions</h2>
+
+<p>One issue I&#8217;d have with TypeScript is trying to gauge Microsoft&#8217;s commitment to the language. Are they really in this for the long term? For example, the code samples on their website haven&#8217;t been updated in ages. Also how large can the TypeScript community get? Are there really going to be a critical mass of developers abandoning JavaScript for this - especially considering Microsoft&#8217;s past attitude to the web and Internet Explorer. The amount of bridges they must have burned is quite large at this stage. If I&#8217;d suffered for years working around IE6&#8217;s issues, the last thing I&#8217;d do is switch to Microsoft&#8217;s new web language.</p>
+
+<p>Overall though, I think it was worthwhile for the company to use TypeScript. The pros outweigh the cons, especially once you identify the issues with TypeScript and develop coding standards to avoid them. As a developer I would have preferred CoffeeScript as a JavaScript replacement but I can see how it would be easier to shift Java developers over to TypeScript. I think its given them a lot of security that they wouldn&#8217;t have had with JavaScript.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Automating Jasmine Unit Tests]]></title>
@@ -637,17 +723,6 @@ gcovr -r $WORKSPACE/$JOB_NAME -x &gt; ${WORKSPACE}/coverage.xml
 <p>Following on from that Brian Fargo launched a <a href="http://www.kickstarter.com/projects/inxile/wasteland-2">Wasteland 2</a> project. This is an attempt to revive the party based CRPGs. This was another genre that I really enjoyed and which stagnated recently. Today&#8217;s publishers aren&#8217;t willing to put up the cash for these games. I&#8217;ve started to contribute to more of these gaming projects on Kickstarter (including a space based game - <a href="http://www.kickstarter.com/projects/64409699/ftl-faster-than-light">FTL</a> and a Norse SRPG - <a href="http://www.kickstarter.com/projects/stoic/the-banner-saga">The Banner Saga</a>). Hopefully this will show that there is a sizable market for these games and they will be more likely to be funded in future. It&#8217;s really interesting how much more invested in the games you feel once you back them on Kickstarter. For example, I&#8217;m really enjoying reading the updates from the game developers. If I was an indie developer I would definitely go down this route. The community that the Kickstarter project creates for your game might be as important as the funding itself.</p>
 
 <p>Another other thing this has made me realize is how much reputation and track record matters. I had never heard of Wasteland 2 before backing it. However once Brian Fargo reeled off the list of games that he&#8217;d worked on, i.e. Fallout, Baldur&#8217;s Gate and Icewind Dale (all of which still sit proudly on my shelf), I had no hesitation in subscribing. I would much rather see people like him develop games instead of leaving it in the hands of companies like Zynga. Trying to learn from this, I think that having a portfolio would be really valuable for a software engineer. Imagine the kind of CV/resume you&#8217;d have if you developed one app, website or side project per year and hosted these online. Given the frameworks and services that are out there e.g. <a href="http://rubyonrails.org/">Rails</a>, <a href="http://www.parse.com">Parse.com</a>, <a href="http://www.heroku.com">Heroku</a> for the web, iOS and Android for mobile, I think it&#8217;s never been easier to create quality small scale projects. To be honest I wish I had started something like that years ago. If I was coming out of college now, one of the first things I&#8217;d do would be to register my name as a url and start hosting projects there. It&#8217;s something small but would really pay off down the line.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Start your own Business Course]]></title>
-    <link href="http://www.gerardcondon.com/blog/2012/03/20/start-your-own-business-course/"/>
-    <updated>2012-03-20T23:46:00+00:00</updated>
-    <id>http://www.gerardcondon.com/blog/2012/03/20/start-your-own-business-course</id>
-    <content type="html"><![CDATA[<p>I&#8217;ve signed up for a Start Your Own Business <a href="http://www.sceb.ie/Online-Booking#Start-Your-Own-Business">course</a> which is being run by the <a href="http://www.sceb.ie">South Cork Enterprise Board</a>. It&#8217;s an eight week course taking three hours every Thursday. I&#8217;ve no intention of leaving my current job but if I&#8217;m going to be doing this on the side, then I&#8217;d like to know how to do it properly and what type of supports are out there.</p>
-
-<p>I&#8217;ve gone to three nights already and I&#8217;m finding it very useful. I think that the process of creating a business plan focuses your mind on what you want to achieve. I&#8217;ve asked myself more questions about what I want to do with this app development in the past few weeks than in the previous two months. It&#8217;s also interesting meeting people there who are setting up non software businesses and seeing what common problems and tasks we have. It&#8217;s good to step outside the software/computing world for a bit and get a wider perspective on things. I hope to come out of this with a clear idea of where I want to take the app work and what I need to do to accomplish this.</p>
 ]]></content>
   </entry>
   
