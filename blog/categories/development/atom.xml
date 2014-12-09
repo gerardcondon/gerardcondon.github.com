@@ -4,7 +4,7 @@
   <title><![CDATA[Category: development | Gerard Condon's Blog]]></title>
   <link href="http://www.gerardcondon.com/blog/categories/development/atom.xml" rel="self"/>
   <link href="http://www.gerardcondon.com/"/>
-  <updated>2014-10-05T23:42:29+01:00</updated>
+  <updated>2014-12-09T00:28:10+00:00</updated>
   <id>http://www.gerardcondon.com/</id>
   <author>
     <name><![CDATA[Gerard Condon]]></name>
@@ -12,6 +12,23 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Open Plan Offices and High Tech Architecture]]></title>
+    <link href="http://www.gerardcondon.com/blog/2014/12/09/open-plan-offices/"/>
+    <updated>2014-12-09T00:27:00+00:00</updated>
+    <id>http://www.gerardcondon.com/blog/2014/12/09/open-plan-offices</id>
+    <content type="html"><![CDATA[<p>Jeremy Paxman recently wrote an <a href="http://www.theguardian.com/commentisfree/2014/sep/12/jeremy-paxman-king-for-a-day-ban-open-plan-offices">article</a> criticising open plan offices. They have been a bugbear of mine for a while also. My working life has been spent in open offices or cubicles (never hot desking thank God) and they're terrible compared to proper offices. Background noise, air-con issues, lack of privacy and personal space are just some of the issues.</p>
+
+<p>Paxman's article put me in mind of a TV series which featured a lot of open plan offices. This was the <a href="http://www.bbc.co.uk/programmes/b03vgz7r">Brits who Built the Modern World</a> series on the BBC which detailed the work of the architects such as Norman Foster and Richard Rogers, who were the pioneers of High Tech Architecture. It's an excellent series and I highly recommend it. The buildings shown typically had a fantastic exterior with really distinctive features. I was really impressed with the level of quality and inventiveness that went into these structures.</p>
+
+<p>However the interiors of these buildings were typically vast open office spaces. The inventiveness that characterized the outsides, had completely vanished when it came to fitting out the inside. Bog-standard, modular office furniture. was the norm. One of the best examples was Norman Foster's <a href="http://en.wikipedia.org/wiki/Willis_Building_(Ipswich)">Willis Building</a> in Ipswich. This has a stunning exterior of dark glass panels and a rooftop garden, all combined with a soul-destroying, open plan interior.</p>
+
+<p>The really odd thing for me was that the architects really bought into the open office ideals. They truly thought that this was the best way to design a workplace. I would have loved to have seen what they could have done, if they had put the effort in to design proper working spaces which combined private, focused space along with collaborative areas. They thought they were designing workplaces which were more efficient and collaborative, but to my mind all they succeeded in doing was creating an environment where everyone is distracted and disrupted most the time. It's a real pity and a waste of their talents.</p>
+
+<p><strong>PS</strong> Let's hope no-one ever interviewing me for a job in an open plan office reads this :)</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Automating Jasmine Unit Tests]]></title>
@@ -80,25 +97,6 @@
 <li>Marijn Haverbeke's <a href="http://eloquentjavascript.net">Eloquent JavaScript</a>. This is available for free on the website. The really cool part about the site is that all the JavaScript code snippets are interactive and can be run on the page while you are reading them.</li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Irish Rail's RealTime API]]></title>
-    <link href="http://www.gerardcondon.com/blog/2013/04/23/irish-rail-realtime-api/"/>
-    <updated>2013-04-23T23:03:00+01:00</updated>
-    <id>http://www.gerardcondon.com/blog/2013/04/23/irish-rail-realtime-api</id>
-    <content type="html"><![CDATA[<p>I spent a lot of time in my childhood and early twenties traveling on the Irish Rail Network. Mostly this seemed to involve waiting for ages at Limerick Junction or barely finding a space to stand on a packed train from Dublin. Those experiences didn't exactly leave me with a great impression of <a href="http://www.irishrail.ie">Iarnród Éireann</a>.</p>
-
-<p>Given this, I was amazed to find out recently, that Iarnród Éireann have an <a href="http://api.irishrail.ie/realtime/index.htm">XML API</a> for accessing realtime data about the trains running on their network. Credit where credit is due, this is an excellent idea and I wish more companies would implement something similar.</p>
-
-<p>The API provides functionality for getting a list of the stations and what trains are due at those stations in the next ninety minutes. It also gives a list of all trains active on the network. It can filter by DART, Suburban or Mainline trains (that leaves some trains in an 'other' category - I'm not too sure what these actually are).</p>
-
-<p>I used this API as part of a Backbone learning <a href="http://www.gerardcondon.com/projects/irishrail/index.html">project</a>. It was quite fun to do. The API returns latitude and longitude coordinates for each station and train, allowing them to be plotted on a Google Map widget. I never realised there were so many stations in Ireland until I saw them plotted on the map.</p>
-
-<p>One issue I ran into was testing the application with live data. Given that I was programming this at night after work, you'd soon reach a time when there are very few trains left on the network!</p>
-
-<p>One technical detail about the API is that it is in XML rather than JSON. This means that I can't use Ajax or JSONP to get the data, due to the same origin policy. Instead I had to bounce the results through <a href="http://developer.yahoo.com/yql/">YQL</a>. YQL exposes a SQL like interface to web data. I'm only using a basic 'select all' query here but looking at their site you can do lots of cool and complex stuff. I found a good <a href="http://www.cypressnorth.com/blog/programming/cross-domain-ajax-request-with-xml-response-for-iefirefoxchrome-safari-jquery/">tutorial</a> from Cypress North on how to use YQL in your code to consume an XML API.</p>
 ]]></content>
   </entry>
   

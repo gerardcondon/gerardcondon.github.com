@@ -9,7 +9,7 @@
   <meta name="author" content="Gerard Condon">
 
   
-  <meta name="description" content="My current project at work is a large scale Backbone application. The company had no prior experience in web programming before this project and was &hellip;">
+  <meta name="description" content="Jeremy Paxman recently wrote an article criticising open plan offices. They have been a bugbear of mine for a while also. My working life has been &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -79,6 +79,50 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/12/09/open-plan-offices/">Open Plan Offices and High Tech Architecture</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-12-09T00:27:00+00:00" pubdate data-updated="true">Dec 9<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Jeremy Paxman recently wrote an <a href="http://www.theguardian.com/commentisfree/2014/sep/12/jeremy-paxman-king-for-a-day-ban-open-plan-offices">article</a> criticising open plan offices. They have been a bugbear of mine for a while also. My working life has been spent in open offices or cubicles (never hot desking thank God) and they&#8217;re terrible compared to proper offices. Background noise, air-con issues, lack of privacy and personal space are just some of the issues.</p>
+
+<p>Paxman&#8217;s article put me in mind of a TV series which featured a lot of open plan offices. This was the <a href="http://www.bbc.co.uk/programmes/b03vgz7r">Brits who Built the Modern World</a> series on the BBC which detailed the work of the architects such as Norman Foster and Richard Rogers, who were the pioneers of High Tech Architecture. It&#8217;s an excellent series and I highly recommend it. The buildings shown typically had a fantastic exterior with really distinctive features. I was really impressed with the level of quality and inventiveness that went into these structures.</p>
+
+<p>However the interiors of these buildings were typically vast open office spaces. The inventiveness that characterized the outsides, had completely vanished when it came to fitting out the inside. Bog-standard, modular office furniture. was the norm. One of the best examples was Norman Foster&#8217;s <a href="http://en.wikipedia.org/wiki/Willis_Building_(Ipswich)">Willis Building</a> in Ipswich. This has a stunning exterior of dark glass panels and a rooftop garden, all combined with a soul-destroying, open plan interior.</p>
+
+<p>The really odd thing for me was that the architects really bought into the open office ideals. They truly thought that this was the best way to design a workplace. I would have loved to have seen what they could have done, if they had put the effort in to design proper working spaces which combined private, focused space along with collaborative areas. They thought they were designing workplaces which were more efficient and collaborative, but to my mind all they succeeded in doing was creating an environment where everyone is distracted and disrupted most the time. It&#8217;s a real pity and a waste of their talents.</p>
+
+<p><strong>PS</strong> Let&#8217;s hope no-one ever interviewing me for a job in an open plan office reads this :)</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -600,50 +644,6 @@ Some features of JavaScript e.g. different return types, can&#8217;t be represen
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/03/17/controllers-in-objective-c/">Controllers in Objective C</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-03-17T13:52:00+00:00" pubdate data-updated="true">Mar 17<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>One of the things to learn about iOS is the MVC model. The Cocoa implementation of MVC has some <a href="http://developer.apple.com/library/ios/documentation/general/conceptual/CocoaEncyclopedia/Model-View-Controller/Model-View-Controller.html#//apple_ref/doc/uid/TP40010810-CH14-SW9">differences</a> compared to the traditional approach. For example, in Cocoa, views are not aware of the models and don&#8217;t listen for model updates. Instead the all events pass through the controller, i.e. it listens for model changes and then tells the view to update itself.</p>
-
-<p>In <a href="http://rubyonrails.org/">Rails</a>, the constant refrain is that controllers should be thin. However on iOS they seem to be absolutely huge. One joke that I saw on Twitter was that on iOS, MVC stood for Massive View Controller. For example, the Recipe sample application from Apple has controllers with hundreds of lines of code with one topping out at 600 LOC.</p>
-
-<p>One of my issues with these view controllers is that they don&#8217;t follow the Single Responsibility Principle, but instead combine multiple functions. They act as delegates for multiple protocols e.g. table data source, fetched results controller delegate etc. I find it hard to distinguish the separate elements of MVC when one class is doing everything. Also in Objective C, once everything is in the same file, it&#8217;s not obvious to which protocol an item belongs. I think this risks breaking the MVC boundaries. For example, during a refactor, if you&#8217;re not careful, you can easily get model variables depending on controller variables and vice-versa.</p>
-
-<p>I&#8217;d much prefer it if these controllers were split out into lots of different classes, each with a single job as per the SRP. This would lead to a more composition-based rather than inheritance-based codebase. I also think that this greatly helps with code navigation. Jumping to a small, focused file has the effect of filtering out irrelevant code. I&#8217;ve started using Sublime Text recently and it has great functionality for navigating between files, so I prefer having lots of smaller files rather than a few large monolithic classes.</p>
-
-<p>(On a side note this is one thing that really annoys me about XCode. Given a properly nested folder structure with well named files, I think it becomes a lot easier to find your way around the app. For example even after only a few weeks learning Rails, I know exactly where to look to find the controllers, models, db code etc. But XCode is a disaster here. It doesn&#8217;t push the groupings made in the app on to the file system underneath. It requires duplicate effort of organising the code both inside and outside the application to keep the codebase properly organised.)</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -657,6 +657,10 @@ Some features of JavaScript e.g. different return types, can&#8217;t be represen
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/12/09/open-plan-offices/">Open Plan Offices and High Tech Architecture</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/10/02/beginning-backbone-review/">Book Review: Beginning Backbone by James Sugrue</a>
@@ -692,10 +696,6 @@ Some features of JavaScript e.g. different return types, can&#8217;t be represen
     
       <li class="post">
         <a href="/blog/2013/03/18/side-project-irish-rail-tracker/">Side Project: Irish Rail Tracker</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/03/17/controllers-in-objective-c/">Controllers in Objective C</a>
       </li>
     
   </ul>
