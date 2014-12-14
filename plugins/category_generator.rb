@@ -88,10 +88,9 @@ module Jekyll
     #  +category+     is the category currently being processed.
     def write_category_index(category_dir, category)
       index = CategoryIndex.new(self, self.source, category_dir, category)
-      index.render(self.layouts, site_payload)
-      index.write(self.dest)
       # Record the fact that this page has been added, otherwise Site::cleanup will remove it.
       self.pages << index
+      paginate(self, index, category_dir)
 
       # Create an Atom-feed for each index.
       feed = CategoryFeed.new(self, self.source, category_dir, category)
@@ -99,6 +98,35 @@ module Jekyll
       feed.write(self.dest)
       # Record the fact that this page has been added, otherwise Site::cleanup will remove it.
       self.pages << feed
+    end
+
+
+    def paginate(site, page, category_dir)
+      page_dir = page.destination('').sub(/\/[^\/]+$/, '')
+      page_dir_config = site.config['pagination_dir']
+      dir = ((page_dir_config || page_dir) + '/').sub(/^\/+/, '')
+
+      # sort categories by descending date of publish
+      category_posts = site.categories[page.data['category']].sort_by { |p| -p.date.to_f }
+
+      # calculate total number of pages
+      pages = CategoryPager.calculate_pages(category_posts, site.config['paginate'].to_i)
+
+      # iterate over the total number of pages and create a physical page for each
+      (1..pages).each do |num_page|
+        # the CategoryPager handles the paging and category data
+        pager = CategoryPager.new(page.data['category'], site.config, num_page, category_posts, page_dir+'/', "/#{category_dir}/", pages)
+
+        if num_page > 1
+          newpage = Page.new(site, site.source, page.dir, page.name)
+          newpage.pager = pager
+          newpage.dir = File.join(category_dir, "/page/#{num_page}")
+          site.pages << newpage
+        else
+          page.pager = pager
+        end
+
+      end
     end
 
     # Loops through the list of category pages and processes each one.
@@ -139,6 +167,25 @@ ERR
 
   end
 
+  class CategoryPager < Pager
+
+    attr_reader :category
+
+    # same as the base class, but includes the category value
+    def initialize(category, config, page, all_posts, index_dir, pagination_dir, num_pages = nil)
+      @category = category
+      super config, page, all_posts, index_dir, pagination_dir, num_pages
+    end
+
+    # use the original to_liquid method, but add in category info
+    alias_method :original_to_liquid, :to_liquid
+    def to_liquid
+      x = original_to_liquid
+      x['category'] = @category
+      x
+    end
+
+  end
 
   # Adds some extra filters used during the category creation process.
   module Filters
