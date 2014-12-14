@@ -1,0 +1,20 @@
+---
+layout: page
+footer: false
+category: Development
+---
+
+<div id="blog-archives" class="category">
+{% for post in paginator.posts %}
+{% capture this_year %}{{ post.date | date: "%Y" }}{% endcapture %}
+{% unless year == this_year %}
+  {% assign year = this_year %}
+  <h2>{{ year }}</h2>
+{% endunless %}
+<article>
+  {% include archive_post.html %}
+</article>
+{% endfor %}
+{{ paginator | pager_links }}
+
+</div>
