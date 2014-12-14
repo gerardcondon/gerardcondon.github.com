@@ -3,7 +3,7 @@ layout: post
 title: "Automating Jasmine Unit Tests"
 date: 2013-07-10 23:48
 comments: true
-categories: development
+categories: Development
 keywords: JavaScript, testing, PhantomJS
 ---
 

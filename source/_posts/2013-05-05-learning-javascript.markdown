@@ -3,7 +3,7 @@ layout: post
 title: "Learning JavaScript"
 date: 2013-05-05 22:52
 comments: true
-categories: JavaScript, development
+categories: JavaScript, Development
 keywords: JavaScript, Crockford, Zakas, Haverbeke
 ---
 

@@ -3,7 +3,7 @@ layout: post
 title: "Irish Rail's RealTime API"
 date: 2013-04-23 23:03
 comments: true
-categories: development
+categories: Development
 keywords: Irish Rail, API, YQL, XML
 ---
 

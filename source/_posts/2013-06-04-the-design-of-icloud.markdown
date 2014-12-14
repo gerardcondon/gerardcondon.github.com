@@ -3,7 +3,7 @@ layout: post
 title: "The Design of iCloud"
 date: 2013-06-04 22:35
 comments: true
-categories: development
+categories: Development
 keywords: iCloud, Core Data, Dropbox, Azure, Amazon
 ---
 
