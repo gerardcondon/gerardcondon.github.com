@@ -9,7 +9,7 @@
   <meta name="author" content="Gerard Condon">
 
   
-  <meta name="description" content="I&#8217;ve been working on a side project for the last month in order to learn about front-end web development. While not complete by any means, I &hellip;">
+  <meta name="description" content="It&#8217;s been a year, give or take, since I started looking into iOS development, and I wanted to write a post to reflect on where I am and what &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://www.gerardcondon.com/blog/page/2/">
+  <link rel="canonical" href="http://www.gerardcondon.comblog/categories/development/page/2/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -86,145 +86,6 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/03/18/side-project-irish-rail-tracker/">Side Project: Irish Rail Tracker</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-03-18T10:56:00+00:00" pubdate data-updated="true">Mar 18<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I&#8217;ve been working on a <a href="http://www.gerardcondon.com/projects/irishrail/index.html">side project</a> for the last month in order to learn about front-end web development. While not complete by any means, I think it&#8217;s good enough to release as a beta. I plan to add features, improve the UI and refactor the code in future.</p>
-
-<p>The motivation behind it was that I wanted to do a project using one of the JavaScript <a href="http://addyosmani.github.com/todomvc/">MVC Frameworks</a> - for this one I chose <a href="http://backbonejs.org">Backbone</a>. Also I&#8217;ll be working more with HTML and CSS in work over the coming year and I need to ramp up on these.</p>
-
-<p><a href="http://www.irishrail.ie">Iarnród Éireann</a> (the Irish Rail company) has a REST API which provides details of the stations in its network and the current status of its trains. My <a href="http://www.gerardcondon.com/projects/irishrail/index.html">webpage</a> plots these stations and trains on a Google Map and shows upcoming train information for each station.</p>
-
-<p>I plan to write a series of posts on how I implemented this and the lessons I learned along the way.</p>
-
-<p>The project is available <a href="http://www.gerardcondon.com/projects/irishrail/index.html">here</a> and the code is available on <a href="https://github.com/gerardcondon/Irish-Rail-Tracker">Github</a> under the MIT licence. The roadmap.md document is where I&#8217;m tracking future work that needs to be done on the project. Any feedback would be much appreciated.</p>
-
-<p>As far as the code goes:</p>
-
-<ul>
-<li>I&#8217;m happy enough with the Backbone model and collection code. The Backbone view code still needs some refactoring to remove duplication and use proper Backbone idioms.</li>
-<li>There are some JavaScript <a href="http://pivotal.github.com/jasmine/">Jasmine</a> tests - mostly for the model. I&#8217;m still figuring out the best way to test the UI - I have some Jasmine tests but also some Ruby <a href="https://github.com/jnicklas/capybara">Capybara</a> tests for the browser.</li>
-<li>The HTML and CSS code are functional rather than elegant. I&#8217;m hoping to improve these as time goes by and as I get more experience with these languages.</li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/03/17/controllers-in-objective-c/">Controllers in Objective C</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-03-17T13:52:00+00:00" pubdate data-updated="true">Mar 17<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>One of the things to learn about iOS is the MVC model. The Cocoa implementation of MVC has some <a href="http://developer.apple.com/library/ios/documentation/general/conceptual/CocoaEncyclopedia/Model-View-Controller/Model-View-Controller.html#//apple_ref/doc/uid/TP40010810-CH14-SW9">differences</a> compared to the traditional approach. For example, in Cocoa, views are not aware of the models and don&#8217;t listen for model updates. Instead the all events pass through the controller, i.e. it listens for model changes and then tells the view to update itself.</p>
-
-<p>In <a href="http://rubyonrails.org/">Rails</a>, the constant refrain is that controllers should be thin. However on iOS they seem to be absolutely huge. One joke that I saw on Twitter was that on iOS, MVC stood for Massive View Controller. For example, the Recipe sample application from Apple has controllers with hundreds of lines of code with one topping out at 600 LOC.</p>
-
-<p>One of my issues with these view controllers is that they don&#8217;t follow the Single Responsibility Principle, but instead combine multiple functions. They act as delegates for multiple protocols e.g. table data source, fetched results controller delegate etc. I find it hard to distinguish the separate elements of MVC when one class is doing everything. Also in Objective C, once everything is in the same file, it&#8217;s not obvious to which protocol an item belongs. I think this risks breaking the MVC boundaries. For example, during a refactor, if you&#8217;re not careful, you can easily get model variables depending on controller variables and vice-versa.</p>
-
-<p>I&#8217;d much prefer it if these controllers were split out into lots of different classes, each with a single job as per the SRP. This would lead to a more composition-based rather than inheritance-based codebase. I also think that this greatly helps with code navigation. Jumping to a small, focused file has the effect of filtering out irrelevant code. I&#8217;ve started using Sublime Text recently and it has great functionality for navigating between files, so I prefer having lots of smaller files rather than a few large monolithic classes.</p>
-
-<p>(On a side note this is one thing that really annoys me about XCode. Given a properly nested folder structure with well named files, I think it becomes a lot easier to find your way around the app. For example even after only a few weeks learning Rails, I know exactly where to look to find the controllers, models, db code etc. But XCode is a disaster here. It doesn&#8217;t push the groupings made in the app on to the file system underneath. It requires duplicate effort of organising the code both inside and outside the application to keep the codebase properly organised.)</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/02/27/destroy-all-software-screencasts/">Destroy All Software Screencasts</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-02-27T23:14:00+00:00" pubdate data-updated="true">Feb 27<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I recently subscribed to Gary Bernhardt&#8217;s <a href="https://www.destroyallsoftware.com/screencasts">Destroy All Software</a> screencasts. I found these absolutely fantastic. There are only about ten to fifteen minutes each in length so it&#8217;s no hassle to find the time to watch them. However they cover a lot in the short time.</p>
-
-<p>They are mostly Ruby and in particular Rails focused but the topics are applicable to any software programming. For example, I&#8217;ve really learned a great deal about TDD from watching this.</p>
-
-<p>The Github <a href="https://github.com/garybernhardt/destroy-all-software-extras">archive</a> is useful, especially the <a href="https://github.com/garybernhardt/sucks-rocks">Suck/Rocks</a> Rails app. His <a href="https://github.com/garybernhardt/dotfiles">Git</a> config file is also really handy and I really like his log formatting. I would have liked to see him post a larger sample Rails app to Github (or for the ultimate in wishful thinking - the code for the Destroy All Software site). It would expand upon how his ideas work when confronted with the complexity and messiness of a real world system.</p>
-
-<p>Overall I highly recommend the series for any programmer regardless of what language you are using. Unfortunately I believe he&#8217;s stopping soon but you get access to the entire back catalog with a subscription and they&#8217;re well worth it.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
       <h1 class="entry-title"><a href="/blog/2013/02/23/year-update-and-reflections/">Year Update and Reflections</a></h1>
     
     
@@ -286,56 +147,6 @@
 <p>However at the end of the day the reality is that I haven&#8217;t shipped anything on iOS yet. I&#8217;ve been justifying this to myself by claiming all these other intangible benefits. Given what I&#8217;ve learned, I don&#8217;t think that I&#8217;ve wasted my time but still I&#8217;d like to get some iOS project finished. Unfortunately given my current life and work commitments I probably won&#8217;t have time to work on it over the next three months. In the meantime, I&#8217;ll post about my JavaScript and TDD experiences.</p>
 
 <p>As regards the blog, looking back I am happy enough with what was posted in the past year. The main thing I&#8217;m not happy with is the regularity of the postings. The same things that have stopped me doing much software work, have also stopped me publishing much. In future I want to maintain a more regular posting rate. I aim to post at least once a fortnight and hopefully once a week.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/01/28/stanford-ios-course-companion-book/">Stanford iOS Course Companion Book</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-28T23:27:00+00:00" pubdate data-updated="true">Jan 28<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I previously <a href="http://www.gerardcondon.com/blog/2012/01/29/itunes-u-and-online-learning/">recommended</a> the Stanford iOS course and they now have a companion <a href="http://editorscut.com/Books/003ipadiphone/003ipadiphone-details.html">book</a> available for the iPad through iBooks.</p>
-
-<p>The content of this book is excellent and it really complements the course videos. I really like the code samples and how they are displayed dynamically on the iPad. They have really used the iBooks format well for these. Additionally all the code is available on <a href="https://github.com/editorscut/ec003-ipad-and-iphone-app-development">Github</a>.</p>
-
-<p>I highly recommend the book and I wish it was available when I originally watched the videos. Given the quality of the lectures and the book, Stanford could easily charge for this stuff - it was certainly equal to any introductory programming course I&#8217;ve attended at college. It seems inconceivable to me that this approach won&#8217;t form the basis of education in the years to come.</p>
-
-<p>It&#8217;s maybe a bit churlish to criticise a free book but still I do have some issues. These concern the format the book was released in and not its content.</p>
-
-<ul>
-<li><p>Firstly it was only released for iPad and not for iPhone. I would have liked to have had a reference version for iPhone.</p></li>
-<li><p>Also I don&#8217;t like the iBooks lock in. I really want to have this on my Macbook and/or Kindle to have open when programming. Here&#8217;s where an epub or pdf version would be a lot better. The <a href="http://pragprog.com">Pragmatic Programmers</a> company have shown the way forward with their ebook releases, giving multiple DRM free versions of their books.</p></li>
-</ul>
-
-
-<p>Apart from those minor nits though, this is an essential resource for learning iOS.</p>
 </div>
   
   
@@ -815,13 +626,203 @@ gcovr -r $WORKSPACE/$JOB_NAME -x &gt; ${WORKSPACE}/coverage.xml
 
     </article>
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/05/15/starting-with-core-data/">Starting Out With Core Data</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-05-15T21:59:00+01:00" pubdate data-updated="true">May 15<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>For my project, I need a way to store the model data that I will be generating. I certainly don&#8217;t want to write a persistence layer for my model objects so I will definitely use a standard library for this. There are a number of options</p>
+
+<ul>
+<li>Core Data. This provides an editor to create the objects and XCode will generate the required model classes for me.</li>
+<li>Use a database like Sqlite directly. Core Data uses a sqlite database behind the scenes but instead I could create one directly and access it using a library like <a href="https://github.com/ccgus/fmdb">FMVH</a>.</li>
+<li>A service like <a href="http://www.parse.com">Parse.com</a>. This provides an online backend for apps.</li>
+</ul>
+
+
+<p>I don&#8217;t want to use the database directly as I prefer working with objects, so that would rule out sqlite for me. Parse.com is really interesting. Among other things, it provides an online site where you can see the data in a spreadsheet interface. This <a href="http://houseofbilz.com/archives/2011/11/30/an-example-backboneparse-com-app/">tutorial</a> shows how you can use Parse.com to implement a todo list website. It&#8217;s a real pity that iCloud doesn&#8217;t provide a similar API to allow non-Apple devices access the data.</p>
+
+<p>In the end I&#8217;ve decided to go with Core Data. The reasons for this are</p>
+
+<ul>
+<li>It&#8217;s an Apple standard library and one of the purposes of writing an app was to learn about iOS and Apple technologies. Where possible I&#8217;ve tried to stick to the Apple way of doing things as I can be sure that this approach will be supported in future - or if there is a new system, then a transition path will be provided.</li>
+<li>Core Data works on the object level rather than the database level. I&#8217;ve programmed in objects for most of my career so this is familiar to me. I have a working knowledge of databases but I feel more comfortable using OOP.</li>
+<li>I&#8217;m assuming that Core Data should integrate with iCloud better than other approaches. Thinking ahead I&#8217;d like to look at iCloud at some stage and learning Core Data first should make that a bit easier.</li>
+</ul>
+
+
+<h2>Magical Record and Mogenerator</h2>
+
+<p>There are some good Core Data tutorials out there. The best introduction that I found was the <a href="http://www.stanford.edu/class/cs193p/cgi-bin/drupal/downloads-2011-fall">Stanford</a> iOS course (lectures 13 &amp; 14). To be honest, the code required to implement Core Data is fairly complex and verbose. To deal with that, I started looking for libraries which would improve the Core Data experience. The best I found is <a href="https://github.com/magicalpanda/MagicalRecord">Magical Record</a>. This library simplifies Core Data a great deal and provides loads of helper categories &amp; functions. There is an excellent tutorial on MagicalRecord <a href="http://yannickloriot.com/2012/03/magicalrecord-how-to-make-programming-with-core-data-pleasant/">here</a>. I also found <a href="http://ablfx.com/blog/?post_type=post&amp;p=561">this</a> tutorial really good and it also includes a sample project which uses MagicalRecord.</p>
+
+<p>Magical Record works well with another tool called <a href="https://github.com/rentzsch/mogenerator">Mogenerator</a>. You download a .dmg from the site and install from that. There is a nice tutorial <a href="http://raptureinvenice.com/getting-started-with-mogenerator/">here</a>. Mogenerator generates classes from the Core Data xcdatamodel file. The normal Core Data build can also do this but the advantage of Mogenerator is that it generates a second set of classes for each Core Data entity. This second set will never be overwritten so you can write custom code in these. The first set of classes will be regenerated each time the model gets updated.</p>
+
+<p>Magical Record is available on Github. Like most iOS projects I&#8217;ve found there, it seems the standard way to integrate this with your project is to copy the source files into your code and work away. I&#8217;m not too comfortable with this approach and would prefer to keep third party libraries separate from my code. This would allow me to update these independently and share them between projects. I&#8217;ll have to look into what options are available for this.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/04/29/joined-the-ios-developer-program/">Joined the iOS Developer Program</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-29T21:40:00+01:00" pubdate data-updated="true">Apr 29<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&#8217;ve been fairly busy with the Start Your Own Business course so I haven&#8217;t had much time to do iOS programming. It&#8217;s time to get back into it now though, and so I&#8217;ve just paid my subscription to the iOS developer program. I&#8217;m looking forward to being able to run code on an actual device. It&#8217;s been a bit limiting working on just the simulator and there&#8217;s nothing like seeing your code running on the final hardware.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/02/21/code-coverage-updates-for-xcode-4-dot-3/">Code Coverage Updates for Xcode 4.3</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-21T00:02:00+00:00" pubdate data-updated="true">Feb 21<span>st</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In a previous <a href="http://www.gerardcondon.com/blog/2012/02/17/adding-code-coverage-to-unit-tests/">post</a>, I described how I got code coverage up and running in Xcode 4.2. Apple have just released Xcode 4.3 and unfortunatly updating to this has broken my code coverage. The reason is that 4.3 removes the /Developer folder and moves this internally to the Xcode.app package. While this has good consequences - it should be possible to update Xcode from the App Store like a normal app - unfortunately it has also removed the libprofile_rt library from /Developer/usr/lib. I haven&#8217;t been able to find a new version of this library in Xcode 4.3. When I tried using the version from 4.2, I got &#8220;mach-o but wrong architecture&#8221; errors.</p>
+
+<p>This means that when building my unit tests with Coverage I get link errors saying that I am missing llvm_gcda functions (llvm_gcda_start_file, llvm_gcda_increment_indirect_counter, llvm_gcda_emit_function, llvm_gcda_emit_arcs). I searched on Google to try and find a solution for 4.3 but it seemed all solutions were for 4.2 so I needed to try to solve this myself. The solution I came up with is fairly hacky. I&#8217;m hoping that as more people upgrade to 4.3, a better solution will be found and I can switch to that.</p>
+
+<p>My solution is to take the actual file which contained the gcda functions in libprofile_rt, add it to my own source code and compile it myself. The file in question can be found on llvm.org - <a href="https://llvm.org/svn/llvm-project/llvm/trunk/runtime/libprofile/GCDAProfiling.c">here</a>. To get it to build locally I deleted the win32 and sys includes (lines 27 to 31 inclusive) and replaced the llvm include (line 23) with <code>#include "stdint.h"</code>. This builds fine using the Coverage build configuration and outputs the same gcda and gcno files as before. To make sure that this code doesn&#8217;t end up in the released project by accident, I&#8217;ve included it in the unit test bundle rather than the app bundle. This is fine for me as I only need coverage when running the tests anyway.</p>
+
+<p><strong>Update:</strong> Some feedback from Tom Black, who emailed me to point out that libprofile_rt can be found in <code>/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/</code>
+However this library did not work for either of us. Instead we got errors like
+<code>The bundle “GCUtilsTests.octest” couldn’t be loaded because it is damaged or missing necessary resources.</code>
+<code>Library not loaded: @executable_path ... libprofile_rt.dylib</code>
+<code>Reason: image not found</code><br/>
+Also this library didn&#8217;t produce .gcda files but instead generated .dia files which didn&#8217;t work in Coverflow.</p>
+
+<p>What worked for Tom, but not for me, was not to include libprofile at all. This removed these errors and another incompatible binary error. Now however he got the following error.
+<code>Detected an attempt to call a symbol in system libraries that is not present on the iPhone:
+fopen$UNIX2003 called from function llvm_gcda_start_file</code>
+He found the solution to this issue <a href="http://www.infinite-loop.dk/blog/2012/02/code-coverage-and-fopen-unix2003-problems/">here</a>. I still got link errors when I followed this though so I need to stick with my original solution.</p>
+
+<p><strong>Update:</strong> Another commenter Rajiv emailed me to say that creating a new target for his project made the coverage work for him. It generated the .gcda and .gcno files when he exited using exit(0). I&#8217;ve tried creating a new simple iOS app and I don&#8217;t get any errors for this when I enable coverage.</p>
+
+<p>One thing which might explain why it still doesn&#8217;t work for some of my projects is the type of project being built. My original project was a static library. I tried to create a new static library project and when I try to enable coverage I get the same link errors as above.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/02/18/apple-new-introduction-to-ios-development/">Apple&#8217;s New Introduction to iOS Development</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-18T09:44:00+00:00" pubdate data-updated="true">Feb 18<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Apple has posted a <a href="https://developer.apple.com/library/ios/#referencelibrary/GettingStarted/RoadMapiOS/Introduction/Introduction.html">new guide</a> to iOS development which ties together all the various strands of creating an app. (via <a href="http://www.loopinsight.com/2012/02/17/apple-posts-guide-to-start-developing-ios-apps/">Loop Insight</a>). Looks really nice.</p>
+</div>
+  
+  
+
+
+    </article>
+  
   <div class="pagination">
     
-      <a class="prev" href="/blog/page/3/">&larr; Older</a>
+      <a class="prev" href="/blog/categories/development/page/3/">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
-    <a class="next" href="/">Newer &rarr;</a>
+    <a class="next" href="/blog/categories/development/">Newer &rarr;</a>
     
   </div>
 </div>

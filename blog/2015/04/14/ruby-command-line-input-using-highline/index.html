@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Destroy All Software Screencasts - Gerard Condon's Blog</title>
+  <title>Ruby Command Line Input Using Highline - Gerard Condon's Blog</title>
   <meta name="author" content="Gerard Condon">
 
   
-  <meta name="description" content="I recently subscribed to Gary Bernhardt&#8217;s Destroy All Software screencasts. I found these absolutely fantastic. There are only about ten to &hellip;">
-  <meta name="keywords" content="Ruby, Programming, ScreenCasts">
+  <meta name="description" content="I&#8217;ve been using Rakefiles a lot recently to automate tasks. I find it really useful in comparison to shell scripting as I can run the rakefiles &hellip;">
+  <meta name="keywords" content="ruby, highline, command line">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://www.gerardcondon.com/blog/2013/02/27/destroy-all-software-screencasts/">
+  <link rel="canonical" href="http://www.gerardcondon.com/blog/2015/04/14/ruby-command-line-input-using-highline/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -83,7 +83,7 @@
   
   <header>
     
-      <h1 class="entry-title">Destroy All Software Screencasts</h1>
+      <h1 class="entry-title">Ruby Command Line Input Using Highline</h1>
     
     
       <p class="meta">
@@ -99,20 +99,32 @@
   
 
 
-<time datetime="2013-02-27T23:14:00+00:00" pubdate data-updated="true">Feb 27<span>th</span>, 2013</time>
+<time datetime="2015-04-14T23:24:00+01:00" pubdate data-updated="true">Apr 14<span>th</span>, 2015</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>I recently subscribed to Gary Bernhardt&#8217;s <a href="https://www.destroyallsoftware.com/screencasts">Destroy All Software</a> screencasts. I found these absolutely fantastic. There are only about ten to fifteen minutes each in length so it&#8217;s no hassle to find the time to watch them. However they cover a lot in the short time.</p>
+<div class="entry-content"><p>I&#8217;ve been using Rakefiles a lot recently to automate tasks. I find it really useful in comparison to shell scripting as I can run the rakefiles under different OSes (OS X and Windows) and have it behave the same in all cases.</p>
 
-<p>They are mostly Ruby and in particular Rails focused but the topics are applicable to any software programming. For example, I&#8217;ve really learned a great deal about TDD from watching this.</p>
+<p>I was building a simple <a href="https://github.com/gerardcondon/pgn/blob/master/Rakefile">script</a> to automate the generation of pgn files for my chess games. I wanted to be able to enter the details of the games on the command line and then have my script output a pgn file.</p>
 
-<p>The Github <a href="https://github.com/garybernhardt/destroy-all-software-extras">archive</a> is useful, especially the <a href="https://github.com/garybernhardt/sucks-rocks">Suck/Rocks</a> Rails app. His <a href="https://github.com/garybernhardt/dotfiles">Git</a> config file is also really handy and I really like his log formatting. I would have liked to see him post a larger sample Rails app to Github (or for the ultimate in wishful thinking - the code for the Destroy All Software site). It would expand upon how his ideas work when confronted with the complexity and messiness of a real world system.</p>
+<p>I didn&#8217;t want to have to go messing about with low level operations such as <code>puts</code> and <code>gets</code> so I searched for something better. I found the <a href="https://github.com/JEG2/highline">Highline</a> gem for this and was really happy with it.</p>
 
-<p>Overall I highly recommend the series for any programmer regardless of what language you are using. Unfortunately I believe he&#8217;s stopping soon but you get access to the entire back catalog with a subscription and they&#8217;re well worth it.</p>
+<p>It allows for a variety of input formats</p>
+
+<ul>
+<li><p>To display a prompt to the user and then store the input in a variable use
+  <code>event = ask("Event Title: ")</code></p></li>
+<li><p>You can specify default values and the default will be listed as part of the prompt. On the command line simply hit enter to get the default value.
+  <code>timeControl = ask("TimeControl: ") { |q| q.default = "5400+15" }</code></p></li>
+<li><p>You can create a menu from an array of values using the choose function.
+  <code>result = choose("1-0", "1/2-1/2", "0-1", "*")</code></p></li>
+</ul>
+
+
+<p>These can be customised and there are a lot more options available such as entering passwords. If you are doing text input in Ruby, I would advise checking it out.</p>
 </div>
 
 
@@ -135,7 +147,7 @@
   
 
 
-<time datetime="2013-02-27T23:14:00+00:00" pubdate data-updated="true">Feb 27<span>th</span>, 2013</time>
+<time datetime="2015-04-14T23:24:00+01:00" pubdate data-updated="true">Apr 14<span>th</span>, 2015</time>
       
 
 <span class="categories">
@@ -149,7 +161,7 @@
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.gerardcondon.com/blog/2013/02/27/destroy-all-software-screencasts/" data-via="" data-counturl="http://www.gerardcondon.com/blog/2013/02/27/destroy-all-software-screencasts/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.gerardcondon.com/blog/2015/04/14/ruby-command-line-input-using-highline/" data-via="" data-counturl="http://www.gerardcondon.com/blog/2015/04/14/ruby-command-line-input-using-highline/" >Tweet</a>
   
   
   
@@ -158,10 +170,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/02/23/year-update-and-reflections/" title="Previous Post: Year Update and Reflections">&laquo; Year Update and Reflections</a>
+        <a class="basic-alignment left" href="/blog/2014/12/09/open-plan-offices/" title="Previous Post: Open Plan Offices and High Tech Architecture">&laquo; Open Plan Offices and High Tech Architecture</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2013/03/17/controllers-in-objective-c/" title="Next Post: Controllers in Objective C">Controllers in Objective C &raquo;</a>
       
     </p>
   </footer>

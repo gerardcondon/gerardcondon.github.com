@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: development | Gerard Condon's Blog]]></title>
+  <title><![CDATA[Category: Development | Gerard Condon's Blog]]></title>
   <link href="http://www.gerardcondon.com/blog/categories/development/atom.xml" rel="self"/>
   <link href="http://www.gerardcondon.com/"/>
-  <updated>2014-12-09T00:28:10+00:00</updated>
+  <updated>2015-04-14T23:39:34+01:00</updated>
   <id>http://www.gerardcondon.com/</id>
   <author>
     <name><![CDATA[Gerard Condon]]></name>
@@ -12,6 +12,33 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Ruby Command Line Input Using Highline]]></title>
+    <link href="http://www.gerardcondon.com/blog/2015/04/14/ruby-command-line-input-using-highline/"/>
+    <updated>2015-04-14T23:24:00+01:00</updated>
+    <id>http://www.gerardcondon.com/blog/2015/04/14/ruby-command-line-input-using-highline</id>
+    <content type="html"><![CDATA[<p>I've been using Rakefiles a lot recently to automate tasks. I find it really useful in comparison to shell scripting as I can run the rakefiles under different OSes (OS X and Windows) and have it behave the same in all cases.</p>
+
+<p>I was building a simple <a href="https://github.com/gerardcondon/pgn/blob/master/Rakefile">script</a> to automate the generation of pgn files for my chess games. I wanted to be able to enter the details of the games on the command line and then have my script output a pgn file.</p>
+
+<p>I didn't want to have to go messing about with low level operations such as <code>puts</code> and <code>gets</code> so I searched for something better. I found the <a href="https://github.com/JEG2/highline">Highline</a> gem for this and was really happy with it.</p>
+
+<p>It allows for a variety of input formats</p>
+
+<ul>
+<li><p>To display a prompt to the user and then store the input in a variable use
+  <code>event = ask("Event Title: ")</code></p></li>
+<li><p>You can specify default values and the default will be listed as part of the prompt. On the command line simply hit enter to get the default value.
+  <code>timeControl = ask("TimeControl: ") { |q| q.default = "5400+15" }</code></p></li>
+<li><p>You can create a menu from an array of values using the choose function.
+  <code>result = choose("1-0", "1/2-1/2", "0-1", "*")</code></p></li>
+</ul>
+
+
+<p>These can be customised and there are a lot more options available such as entering passwords. If you are doing text input in Ruby, I would advise checking it out.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Open Plan Offices and High Tech Architecture]]></title>
@@ -27,6 +54,92 @@
 <p>The really odd thing for me was that the architects really bought into the open office ideals. They truly thought that this was the best way to design a workplace. I would have loved to have seen what they could have done, if they had put the effort in to design proper working spaces which combined private, focused space along with collaborative areas. They thought they were designing workplaces which were more efficient and collaborative, but to my mind all they succeeded in doing was creating an environment where everyone is distracted and disrupted most the time. It's a real pity and a waste of their talents.</p>
 
 <p><strong>PS</strong> Let's hope no-one ever interviewing me for a job in an open plan office reads this :)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Working With Typescript]]></title>
+    <link href="http://www.gerardcondon.com/blog/2014/09/19/working-with-typescript/"/>
+    <updated>2014-09-19T01:24:00+01:00</updated>
+    <id>http://www.gerardcondon.com/blog/2014/09/19/working-with-typescript</id>
+    <content type="html"><![CDATA[<p>For the past year and a half, my team at work have been using <a href="http://www.typescriptlang.com">TypeScript</a> to implement a large single page application in <a href="http://www.backbonejs.org">Backbone</a>. We're over three quarters of the way through the project, closing in our our first release and here are my thoughts on using TypeScript to date.</p>
+
+<p>This is my first major foray into web development, so it also required ramping up on HTML, CSS and REST. Previously I had used JavaScript to implement the client side of a websocket API, but that project was non-GUI work.</p>
+
+<h2>Reasons for choosing TypeScript</h2>
+
+<p>The company has settled on TypeScript for web programming due to a number of factors.</p>
+
+<ul>
+<li><p>Firstly is the additional security/peace of mind provided by type checking. For example, this prevents a lot of mistakes in calling functions with the wrong parameters. It makes some refactorings easier, as the compiler can tell you when you're calling functions that no longer exist or are passing the wrong types to a function.</p></li>
+<li><p>TypeScript adds classical Object-Oriented constructs to JavaScript e.g. interfaces, classes with inheritance. Rather than having to chose a library to implement inheritance, it is instead a first class language feature. I find this, along with having a proper super keyword to be much more usable in practice than prototypical inheritance.</p>
+
+<p>A nice feature is that TypeScript has support for implicit interfaces. The compiler will figure out if a class implements an interface rather than requiring that the class declares a list of implements X clauses in its definition. This reduces the friction of dealing with the type system.</p></li>
+<li><p>TypeScript is compatible with JavaScript so any library out there can be used with our code with no problems.</p></li>
+<li><p>Better tooling. The idea behind this was that, given that TypeScript has a proper type system, this would allow better tooling such as Intellisense. The theory was that programming in TypeScript would be a better experience because the IDE would be better.</p>
+
+<p>As an aside, I would question the value of Intellisense and the type of code it leads to. Take Java for example. When you combine Intellisense with modern IDEs' ability to automatically import files, you greatly lower the barrier to coupling. It is no problem to include remote files, grab the inevitable Singleton instance, and execute large Law of Demeter busting method chains on them.</p>
+
+<pre><code>  GlobalSingletonReference.getInstance().getSomethingElse().andItsChild()
+      .lawOfWhatExactlyNow().pleaseStopSoon().noTheresMore().invoke()
+</code></pre>
+
+<p>I think Java tools have given the ability to create larger programs than can be properly maintained.</p></li>
+</ul>
+
+
+<p>These features were seen as key to creating a more maintainable source code base especially at large scale.</p>
+
+<h2>My Experience with TypeScript</h2>
+
+<p>We had written a JavaScript prototype in Backbone and we ported that to TypeScript, so that we could compare and see how it went. I tried to use TypeScript as much as possible to be fair to the experiment. You can get away with basically writing JavaScript and passing it through the TypeScript compiler but that's no good to anyone really.</p>
+
+<p>I found it made my code look more like Java or C#. This was especially the case with class definitions. Defining a class hierarchy in JavaScript is terrible - needing to set the prototype to the parent's prototype, manually defining super etc. The TypeScript version is very familiar to a Java or C# coder. Our group of TypeScript programmers were converted Java/C++ programmers so this was a huge bonus.</p>
+
+<p>Having interfaces was great. They're very useful in defining APIs and especially so for documenting external APIs. One thing I hate about JavaScript, is having to read documentation or readme files for third party libraries in order to find out their API. An interface definition in the language itself is far superior, as it is a lot more concise and guaranteed to be correct, having gone through the compiler.</p>
+
+<p>In the end, the code had the same classes with the same class names but the class implementations were far more readable due to the OO nature of TypeScript and the ability to define and program to interfaces.</p>
+
+<p>I did find that refactoring was easier - operations like adding additional parameters to functions were trivial compared to JavaScript. For the JavaScript code, I had to rely on my unit tests to assure me that my refactorings were correct but here I could offload a lot of those tests to the compiler.</p>
+
+<p>When we started on TypeScript it was version 0.8. The compiler was a bit rough then and crashed on some invalid input rather than reporting errors. It has been steadily improved since then and version 1.0 is perfectly fine for us, reporting the correct errors for all the previously crashing cases. Also the language has been added to and improved over time.</p>
+
+<h2>Things I didn't like about TypeScript</h2>
+
+<p>On the flip side there are a lot of things that I don't really like about TypeScript.
+Some features of JavaScript e.g. different return types, can't be represented in TypeScript. In these circumstances you find yourself using the "any" type - the equivalent of using Object in Java. The problem with this is that using it completely circumvents the type checker. Thus the more complex code ends up being the code with less type checking.</p>
+
+<p>Other JavaScript features such as mixins have such horrible syntax in TypeScript (see <a href="https://typescript.codeplex.com/wikipage?title=Mixins%20in%20TypeScript">here</a>) that they're basically unusable. Mixins in particular require repeated boilerplate code to get past the compiler. That was a pattern with a lot of the issues I had with TypeScript. As you try to do the more dynamic JavaScript stuff, you end up writing and repeating declarations to get the compiler off your back. Ideally there would be some way to say to the TypeScript compiler that we are going to implement this interface dynamically - the implementation may not be here now but it will be at runtime. We ended up generating a lot of this boilerplate code using Ruby and Erb (a topic for another blog post).</p>
+
+<p>I tried debugging with source maps in Chrome but I wasn't a fan of the experience. Breakpoints would always get shifted a few lines and it was hard to get them to break on a function. I was constantly wondering if I had the correct version rather than a cached sourcemap and did the TypeScript match up to the JavaScript. I ended up just using the compiled JavaScript for debugging.</p>
+
+<p>Continuing with the last point, with some TypeScript features, you need to know what type of code was generated e.g. did a variable assignment get generated in the constructor or on the prototype. For example, this is necessary when integrating with Backbone. Instance variables in TypeScript are not defined on the prototype but instead in the constructor after the call to super. This means that they are not defined by the time the Backbone constructor is called. The Microsoft <a href="https://github.com/Microsoft/TypeScriptSamples/blob/master/todomvc/js/todos.ts">solution</a> is to put the call to super in the middle of the constructor but this looks wrong to any Java programmer and I could see them inadvertently breaking the code by moving super to the top of the constructor.</p>
+
+<p>TypeScript's support for Generics was almost good but again there are some issues. The main one I ran into is that you can't create a new instance of the generic type e.g. for a generic type T you can't do <code>var x = new T()</code>. There are ways around this by passing in functions that create objects but the code they lead to is fairly bad.</p>
+
+<p>The idea that types would lead to better tooling didn't pan out for us. Taking IDEs first, I think the main tool that supports TypeScript is <a href="http://msdn.microsoft.com/en-us/vstudio/aa718325.aspx">Visual Studio</a>. There is also JetBrains' <a href="http://www.jetbrains.com/webstorm/">WebStorm</a>. As IDEs go these seem perfectly fine. It's a bit hard for me to evaluate this as I'm not a fan of large IDEs. One issue with these is that, especially in the case of Visual Studio, they require large license fees. I don't like criticising tools on cost issues, as I feel that companies should treat these as a required cost of hiring programmers. Unfortunately, a lot of companies don't, so if I'm required to buy a personal license, I much prefer to buy a license for a tool like <a href="http://www.sublimetext.com">Sublime Text</a>.</p>
+
+<p>TypeScript files import other files by means of a reference path at the top of the file. This is almost like Java except unfortunately the compiler does not enforce these, thus requiring them to be manually maintained. This is impossible to get right for a large project. The only essential ones are those for your base classes but if you leave out the others then IDEs have problems locating type declarations. If you have extraneous references that are not technically needed then this can lead to the TypeScript compiler generating invalid code that defines subclasses before their parent classes. When run, these cause runtime exceptions. Not a great situation.</p>
+
+<p>There aren't a great number of TypeScript plugins for Sublime Text and there is no official one from Microsoft. Also there are no code quality tools such as linters. It's not much use running the JavaScript versions as the only thing they can run on is the compiled code. The set of tools available for JavaScript is much larger and more mature. Even where you would think that having types would allow for newer tools e.g. static analysis or dependency graph generators, there is nothing.</p>
+
+<p>From a language point of view I wonder if trying to make all valid JavaScript code be valid TypeScript code is harming them? Would they be better going for a more C# like language and mandating that any JavaScript should be in separate files? That's what we ended up doing anyway - we didn't want to mix our JavaScript and TypeScript codebase.</p>
+
+<h3>Integration with Third Party Code.</h3>
+
+<p>In order to use external JavaScript files in TypeScript, you must first create a definition file for the JavaScript API. This declares, in a manner similar to Java interfaces, the functions, classes and interfaces that the JavaScript code exposes. These files can be a pain to locate and maintain. There is a Github repository <a href="https://github.com/borisyankov/DefinitelyTyped">Definitely Typed</a> which maintains a collection of .d.ts files for popular JavaScript libraries. These are typically of a high standard but we have had to add missing functions to some Backbone .d.ts files. If there is none online you have to write one yourself which can involve reverse engineering the API and types of the library.</p>
+
+<p>I think there is a large risk in using these, given that they are neither maintained by the library owners in question or by Microsoft themselves. It is problematic to update the libraries as now you have to also update the .d.ts. files. Everything going well, the Definitely Typed version will be updated to the latest version but there are no guarantees. What happens if the maintainer of this repository gets fed up and stops updating the files?</p>
+
+<p>However once they are found, these .d.ts files can be extremely useful. When working with websockets, the TypeScript lib.d.ts file was the best documentation I found on the subject. I think the interface/protocol concept is a great addition to any programming language. It is especially useful for documenting APIs and it harms Ruby and JavaScript not to have such a construct.</p>
+
+<p>It can be a bit tricky to integrate your TypeScript code with existing JavaScript libraries. As outlined above with Backbone, some libraries need to have code that's on the prototype so you need to know the code that TypeScript generates. Also where in the hierarchy does the library go? We found it best to have the JavaScript classes at the top of the inheritance tree and TypeScript in the subclasses.</p>
+
+<h2>Conclusions</h2>
+
+<p>One issue I'd have with TypeScript is trying to gauge Microsoft's commitment to the language. Are they really in this for the long term? For example, the code samples on their website haven't been updated in ages. Also how large can the TypeScript community get? Are there really going to be a critical mass of developers abandoning JavaScript for this - especially considering Microsoft's past attitude to the web and Internet Explorer. The amount of bridges they must have burned is quite large at this stage. If I'd suffered for years working around IE6's issues, the last thing I'd do is switch to Microsoft's new web language.</p>
+
+<p>Overall though, I think it was worthwhile for the company to use TypeScript. The pros outweigh the cons, especially once you identify the issues with TypeScript and develop coding standards to avoid them. As a developer I would have preferred CoffeeScript as a JavaScript replacement but I can see how it would be easier to shift Java developers over to TypeScript. I think its given them a lot of security that they wouldn't have had with JavaScript.</p>
 ]]></content>
   </entry>
   
@@ -62,41 +175,6 @@
 <p>The other mode of iCloud syncing is the Document based syncing. The issue I have with this is that anything stored in iCloud is restricted to the application that created it. This is a major issue when an application stores data in a common file format (e.g. plain text or image formats such as PNG or JPEG) that you may expect to be able to use in another application. Dropbox is a far superior solution in this case. I feel much more confident in the apps which use this over iCloud, as I will always have access to the data files.</p>
 
 <p>The other day, Brent Simmons <a href="http://inessential.com/2013/05/07/30_minutes_to_sync">posted</a> a great proposal for an Apple backend service. They really need to do something here as their competitors aren't standing still. Microsoft is on the right track here with Azure and similarly Amazon's cloud computing services are going from strength to strength. It will be interesting to see if anything will be announced for iCloud at WWDC.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Test Driven Design in practice]]></title>
-    <link href="http://www.gerardcondon.com/blog/2013/05/22/test-driven-design-in-practice/"/>
-    <updated>2013-05-22T21:35:00+01:00</updated>
-    <id>http://www.gerardcondon.com/blog/2013/05/22/test-driven-design-in-practice</id>
-    <content type="html"><![CDATA[<p>I recently tried implementing a JavaScript project at work using the testing methods I've learned from the <a href="http://www.destroyallsoftware.com">Destroy All Software</a> Screencast. It ended up being some of the best code I've written. The interfaces grew neatly, it wasn't not over designed and it was completely covered by tests. It's the project that I have the most confidence in its correctnesss. It's nice to know that despite any modifications in future, as long as all the tests pass it will pretty much always work first time.</p>
-
-<p>Anywhere I've worked up to now, testing was always seen as something that you implemented after the fact. Code coverage was the main driver of the testing. However this approach completely misses the input that TDD has on the design of the application. By writing applications so that they can be tested easily, they turn out to be much better designed. They are less coupled and all the dependencies are visible. Having the design emerge from the growing system is better than imposing over elaborate architecture and patterns top down.</p>
-
-<p>I found a couple of good resources recently on testing and the impact it has on your code. This is a good <a href="http://vimeo.com/15007792">talk</a> by Michael Feathers on the synergy between testing and design. He shows how testing problems are indicative of design problems. Misko Hevery's <a href="http://misko.hevery.com">site</a> has some great presentations and resources on how to design code that is testable.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Learning JavaScript]]></title>
-    <link href="http://www.gerardcondon.com/blog/2013/05/05/learning-javascript/"/>
-    <updated>2013-05-05T22:52:00+01:00</updated>
-    <id>http://www.gerardcondon.com/blog/2013/05/05/learning-javascript</id>
-    <content type="html"><![CDATA[<p>Last year, the project I was working on at work switched languages for its UI code from C++ to HTML and JavaScript. For me, this meant learning JavaScript and web development.</p>
-
-<p>When I was in college, we studied Java as the "proper" programming language and barely covered JavaScript - only as part of a HTML course. Back then, I never really saw it as anything more than a language for adding simple dynamic features to a web page. However ten years later, and (hopefully!) knowing a great deal more about programming, my opinions have changed. Now, I have a whole new respect for JavaScript, based on features that I wouldn't have been able to really comprehend back then.</p>
-
-<p>I love the power that first class functions and closures give you. It's spoiled me as a programmer as I'm finding it hard going back to languages without those features! I know that they are coming, or have recently come, to Java and C++. However given the nature of exising legacy codebases in those languages and that projects may be restricted to earlier compilers, it'll be a while before they're mainstream.</p>
-
-<p>There are no shortage of in-depth JavaScript books and tutorials which teach all the features of the language. However learning JavaScript syntax and features is not the problem. The real issue is knowing what features to avoid. Unfortunately it's incredibly easy to write unmaintainable code in JavaScript if you're not careful. Luckily there are some very good books written on this topic. The ones I recommend are:</p>
-
-<ul>
-<li>Douglas Crockford's <a href="http://www.amazon.com/JavaScript-Good-Parts-Douglas-Crockford/dp/0596517742">JavaScript: The Good Parts</a>. This is an really good compact book. It allows you to limit yourself to the features of JavaScript which support good software development practices.</li>
-<li>Nicholas Zakas's <a href="http://www.amazon.com/Maintainable-JavaScript-Nicholas-C-Zakas/dp/1449327680">Maintainable JavaScript</a>. Again this book is more than a simple explanation of JavaScript syntax. It's topics include JavaScript programming practices and build automation. The build process part is especially useful for learning the proper process for building, linting and testing JavaScript code.</li>
-<li>Marijn Haverbeke's <a href="http://eloquentjavascript.net">Eloquent JavaScript</a>. This is available for free on the website. The really cool part about the site is that all the JavaScript code snippets are interactive and can be run on the page while you are reading them.</li>
-</ul>
-
 ]]></content>
   </entry>
   

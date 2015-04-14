@@ -9,7 +9,7 @@
   <meta name="author" content="Gerard Condon">
 
   
-  <meta name="description" content="Wherever possible I think that automating your testing is essential. For this project there is no way that I can manually rerun the same tests over &hellip;">
+  <meta name="description" content="If you are going to the effort of having unit tests, then you really need to have code coverage. This will allow you to ensure that your tests are &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://www.gerardcondon.com/blog/page/4/">
+  <link rel="canonical" href="http://www.gerardcondon.comblog/categories/development/page/3/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -80,6 +80,79 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/02/17/adding-code-coverage-to-unit-tests/">Adding Code Coverage to Unit Tests for Xcode 4.2</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-17T22:27:00+00:00" pubdate data-updated="true">Feb 17<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>If you are going to the effort of having unit tests, then you really need to have code coverage. This will allow you to ensure that your tests are exercising all your code. It is really easy to spot a missing test when you see a branch of an if-else with no coverage. Code coverage for me is also a way to motivate myself to implement the tests. It&#8217;s like high scores in games - it gives me a target to aim for. Coverage gives feedback that your tests are actually doing something, and with each test you add, you can see the areas of untested code steadily decrease.</p>
+
+<p>To set up code coverage in Xcode 4.2 I used the guide on these blogs - <a href="http://www.infinite-loop.dk/blog/2011/05/covering-it-all-up/">Infinite Loop</a> and <a href="http://mattrajca.com/post/8749868513/llvm-code-coverage-and-xcode-4">Matt Rajca</a>. Originally only the gcc compiler was supported but since then the Clang compiler has had code coverage enabled. This is important as we need to use Clang for ARC and static analysis among other things.</p>
+
+<h3>XCode Build Settings</h3>
+
+<p>Xcode has the concept of build configurations which can have built settings altered independently of each other. The two default configurations are Debug and Release. We want to add a new configuration named Coverage. To do this duplicate the Debug configuration.</p>
+
+<p><img src="/images/codeCoverage/NewBuildConfig.png" title="New Build Configuration" ></p>
+
+<p>In order to specify different settings for configurations in Xcode, hover over the left hand margin directly to the left of the setting we wish to update. An arrow will appear which when clicked will expand to an additional three lines for Debug, Coverage and Release. Editing the top line will alter the setting for all versions. Altering either of the new lines will only update the setting for that version of the build.</p>
+
+<p><img src="/images/codeCoverage/BuildSettings.png" title="Build Settings" ></p>
+
+<ul>
+<li>Open the Build Settings tab for the main target. Under &#8220;Apple LLVM 3.0 compiler - Code Generation&#8221;, enable both
+
+<ul>
+<li>&#8220;Generate Test Coverage Files&#8221;</li>
+<li> &#8220;Instrument Program Flow&#8221;</li>
+</ul>
+</li>
+<li> We now need to add the libprofile_rt library to the build. This will link in the implementations of the coverage functions. If you are seeing link errors like &#8220;_llvm_gcda_increment_indirect_counter&#8221;, referenced from:&#8221;, then you have not done this step.<br/>
+This library is located in /Developer/usr/lib. This folder contains libprofile.a which is a static library and a libprofile.dylib which is a dynamic linked library (similar to a .dll in Windows). To link this open the Build Phases tab for the main target. Expand the &#8220;Link Binary with Libraries&#8221; and click the + button. Click &#8220;Add Other&#8221; and then find libprofile_rt.dylib in the file viewer and add it. (Note that this doesn&#8217;t work for me since Xcode 4.3. I&#8217;ve documented the updates I needed to make <a href="http://www.gerardcondon.com/blog/2012/02/21/code-coverage-updates-for-xcode-4-dot-3/">here</a>).</li>
+</ul>
+
+
+<h3>Executing Tests</h3>
+
+<p>Now your unit tests should run and if you examine the build output files under the DerivedData folder you should find .gcda and .gcno coverage files along with your .o files. To find this folder you can go to the Projects tab in the Organizer and select your project. The path to the Derived Data folder is listed here along with an arrow which will open the folder in the Finder.</p>
+
+<p><img src="/images/codeCoverage/DerivedData.png" title="Derived Data" ></p>
+
+<p>From here the path to the coverage files is Build/Intermediates/${Project Target}.build/Coverage-iphonesimulator/${Project Target}.build/Objects-normal/i386. Replace ${Project Target} with the name of your project target.</p>
+
+<h3>Viewing Coverage Data</h3>
+
+<p>To view the coverage data I used <a href="http://code.google.com/p/coverstory/">CoverStory</a>. Simply open the app and point it at the coverage folder. This will give a nice two pane display showing your files on the left and an editor which shows how often each line of code was hit. Now you can identify untested code and add new tests to cover them.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -555,51 +628,13 @@ The bare option is used as this will just clone the contents of the local .git d
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/01/08/7/">Initial Post</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-08T18:00:00+00:00" pubdate data-updated="true">Jan 8<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Here&#8217;s my initial blog post. I&#8217;m creating this blog as I&#8217;ve decided to create iOS apps in my spare time. Up to now I&#8217;ve been working as a programmer for eight years in Java, C++ and C. I&#8217;ve never written an Objective C application before nor programmed on the Mac. Also I&#8217;ve never blogged before so this is a totally new experience for me.</p>
-
-<p>Given the time of year, there is a lot of advice regarding New Year Resolutions and how to stick with them. One of the ideas is that by telling your resolution to other people, this acts as positive reinforcement to actually carry it out. My version of that is this blog. I am making a commitment to create and publish an app to the app store. After that, we&#8217;ll see.</p>
-
-<p>I want to use this blog to document my journey to learn not only the technical aspects e.g. learning Objective C and Xcode, but also the other non software activities that come with creating and publishing software. This will no doubt change with time as (hopefully) I start to release apps but will do for a starting point.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
+    
+      <a class="prev" href="/blog/categories/development/page/4/">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
-    <a class="next" href="/blog/page/3/">Newer &rarr;</a>
+    <a class="next" href="/blog/categories/development/page/2/">Newer &rarr;</a>
     
   </div>
 </div>

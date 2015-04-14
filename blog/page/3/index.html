@@ -9,7 +9,7 @@
   <meta name="author" content="Gerard Condon">
 
   
-  <meta name="description" content="I&#8217;ve been fairly busy with the Start Your Own Business course so I haven&#8217;t had much time to do iOS programming. It&#8217;s time to get &hellip;">
+  <meta name="description" content="For my project, I need a way to store the model data that I will be generating. I certainly don&#8217;t want to write a persistence layer for my &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -69,6 +69,7 @@
   
 <ul class="main-navigation">
   <li><a href="/">Blog</a></li>
+  <li><a href="/blog/categories/development">Development</a></li>
   <li><a href="/projects">Projects</a></li>
   <li><a href="/about">About</a></li>
   <li><a href="/blog/archives">Archives</a></li>
@@ -79,6 +80,68 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/05/15/starting-with-core-data/">Starting Out With Core Data</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-05-15T21:59:00+01:00" pubdate data-updated="true">May 15<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>For my project, I need a way to store the model data that I will be generating. I certainly don&#8217;t want to write a persistence layer for my model objects so I will definitely use a standard library for this. There are a number of options</p>
+
+<ul>
+<li>Core Data. This provides an editor to create the objects and XCode will generate the required model classes for me.</li>
+<li>Use a database like Sqlite directly. Core Data uses a sqlite database behind the scenes but instead I could create one directly and access it using a library like <a href="https://github.com/ccgus/fmdb">FMVH</a>.</li>
+<li>A service like <a href="http://www.parse.com">Parse.com</a>. This provides an online backend for apps.</li>
+</ul>
+
+
+<p>I don&#8217;t want to use the database directly as I prefer working with objects, so that would rule out sqlite for me. Parse.com is really interesting. Among other things, it provides an online site where you can see the data in a spreadsheet interface. This <a href="http://houseofbilz.com/archives/2011/11/30/an-example-backboneparse-com-app/">tutorial</a> shows how you can use Parse.com to implement a todo list website. It&#8217;s a real pity that iCloud doesn&#8217;t provide a similar API to allow non-Apple devices access the data.</p>
+
+<p>In the end I&#8217;ve decided to go with Core Data. The reasons for this are</p>
+
+<ul>
+<li>It&#8217;s an Apple standard library and one of the purposes of writing an app was to learn about iOS and Apple technologies. Where possible I&#8217;ve tried to stick to the Apple way of doing things as I can be sure that this approach will be supported in future - or if there is a new system, then a transition path will be provided.</li>
+<li>Core Data works on the object level rather than the database level. I&#8217;ve programmed in objects for most of my career so this is familiar to me. I have a working knowledge of databases but I feel more comfortable using OOP.</li>
+<li>I&#8217;m assuming that Core Data should integrate with iCloud better than other approaches. Thinking ahead I&#8217;d like to look at iCloud at some stage and learning Core Data first should make that a bit easier.</li>
+</ul>
+
+
+<h2>Magical Record and Mogenerator</h2>
+
+<p>There are some good Core Data tutorials out there. The best introduction that I found was the <a href="http://www.stanford.edu/class/cs193p/cgi-bin/drupal/downloads-2011-fall">Stanford</a> iOS course (lectures 13 &amp; 14). To be honest, the code required to implement Core Data is fairly complex and verbose. To deal with that, I started looking for libraries which would improve the Core Data experience. The best I found is <a href="https://github.com/magicalpanda/MagicalRecord">Magical Record</a>. This library simplifies Core Data a great deal and provides loads of helper categories &amp; functions. There is an excellent tutorial on MagicalRecord <a href="http://yannickloriot.com/2012/03/magicalrecord-how-to-make-programming-with-core-data-pleasant/">here</a>. I also found <a href="http://ablfx.com/blog/?post_type=post&amp;p=561">this</a> tutorial really good and it also includes a sample project which uses MagicalRecord.</p>
+
+<p>Magical Record works well with another tool called <a href="https://github.com/rentzsch/mogenerator">Mogenerator</a>. You download a .dmg from the site and install from that. There is a nice tutorial <a href="http://raptureinvenice.com/getting-started-with-mogenerator/">here</a>. Mogenerator generates classes from the Core Data xcdatamodel file. The normal Core Data build can also do this but the advantage of Mogenerator is that it generates a second set of classes for each Core Data entity. This second set will never be overwritten so you can write custom code in these. The first set of classes will be regenerated each time the model gets updated.</p>
+
+<p>Magical Record is available on Github. Like most iOS projects I&#8217;ve found there, it seems the standard way to integrate this with your project is to copy the source files into your code and work away. I&#8217;m not too comfortable with this approach and would prefer to keep third party libraries separate from my code. This would allow me to update these independently and share them between projects. I&#8217;ll have to look into what options are available for this.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -558,48 +621,6 @@ This library is located in /Developer/usr/lib. This folder contains libprofile.a
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/02/13/test-automation/">Test Automation</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-13T18:00:00+00:00" pubdate data-updated="true">Feb 13<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>  Wherever possible I think that automating your testing is essential. For this project there is no way that I can manually rerun the same tests over and over again - the time commitment is just too much. I need to be able to click a button and have a framework run all my tests automatically and report back to me the number of tests passing, failing etc. I know that this won&#8217;t catch all the bugs in the code and that I&#8217;ll still need to do some manual testing for each release. However, the more I can push into this automated testing, the more time I&#8217;ll save on the manual testing later.</p>
-
-<p>Based on my previous <a href="blog/2012/02/10/devising-my-unit-testing-philosophy/">post</a> I&#8217;ve mentally divided up the code into different layers which build on top of each other. The app GUI is one layer. Then we have the model classes which in turn depend on utility classes etc. These different levels of code require different levels of testing.</p>
-
-<p>  For the utility and model layers I plan to use an automated unit testing framework such as <a href="http://www.junit.org/">JUnit</a>. Xcode provides <a href="https://developer.apple.com/library/ios/#documentation/DeveloperTools/Conceptual/UnitTesting/03-Writing_Test_Case_Methods/writing_tests.html#//apple_ref/doc/uid/TP40002143-CH4-SW1">OCUnit</a> which is a JUnit like framework for implementing unit tests. This framework provides the usual fail and assert macros and functions. There are some annoying things about running unit tests in Xcode. One is that it doesn&#8217;t have a separate test runner panel like JUnit has in <a href="http://www.eclipse.org/">Eclipse</a>. Instead it treats the unit test errors as build failures. All the print output for the tests is dumped into the same console output which can make it tricky to identify which output is for which test. Also there is no way to selectively run these tests. You have to rerun them all together every time. There are other frameworks out there e.g. <a href="https://github.com/gabriel/gh-unit">GHUnit</a> but for the moment I&#8217;ll stick with the default.</p>
-
-<p>For the higher level GUI code, unit testing is not useful so I&#8217;ll need a different testing approach and toolset. There seem to be number of <a href="http://sgleadow.github.com/blog/2011/10/26/which-automated-ios-testing-tool-to-use/">options</a> out there. I&#8217;m not sure what is available and what is the best to use. Apple have an <a href="https://developer.apple.com/library/mac/documentation/developertools/conceptual/InstrumentsUserGuide/Built-InInstruments/Built-InInstruments.html#//apple_ref/doc/uid/TP40004652-CH6-SW75">Instruments</a> application which allows you do perform UI testing using Javascript. I&#8217;ve also seen these <a href="http://www.testingwithfrank.com/">Frank</a> and <a href="http://www.zucchiniframework.org/">Zucchini</a> frameworks. I haven&#8217;t evaluated any of these yet as I don&#8217;t have a fully functional app to test it on. Once I get a nearly complete app I can see how much my unit testing provides, compare that to what I have left to test, and then make a judgement on where to go from there.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -615,6 +636,10 @@ This library is located in /Developer/usr/lib. This folder contains libprofile.a
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/04/14/ruby-command-line-input-using-highline/">Ruby Command Line Input Using Highline</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/12/09/open-plan-offices/">Open Plan Offices and High Tech Architecture</a>
@@ -652,10 +677,6 @@ This library is located in /Developer/usr/lib. This folder contains libprofile.a
         <a href="/blog/2013/04/17/uncle-bobs-architecture-talk/">Uncle Bob&#8217;s &#8220;Architecture The Lost Years&#8221; Talk</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2013/03/18/side-project-irish-rail-tracker/">Side Project: Irish Rail Tracker</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -681,7 +702,7 @@ This library is located in /Developer/usr/lib. This folder contains libprofile.a
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - Gerard Condon -
+  Copyright &copy; 2015 - Gerard Condon -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

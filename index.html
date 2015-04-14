@@ -9,7 +9,7 @@
   <meta name="author" content="Gerard Condon">
 
   
-  <meta name="description" content="Jeremy Paxman recently wrote an article criticising open plan offices. They have been a bugbear of mine for a while also. My working life has been &hellip;">
+  <meta name="description" content="I&#8217;ve been using Rakefiles a lot recently to automate tasks. I find it really useful in comparison to shell scripting as I can run the rakefiles &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -69,6 +69,7 @@
   
 <ul class="main-navigation">
   <li><a href="/">Blog</a></li>
+  <li><a href="/blog/categories/development">Development</a></li>
   <li><a href="/projects">Projects</a></li>
   <li><a href="/about">About</a></li>
   <li><a href="/blog/archives">Archives</a></li>
@@ -79,6 +80,60 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/14/ruby-command-line-input-using-highline/">Ruby Command Line Input Using Highline</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-04-14T23:24:00+01:00" pubdate data-updated="true">Apr 14<span>th</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&#8217;ve been using Rakefiles a lot recently to automate tasks. I find it really useful in comparison to shell scripting as I can run the rakefiles under different OSes (OS X and Windows) and have it behave the same in all cases.</p>
+
+<p>I was building a simple <a href="https://github.com/gerardcondon/pgn/blob/master/Rakefile">script</a> to automate the generation of pgn files for my chess games. I wanted to be able to enter the details of the games on the command line and then have my script output a pgn file.</p>
+
+<p>I didn&#8217;t want to have to go messing about with low level operations such as <code>puts</code> and <code>gets</code> so I searched for something better. I found the <a href="https://github.com/JEG2/highline">Highline</a> gem for this and was really happy with it.</p>
+
+<p>It allows for a variety of input formats</p>
+
+<ul>
+<li><p>To display a prompt to the user and then store the input in a variable use
+  <code>event = ask("Event Title: ")</code></p></li>
+<li><p>You can specify default values and the default will be listed as part of the prompt. On the command line simply hit enter to get the default value.
+  <code>timeControl = ask("TimeControl: ") { |q| q.default = "5400+15" }</code></p></li>
+<li><p>You can create a menu from an array of values using the choose function.
+  <code>result = choose("1-0", "1/2-1/2", "0-1", "*")</code></p></li>
+</ul>
+
+
+<p>These can be customised and there are a lot more options available such as entering passwords. If you are doing text input in Ruby, I would advise checking it out.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -591,59 +646,6 @@ Some features of JavaScript e.g. different return types, can&#8217;t be represen
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/03/18/side-project-irish-rail-tracker/">Side Project: Irish Rail Tracker</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-03-18T10:56:00+00:00" pubdate data-updated="true">Mar 18<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I&#8217;ve been working on a <a href="http://www.gerardcondon.com/projects/irishrail/index.html">side project</a> for the last month in order to learn about front-end web development. While not complete by any means, I think it&#8217;s good enough to release as a beta. I plan to add features, improve the UI and refactor the code in future.</p>
-
-<p>The motivation behind it was that I wanted to do a project using one of the JavaScript <a href="http://addyosmani.github.com/todomvc/">MVC Frameworks</a> - for this one I chose <a href="http://backbonejs.org">Backbone</a>. Also I&#8217;ll be working more with HTML and CSS in work over the coming year and I need to ramp up on these.</p>
-
-<p><a href="http://www.irishrail.ie">Iarnród Éireann</a> (the Irish Rail company) has a REST API which provides details of the stations in its network and the current status of its trains. My <a href="http://www.gerardcondon.com/projects/irishrail/index.html">webpage</a> plots these stations and trains on a Google Map and shows upcoming train information for each station.</p>
-
-<p>I plan to write a series of posts on how I implemented this and the lessons I learned along the way.</p>
-
-<p>The project is available <a href="http://www.gerardcondon.com/projects/irishrail/index.html">here</a> and the code is available on <a href="https://github.com/gerardcondon/Irish-Rail-Tracker">Github</a> under the MIT licence. The roadmap.md document is where I&#8217;m tracking future work that needs to be done on the project. Any feedback would be much appreciated.</p>
-
-<p>As far as the code goes:</p>
-
-<ul>
-<li>I&#8217;m happy enough with the Backbone model and collection code. The Backbone view code still needs some refactoring to remove duplication and use proper Backbone idioms.</li>
-<li>There are some JavaScript <a href="http://pivotal.github.com/jasmine/">Jasmine</a> tests - mostly for the model. I&#8217;m still figuring out the best way to test the UI - I have some Jasmine tests but also some Ruby <a href="https://github.com/jnicklas/capybara">Capybara</a> tests for the browser.</li>
-<li>The HTML and CSS code are functional rather than elegant. I&#8217;m hoping to improve these as time goes by and as I get more experience with these languages.</li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -657,6 +659,10 @@ Some features of JavaScript e.g. different return types, can&#8217;t be represen
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/04/14/ruby-command-line-input-using-highline/">Ruby Command Line Input Using Highline</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/12/09/open-plan-offices/">Open Plan Offices and High Tech Architecture</a>
@@ -694,10 +700,6 @@ Some features of JavaScript e.g. different return types, can&#8217;t be represen
         <a href="/blog/2013/04/17/uncle-bobs-architecture-talk/">Uncle Bob&#8217;s &#8220;Architecture The Lost Years&#8221; Talk</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2013/03/18/side-project-irish-rail-tracker/">Side Project: Irish Rail Tracker</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -723,7 +725,7 @@ Some features of JavaScript e.g. different return types, can&#8217;t be represen
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - Gerard Condon -
+  Copyright &copy; 2015 - Gerard Condon -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 
