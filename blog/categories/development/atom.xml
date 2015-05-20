@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Development | Gerard Condon's Blog]]></title>
   <link href="http://www.gerardcondon.com/blog/categories/development/atom.xml" rel="self"/>
   <link href="http://www.gerardcondon.com/"/>
-  <updated>2015-04-14T23:39:34+01:00</updated>
+  <updated>2015-05-21T00:18:45+01:00</updated>
   <id>http://www.gerardcondon.com/</id>
   <author>
     <name><![CDATA[Gerard Condon]]></name>
@@ -12,6 +12,23 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Mini Linx 7 Review]]></title>
+    <link href="http://www.gerardcondon.com/blog/2015/05/20/mini-linx-7-review/"/>
+    <updated>2015-05-20T23:58:00+01:00</updated>
+    <id>http://www.gerardcondon.com/blog/2015/05/20/mini-linx-7-review</id>
+    <content type="html"><![CDATA[<p>I recently bought a <a href="http://linxtablets.co.uk/linx-7.html">Linx 7</a> tablet for 70 euro. For the price it's a great little tablet. It comes with a full version of Windows 8 and a year's subscription to Office 365. It's great for Youtube/videos, Twitter and internet browsing. It's cheap enough, compared to a four or five hundred euro iPad, that I can leave the two year old watch his favourite videos on it without worrying too much. Some parts of the hardware are not up to scratch - the camera is terrible and the headphone jack has static noise - but for the price it's fine.</p>
+
+<p>One of the best features of the tablet compared to iOS is that it comes with a micro-SD card slot. That means that it is really easy to copy over files from my desktop. I recently tried to load up my iPad with photos and vidoes to show the in-laws. Even though the videos were shot on another iOS device, it was a nightmare to get them on the iPad - a convoluted process involving re-encoding and syncing through iTunes. On the Linx, I just copied the original files to the SD card in Windows, plugged the card in into the slot and was able to watch them immediately.</p>
+
+<p>In fact that original iPad is really only used now as an ereader. I think the usefulness of the applications on iOS has been going down recently compared to other platforms. Quality-wise they're absolutely fine but they're fairly shallow compared to what they could be. The race to the bottom app-store economy and the limitations that iOS puts on inter-app communications severely limits the type of apps being written.</p>
+
+<p>I play a good bit of chess and the apps on iOS are nowhere near the quality of those on Windows. And apparently also those on <a href="http://prodigalpawnchessbookreviews.blogspot.ie/2015/05/why-android-chess-apps-have-it-all-over.html">Android</a>. However with the Linx I can run any Windows chess app. Even Chessbase runs fine on it, which gives access to a vast library of Chessbase Fritz Trainer videos. I can open pgn files in multiple different applications and copy and paste data between them. I can use source control to version my notes. Also on Windows, developers are able to charge proper rates for their applications, thus ensuring a robust marketplace for software.</p>
+
+<p>The problem with using Windows applications on the Linx is that the UI is really awkward to use with just your fingers. However to me, this is a small price to pay for being able to use these apps at all on a tablet. Also you can use Bluetooth mice and keyboards with the Linx so at least you have some options.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Ruby Command Line Input Using Highline]]></title>
@@ -158,23 +175,6 @@ Some features of JavaScript e.g. different return types, can't be represented in
 
 
 <p>In future, I'd like to add this to a build system which will run jshint on my code and also do whatever minfication/optimizations are needed. It's looking like <a href="http://gruntjs.com/">Grunt</a> is a good tool for this so will investigate that further.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[The Design of iCloud]]></title>
-    <link href="http://www.gerardcondon.com/blog/2013/06/04/the-design-of-icloud/"/>
-    <updated>2013-06-04T22:35:00+01:00</updated>
-    <id>http://www.gerardcondon.com/blog/2013/06/04/the-design-of-icloud</id>
-    <content type="html"><![CDATA[<p>There's been a lot of blog posts from developers recently about the problems with iCloud syncing. The Verge has a great summary <a href="http://www.theverge.com/2013/3/26/4148628/why-doesnt-icloud-just-work">here</a>. There are quite a few who are removing iCloud from their products and going with other syncing options such as Dropbox.</p>
-
-<p>The impression I get from these discussions is that it's the reliability of iCloud that's the problem, i.e. if iCloud was rock solid then it would be a great option for your app. I disagree with this view and I think the design of iCloud is fundamentally flawed.</p>
-
-<p>I think that even if iCloud Database syncing was perfectly reliable, it would still be a bad way of syncing data. One conclusion I've drawn from looking at web backends and Rails in particular, is that iCloud is only useful if you want to stick to Apple devices. There is no way to get at this data outside of iOS or OS X. In particular it is impossible to access this from a web application. For this reason, I think it's vital to have a proper backend if you are storing data in the cloud.</p>
-
-<p>The other mode of iCloud syncing is the Document based syncing. The issue I have with this is that anything stored in iCloud is restricted to the application that created it. This is a major issue when an application stores data in a common file format (e.g. plain text or image formats such as PNG or JPEG) that you may expect to be able to use in another application. Dropbox is a far superior solution in this case. I feel much more confident in the apps which use this over iCloud, as I will always have access to the data files.</p>
-
-<p>The other day, Brent Simmons <a href="http://inessential.com/2013/05/07/30_minutes_to_sync">posted</a> a great proposal for an Apple backend service. They really need to do something here as their competitors aren't standing still. Microsoft is on the right track here with Azure and similarly Amazon's cloud computing services are going from strength to strength. It will be interesting to see if anything will be announced for iCloud at WWDC.</p>
 ]]></content>
   </entry>
   

@@ -4,7 +4,7 @@
   <title><![CDATA[Gerard Condon's Blog]]></title>
   <link href="http://www.gerardcondon.com/atom.xml" rel="self"/>
   <link href="http://www.gerardcondon.com/"/>
-  <updated>2015-04-14T23:39:34+01:00</updated>
+  <updated>2015-05-21T00:18:45+01:00</updated>
   <id>http://www.gerardcondon.com/</id>
   <author>
     <name><![CDATA[Gerard Condon]]></name>
@@ -12,6 +12,23 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Mini Linx 7 Review]]></title>
+    <link href="http://www.gerardcondon.com/blog/2015/05/20/mini-linx-7-review/"/>
+    <updated>2015-05-20T23:58:00+01:00</updated>
+    <id>http://www.gerardcondon.com/blog/2015/05/20/mini-linx-7-review</id>
+    <content type="html"><![CDATA[<p>I recently bought a <a href="http://linxtablets.co.uk/linx-7.html">Linx 7</a> tablet for 70 euro. For the price it&#8217;s a great little tablet. It comes with a full version of Windows 8 and a year&#8217;s subscription to Office 365. It&#8217;s great for Youtube/videos, Twitter and internet browsing. It&#8217;s cheap enough, compared to a four or five hundred euro iPad, that I can leave the two year old watch his favourite videos on it without worrying too much. Some parts of the hardware are not up to scratch - the camera is terrible and the headphone jack has static noise - but for the price it&#8217;s fine.</p>
+
+<p>One of the best features of the tablet compared to iOS is that it comes with a micro-SD card slot. That means that it is really easy to copy over files from my desktop. I recently tried to load up my iPad with photos and vidoes to show the in-laws. Even though the videos were shot on another iOS device, it was a nightmare to get them on the iPad - a convoluted process involving re-encoding and syncing through iTunes. On the Linx, I just copied the original files to the SD card in Windows, plugged the card in into the slot and was able to watch them immediately.</p>
+
+<p>In fact that original iPad is really only used now as an ereader. I think the usefulness of the applications on iOS has been going down recently compared to other platforms. Quality-wise they&#8217;re absolutely fine but they&#8217;re fairly shallow compared to what they could be. The race to the bottom app-store economy and the limitations that iOS puts on inter-app communications severely limits the type of apps being written.</p>
+
+<p>I play a good bit of chess and the apps on iOS are nowhere near the quality of those on Windows. And apparently also those on <a href="http://prodigalpawnchessbookreviews.blogspot.ie/2015/05/why-android-chess-apps-have-it-all-over.html">Android</a>. However with the Linx I can run any Windows chess app. Even Chessbase runs fine on it, which gives access to a vast library of Chessbase Fritz Trainer videos. I can open pgn files in multiple different applications and copy and paste data between them. I can use source control to version my notes. Also on Windows, developers are able to charge proper rates for their applications, thus ensuring a robust marketplace for software.</p>
+
+<p>The problem with using Windows applications on the Linx is that the UI is really awkward to use with just your fingers. However to me, this is a small price to pay for being able to use these apps at all on a tablet. Also you can use Bluetooth mice and keyboards with the Linx so at least you have some options.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Ruby Command Line Input Using Highline]]></title>
@@ -734,41 +751,6 @@ gcovr -r $WORKSPACE/$JOB_NAME -x &gt; ${WORKSPACE}/coverage.xml
 <p>The <a href="http://blog.octo.com/en/jenkins-quality-dashboard-ios-development/">Octo Talks</a> blog also suggested a number of other metrics which could be captured in Jenkins. I added the SLOC Count and the Clang Build Scan. Both of these required installing tools and then Jenkins plugins which used those tools. This instructions on the blog covered this. Ones that I&#8217;ve put on the someday/maybe list are the PMD plugin and OCLint.</p>
 
 <p>At the end of all this, Jenkins is working quite well for my simple test project. Next step is to try it out on my app.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Localizing iOS Apps]]></title>
-    <link href="http://www.gerardcondon.com/blog/2012/05/19/localizing-ios-apps/"/>
-    <updated>2012-05-19T16:54:00+01:00</updated>
-    <id>http://www.gerardcondon.com/blog/2012/05/19/localizing-ios-apps</id>
-    <content type="html"><![CDATA[<p>I was looking at a tutorial for creating a settings bundle for my app and it had separate files for different languages. I realised that I hadn&#8217;t a clue how to localize iOS applications. I decided I&#8217;d better look into it now, rather than at the end of development, in case it required me to change existing code. Much better to implement with localization in mind, than retrofit at the end of development.</p>
-
-<p>I&#8217;m interested to see how many translations I&#8217;ll be able to include in the app. I&#8217;m not sure how easy it will be to do the translation or even how much text there will be to translate. I&#8217;m planning a Chinese translation and for sentimental reasons I&#8217;ll do an Irish translation. I&#8217;ll probably try to get some European languages done also. I think that once I put in the infrastructure to do one language then adding additional ones shouldn&#8217;t be too much bother.</p>
-
-<p>The basics of implementing localization is that you externalize all strings in your application to .strings files and then provide versions of these files for each language you support. The process for creating the basic localization.strings file is outlined <a href="http://userflex.wordpress.com/2011/10/20/localized-strings-xcode4/">here</a>. In your code you can get the localized values for these strings using <code>NSLocalizedString(@"Externalized String Name", @"")</code>.</p>
-
-<h2>Localization Tools</h2>
-
-<p>Using this method, we will have to deal with lots of .strings files. Xcode doesn&#8217;t provide much help here so I looked around for third party apps. I bought <a href="http://www.cocoanetics.com/apps/linguan/">Linguan</a> on the Mac App Store and it looks very good. You point it at an Xcode project file and it locates all the .strings files and presents them in a nice table. It can generate text files which you can send on to your translators for them to translate and re-import their translations. I&#8217;m very pleased with it so far.</p>
-
-<p>Apart from having .strings files for strings in the code, I also need to localize the app&#8217;s storyboards. Albert Mata has a fantastic tutorial on how to do this <a href="http://www.albertmata.net/articles/introduction-to-internationalization-using-storyboards-on-ios-5.html">here</a>. A big problem with localizing storyboards is that changes in one language&#8217;s storyboards are not propagated to the others. Manually keeping these in sync would be a nightmare. Thankfully there is a handy script <a href="http://code.google.com/p/edim-mobile/source/browse/trunk/ios/IncrementalLocalization/localize.py">here</a> by Ederson Machado, which will update the .strings files for the storyboard and also keep the storyboards in sync. There is a nice video outlining the features of the script <a href="http://www.youtube.com/watch?v=cF1Rf02QvZQ">here</a>. By adding this script as a build run script, we can ensure that our storyboards are always in sync.</p>
-
-<h2>Localization Workflow</h2>
-
-<p>My localization workflow is as follows:</p>
-
-<ul>
-<li>First I created multiple storyboards for each language using the Localization area on the sidebar. This will create a language.proj folder for each language.</li>
-<li>I ran the localize.py script on the project. This generated the mainstoryboard.strings files in each of the language folders.</li>
-<li>I manually add these files to Xcode. First I added the English version. Then I clicked the plus button in the Localization sidebar and added the other languages. Xcode is able to find those .strings files and link them to the overall file.</li>
-<li>I create a localization.strings file to deal with the strings in the code and added all languages.</li>
-<li>I ran genstrings but I don&#8217;t think this is needed if you&#8217;re using Linguan.</li>
-<li>When I opened the project in Linguan it was able to find all the strings files, including those from the storyboard.</li>
-</ul>
-
-
-<p>I&#8217;m satisfied now that I have the localization mostly under control. One thing I still need to look at is how does this affect testing. Hopefully any test framework that I used will be able to run the tests in all languages.</p>
 ]]></content>
   </entry>
   
