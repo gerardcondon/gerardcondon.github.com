@@ -9,7 +9,7 @@
   <meta name="author" content="Gerard Condon">
 
   
-  <meta name="description" content="I was looking at a tutorial for creating a settings bundle for my app and it had separate files for different languages. I realised that I hadn&#8217 &hellip;">
+  <meta name="description" content="First post in a long time. I didn&#8217;t really do much iOS development over the summer and am only starting to get back into it in the past few &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,103 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/09/16/setting-up-jenkins-on-os-x/">Setting Up Jenkins on OS X</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-16T13:24:00+01:00" pubdate data-updated="true">Sep 16<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>First post in a long time. I didn&#8217;t really do much iOS development over the summer and am only starting to get back into it in the past few weeks. I have some draft posts on my dealings with both Core Data and UITableViews and once those features are complete I&#8217;ll post them.</p>
+
+<p>Along with coding, I&#8217;ve been looking at adding some build infrastructure for my projects. Having seen <a href="http://jenkins-ci.org/">Jenkins</a> used at work, I wanted to get a CI system set up for my builds here at home. I want to use it to kick off a build, run the tests and package up the iPhone app. By using something like Jenkins I can automate my build and testing process and also have a record of previous builds.</p>
+
+<h2>Jenkins Install</h2>
+
+<p>The first step was to install Jenkins. They provide a Mac installer - the only annoyance is that it triggers the new OS X Gatekeeper dialog blocking unsigned apps from installing. Then I loaded locahost:8080 in my browser to find that Jenkins wasn&#8217;t loading and there was no error message telling me what went wrong. D&#8217;oh. The issue is that Jenkins requires Java to run but it isn&#8217;t installed by default on OS X. To install simply type <code>java</code> into a terminal and a message box will appear prompting you to install Java.</p>
+
+<p>Then I followed the user setup from Moritz Haarmann&#8217;s <a href="http://momo.brauchtman.net/2011/11/12/howto-install-jenkins-on-os-x-and-make-it-build-mac-stuff/">blog</a>. I&#8217;m not sure if the jenkins account part is still necessary, as when I got to the stage about changing the user name in the plist file, it had already been set to Jenkins. The changing permissions on the Jenkins home folder was needed though. After that I was able to run ssh-keygen and generate some keys.</p>
+
+<h2>Updating Git Workflow</h2>
+
+<p>I installed the Git and XCode plugins from the Manage Jenkins screen with no issues. I then created a simple project to test it out. I just added a git clone step. This failed for me with the following errors</p>
+
+<pre><code>Failed to connect to repository : Command "git ls-remote -h ..../MyApp.git HEAD" returned status code 128:
+stdout: 
+stderr: fatal: '..../MyApp.git' does not appear to be a git repository
+fatal: The remote end hung up unexpectedly
+</code></pre>
+
+<p>The problem here is that the repository is on my Dropbox account (as described <a href="http://www.gerardcondon.com/blog/2012/01/26/version-control-in-xcode-using-git-and-dropbox/">here</a>). This folder is not visible to the jenkins user. I didn&#8217;t want to mess around with changing permissions on the Dropbox folder so I looked for an alternative solution. A colleague at work told me about <a href="https://bitbucket.org/">Bitbucket</a> from Atlassian. This is similar to <a href="http://www.github.com">Github</a> but allows for private repositories. As luck would have it, I had already been using another Atlassian product <a href="http://www.sourcetreeapp.com/">SourceTree</a> to manage my git repositories. This tool works seamlessly with Bitbucket. Once I uploaded my ssh key to Bitbucket I could simply add another remote repository to my local repository and push to it, all from within SourceTree.</p>
+
+<p>Now that I had a repository on Bitbucket, it was time to integrate that with Jenkins. This turned out to be fairly easy. I uploaded the ssh key for the jenkins account to Bitbucket. The admin page for the repository showed its ssh address so I added a Git build step to the project using that ssh address. When the project is built now, Jenkins will download the latest code from the repository first and then continue on.</p>
+
+<h2>Jenkins Issues</h2>
+
+<p>While Jenkins is mostly working fine now, there were a few issues I&#8217;ve run into. The git checkout isn&#8217;t working at all using the Git Plugin. Originally it did but then I started getting the following errors</p>
+
+<pre><code>FATAL: Could not checkout null with start point 02dbc3e456d6aa6079543eeaa8361bdebe8fac9d
+hudson.plugins.git.GitException: Could not checkout null with start point 02dbc3e456d6aa6079543eeaa8361bdebe8fac9d
+    at hudson.plugins.git.GitAPI.checkoutBranch(GitAPI.java:956)
+    ...
+
+Caused by: hudson.plugins.git.GitException: Command "git checkout -f 02dbc3e456d6aa6079543eeaa8361bdebe8fac9d" returned status code 128:
+stdout: 
+stderr: fatal: reference is not a tree: 02dbc3e456d6aa6079543eeaa8361bdebe8fac9d
+</code></pre>
+
+<p>I wasn&#8217;t able to find a solution to this so I had to stop using the Git plugin and just add an <code>execute shell</code> build step to clone the Bitbucket git repository. As I add more projects to Jenkins, I&#8217;ll check if I get the same issues there also.</p>
+
+<h2>Build XCode Project</h2>
+
+<p>The <a href="http://www.XXX.com">XCode plugin</a> for Jenkins made it really easy to build once setup. You add an XCode build step and configure it as necessary. I chose to do a clean build each time. The project I tested this on was a static library so I didn&#8217;t need an IPA built or any of the version number updates but they should be useful when building a proper app.</p>
+
+<p>When I first tried to build I got an error saying <code>You have not agreed to the Xcode license agreements</code>. I needed to run <code>sudo xcodebuild -license</code> in the terminal to fix this.</p>
+
+<p>In order to run the unit tests, the XCode plugin recommends using two build steps, one to build the app and the other to execute the tests. The reason for this is that the test step requires extra parameters i.e. path to the simulator SDK. If you&#8217;re using the OCTest framework which comes with XCode then the plugin will listen to the test output and generate JUnit compatible xml files. Jenkins can read these and add the to the build results page.</p>
+
+<h2>Set up Coverage</h2>
+
+<p>Setting up code coverage for iOS projects is not an easy task. My gcov setup for XCode 4.3 still worked for me but the problem was to integrate this with Jenkins. Coverstory would not be of use here but I found this <a href="https://software.sandia.gov/trac/fast/wiki/gcovr">gcovr</a> script from the <a href="http://blog.octo.com/en/jenkins-quality-dashboard-ios-development/">Octo Talks</a> blog. Gcovr will convert the gcov output into a <a href="http://cobertura.sourceforge.net/">cobertura</a> xml file which can be read by Jenkins.</p>
+
+<p>One problem I had was that for some reason, gcov wouldn&#8217;t work on the files in the Jenkins workspace. I was getting <code>gcno:cannot open graph file</code>errors. Coverstory also didn&#8217;t work on the files in this location. What worked for me was to copy the gcda and gcno files out to a temp folder under /Users/Shared/Jenkins/Home. Passing the original build location as the root parameter to gcovr allowed the cobertura plugin to find the source code in the html report, while also removing system headers from the coverage report. Here is the script.</p>
+
+<pre><code>cp -r ${WORKSPACE}/build/${JOB_NAME}.build/Coverage-iphonesimulator/${JOB_NAME}.build/Objects-normal/i386/*.gc* /Users/shared/Jenkins/tmp/${JOB_NAME}
+cd /Users/shared/Jenkins/tmp/${JOB_NAME}
+gcovr -r $WORKSPACE/$JOB_NAME -x &gt; ${WORKSPACE}/coverage.xml
+</code></pre>
+
+<p>The <a href="http://blog.octo.com/en/jenkins-quality-dashboard-ios-development/">Octo Talks</a> blog also suggested a number of other metrics which could be captured in Jenkins. I added the SLOC Count and the Clang Build Scan. Both of these required installing tools and then Jenkins plugins which used those tools. This instructions on the blog covered this. Ones that I&#8217;ve put on the someday/maybe list are the PMD plugin and OCLint.</p>
+
+<p>At the end of all this, Jenkins is working quite well for my simple test project. Next step is to try it out on my app.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -557,79 +654,6 @@ He found the solution to this issue <a href="http://www.infinite-loop.dk/blog/20
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/02/17/adding-code-coverage-to-unit-tests/">Adding Code Coverage to Unit Tests for Xcode 4.2</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-17T22:27:00+00:00" pubdate data-updated="true">Feb 17<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>If you are going to the effort of having unit tests, then you really need to have code coverage. This will allow you to ensure that your tests are exercising all your code. It is really easy to spot a missing test when you see a branch of an if-else with no coverage. Code coverage for me is also a way to motivate myself to implement the tests. It&#8217;s like high scores in games - it gives me a target to aim for. Coverage gives feedback that your tests are actually doing something, and with each test you add, you can see the areas of untested code steadily decrease.</p>
-
-<p>To set up code coverage in Xcode 4.2 I used the guide on these blogs - <a href="http://www.infinite-loop.dk/blog/2011/05/covering-it-all-up/">Infinite Loop</a> and <a href="http://mattrajca.com/post/8749868513/llvm-code-coverage-and-xcode-4">Matt Rajca</a>. Originally only the gcc compiler was supported but since then the Clang compiler has had code coverage enabled. This is important as we need to use Clang for ARC and static analysis among other things.</p>
-
-<h3>XCode Build Settings</h3>
-
-<p>Xcode has the concept of build configurations which can have built settings altered independently of each other. The two default configurations are Debug and Release. We want to add a new configuration named Coverage. To do this duplicate the Debug configuration.</p>
-
-<p><img src="/images/codeCoverage/NewBuildConfig.png" title="New Build Configuration" ></p>
-
-<p>In order to specify different settings for configurations in Xcode, hover over the left hand margin directly to the left of the setting we wish to update. An arrow will appear which when clicked will expand to an additional three lines for Debug, Coverage and Release. Editing the top line will alter the setting for all versions. Altering either of the new lines will only update the setting for that version of the build.</p>
-
-<p><img src="/images/codeCoverage/BuildSettings.png" title="Build Settings" ></p>
-
-<ul>
-<li>Open the Build Settings tab for the main target. Under &#8220;Apple LLVM 3.0 compiler - Code Generation&#8221;, enable both
-
-<ul>
-<li>&#8220;Generate Test Coverage Files&#8221;</li>
-<li> &#8220;Instrument Program Flow&#8221;</li>
-</ul>
-</li>
-<li> We now need to add the libprofile_rt library to the build. This will link in the implementations of the coverage functions. If you are seeing link errors like &#8220;_llvm_gcda_increment_indirect_counter&#8221;, referenced from:&#8221;, then you have not done this step.<br/>
-This library is located in /Developer/usr/lib. This folder contains libprofile.a which is a static library and a libprofile.dylib which is a dynamic linked library (similar to a .dll in Windows). To link this open the Build Phases tab for the main target. Expand the &#8220;Link Binary with Libraries&#8221; and click the + button. Click &#8220;Add Other&#8221; and then find libprofile_rt.dylib in the file viewer and add it. (Note that this doesn&#8217;t work for me since Xcode 4.3. I&#8217;ve documented the updates I needed to make <a href="http://www.gerardcondon.com/blog/2012/02/21/code-coverage-updates-for-xcode-4-dot-3/">here</a>).</li>
-</ul>
-
-
-<h3>Executing Tests</h3>
-
-<p>Now your unit tests should run and if you examine the build output files under the DerivedData folder you should find .gcda and .gcno coverage files along with your .o files. To find this folder you can go to the Projects tab in the Organizer and select your project. The path to the Derived Data folder is listed here along with an arrow which will open the folder in the Finder.</p>
-
-<p><img src="/images/codeCoverage/DerivedData.png" title="Derived Data" ></p>
-
-<p>From here the path to the coverage files is Build/Intermediates/${Project Target}.build/Coverage-iphonesimulator/${Project Target}.build/Objects-normal/i386. Replace ${Project Target} with the name of your project target.</p>
-
-<h3>Viewing Coverage Data</h3>
-
-<p>To view the coverage data I used <a href="http://code.google.com/p/coverstory/">CoverStory</a>. Simply open the app and point it at the coverage folder. This will give a nice two pane display showing your files on the left and an editor which shows how often each line of code was hit. Now you can identify untested code and add new tests to cover them.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -645,6 +669,10 @@ This library is located in /Developer/usr/lib. This folder contains libprofile.a
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/06/01/linx-7-standby-battery-life-fix/">Linx 7 Standby Battery Life Fix</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/05/20/mini-linx-7-review/">Mini Linx 7 Review</a>
@@ -680,10 +708,6 @@ This library is located in /Developer/usr/lib. This folder contains libprofile.a
     
       <li class="post">
         <a href="/blog/2013/05/05/learning-javascript/">Learning JavaScript</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/04/23/irish-rail-realtime-api/">Irish Rail&#8217;s RealTime API</a>
       </li>
     
   </ul>

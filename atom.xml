@@ -4,7 +4,7 @@
   <title><![CDATA[Gerard Condon's Blog]]></title>
   <link href="http://www.gerardcondon.com/atom.xml" rel="self"/>
   <link href="http://www.gerardcondon.com/"/>
-  <updated>2015-05-21T00:18:45+01:00</updated>
+  <updated>2015-06-01T00:27:54+01:00</updated>
   <id>http://www.gerardcondon.com/</id>
   <author>
     <name><![CDATA[Gerard Condon]]></name>
@@ -12,6 +12,15 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Linx 7 Standby Battery Life Fix]]></title>
+    <link href="http://www.gerardcondon.com/blog/2015/06/01/linx-7-standby-battery-life-fix/"/>
+    <updated>2015-06-01T00:23:00+01:00</updated>
+    <id>http://www.gerardcondon.com/blog/2015/06/01/linx-7-standby-battery-life-fix</id>
+    <content type="html"><![CDATA[<p>One issue I had with my Linx 7 was that the battery was draining really quickly in standby mode. I was having to shut down the tablet completely between uses. I found <a href="http://www.linxtablet.co.uk/viewtopic.php?f=41&amp;t=214#p1139">this</a> page on a Linx forum site which recommended upgrading the wifi driver. I installed the driver and now the standby battery life is excellent.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Mini Linx 7 Review]]></title>
@@ -27,6 +36,8 @@
 <p>I play a good bit of chess and the apps on iOS are nowhere near the quality of those on Windows. And apparently also those on <a href="http://prodigalpawnchessbookreviews.blogspot.ie/2015/05/why-android-chess-apps-have-it-all-over.html">Android</a>. However with the Linx I can run any Windows chess app. Even Chessbase runs fine on it, which gives access to a vast library of Chessbase Fritz Trainer videos. I can open pgn files in multiple different applications and copy and paste data between them. I can use source control to version my notes. Also on Windows, developers are able to charge proper rates for their applications, thus ensuring a robust marketplace for software.</p>
 
 <p>The problem with using Windows applications on the Linx is that the UI is really awkward to use with just your fingers. However to me, this is a small price to pay for being able to use these apps at all on a tablet. Also you can use Bluetooth mice and keyboards with the Linx so at least you have some options.</p>
+
+<p><strong>Update</strong> If you have a Linx tablet then you should <a href="http://www.gerardcondon.com/blog/2015/06/01/linx-7-standby-battery-life-fix">upgrade the wifi drivers</a> to fix the battery life.</p>
 ]]></content>
   </entry>
   
@@ -681,76 +692,6 @@ fi
 </code></pre>
 
 <p>These changes fixed the 4.5 build issues and now I have a working build and test setup again. Finally!!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Setting up Jenkins on OS X]]></title>
-    <link href="http://www.gerardcondon.com/blog/2012/09/16/setting-up-jenkins-on-os-x/"/>
-    <updated>2012-09-16T13:24:00+01:00</updated>
-    <id>http://www.gerardcondon.com/blog/2012/09/16/setting-up-jenkins-on-os-x</id>
-    <content type="html"><![CDATA[<p>First post in a long time. I didn&#8217;t really do much iOS development over the summer and am only starting to get back into it in the past few weeks. I have some draft posts on my dealings with both Core Data and UITableViews and once those features are complete I&#8217;ll post them.</p>
-
-<p>Along with coding, I&#8217;ve been looking at adding some build infrastructure for my projects. Having seen <a href="http://jenkins-ci.org/">Jenkins</a> used at work, I wanted to get a CI system set up for my builds here at home. I want to use it to kick off a build, run the tests and package up the iPhone app. By using something like Jenkins I can automate my build and testing process and also have a record of previous builds.</p>
-
-<h2>Jenkins Install</h2>
-
-<p>The first step was to install Jenkins. They provide a Mac installer - the only annoyance is that it triggers the new OS X Gatekeeper dialog blocking unsigned apps from installing. Then I loaded locahost:8080 in my browser to find that Jenkins wasn&#8217;t loading and there was no error message telling me what went wrong. D&#8217;oh. The issue is that Jenkins requires Java to run but it isn&#8217;t installed by default on OS X. To install simply type <code>java</code> into a terminal and a message box will appear prompting you to install Java.</p>
-
-<p>Then I followed the user setup from Moritz Haarmann&#8217;s <a href="http://momo.brauchtman.net/2011/11/12/howto-install-jenkins-on-os-x-and-make-it-build-mac-stuff/">blog</a>. I&#8217;m not sure if the jenkins account part is still necessary, as when I got to the stage about changing the user name in the plist file, it had already been set to Jenkins. The changing permissions on the Jenkins home folder was needed though. After that I was able to run ssh-keygen and generate some keys.</p>
-
-<h2>Updating Git Workflow</h2>
-
-<p>I installed the Git and XCode plugins from the Manage Jenkins screen with no issues. I then created a simple project to test it out. I just added a git clone step. This failed for me with the following errors</p>
-
-<pre><code>Failed to connect to repository : Command "git ls-remote -h ..../MyApp.git HEAD" returned status code 128:
-stdout: 
-stderr: fatal: '..../MyApp.git' does not appear to be a git repository
-fatal: The remote end hung up unexpectedly
-</code></pre>
-
-<p>The problem here is that the repository is on my Dropbox account (as described <a href="http://www.gerardcondon.com/blog/2012/01/26/version-control-in-xcode-using-git-and-dropbox/">here</a>). This folder is not visible to the jenkins user. I didn&#8217;t want to mess around with changing permissions on the Dropbox folder so I looked for an alternative solution. A colleague at work told me about <a href="https://bitbucket.org/">Bitbucket</a> from Atlassian. This is similar to <a href="http://www.github.com">Github</a> but allows for private repositories. As luck would have it, I had already been using another Atlassian product <a href="http://www.sourcetreeapp.com/">SourceTree</a> to manage my git repositories. This tool works seamlessly with Bitbucket. Once I uploaded my ssh key to Bitbucket I could simply add another remote repository to my local repository and push to it, all from within SourceTree.</p>
-
-<p>Now that I had a repository on Bitbucket, it was time to integrate that with Jenkins. This turned out to be fairly easy. I uploaded the ssh key for the jenkins account to Bitbucket. The admin page for the repository showed its ssh address so I added a Git build step to the project using that ssh address. When the project is built now, Jenkins will download the latest code from the repository first and then continue on.</p>
-
-<h2>Jenkins Issues</h2>
-
-<p>While Jenkins is mostly working fine now, there were a few issues I&#8217;ve run into. The git checkout isn&#8217;t working at all using the Git Plugin. Originally it did but then I started getting the following errors</p>
-
-<pre><code>FATAL: Could not checkout null with start point 02dbc3e456d6aa6079543eeaa8361bdebe8fac9d
-hudson.plugins.git.GitException: Could not checkout null with start point 02dbc3e456d6aa6079543eeaa8361bdebe8fac9d
-    at hudson.plugins.git.GitAPI.checkoutBranch(GitAPI.java:956)
-    ...
-
-Caused by: hudson.plugins.git.GitException: Command "git checkout -f 02dbc3e456d6aa6079543eeaa8361bdebe8fac9d" returned status code 128:
-stdout: 
-stderr: fatal: reference is not a tree: 02dbc3e456d6aa6079543eeaa8361bdebe8fac9d
-</code></pre>
-
-<p>I wasn&#8217;t able to find a solution to this so I had to stop using the Git plugin and just add an <code>execute shell</code> build step to clone the Bitbucket git repository. As I add more projects to Jenkins, I&#8217;ll check if I get the same issues there also.</p>
-
-<h2>Build XCode Project</h2>
-
-<p>The <a href="http://www.XXX.com">XCode plugin</a> for Jenkins made it really easy to build once setup. You add an XCode build step and configure it as necessary. I chose to do a clean build each time. The project I tested this on was a static library so I didn&#8217;t need an IPA built or any of the version number updates but they should be useful when building a proper app.</p>
-
-<p>When I first tried to build I got an error saying <code>You have not agreed to the Xcode license agreements</code>. I needed to run <code>sudo xcodebuild -license</code> in the terminal to fix this.</p>
-
-<p>In order to run the unit tests, the XCode plugin recommends using two build steps, one to build the app and the other to execute the tests. The reason for this is that the test step requires extra parameters i.e. path to the simulator SDK. If you&#8217;re using the OCTest framework which comes with XCode then the plugin will listen to the test output and generate JUnit compatible xml files. Jenkins can read these and add the to the build results page.</p>
-
-<h2>Set up Coverage</h2>
-
-<p>Setting up code coverage for iOS projects is not an easy task. My gcov setup for XCode 4.3 still worked for me but the problem was to integrate this with Jenkins. Coverstory would not be of use here but I found this <a href="https://software.sandia.gov/trac/fast/wiki/gcovr">gcovr</a> script from the <a href="http://blog.octo.com/en/jenkins-quality-dashboard-ios-development/">Octo Talks</a> blog. Gcovr will convert the gcov output into a <a href="http://cobertura.sourceforge.net/">cobertura</a> xml file which can be read by Jenkins.</p>
-
-<p>One problem I had was that for some reason, gcov wouldn&#8217;t work on the files in the Jenkins workspace. I was getting <code>gcno:cannot open graph file</code>errors. Coverstory also didn&#8217;t work on the files in this location. What worked for me was to copy the gcda and gcno files out to a temp folder under /Users/Shared/Jenkins/Home. Passing the original build location as the root parameter to gcovr allowed the cobertura plugin to find the source code in the html report, while also removing system headers from the coverage report. Here is the script.</p>
-
-<pre><code>cp -r ${WORKSPACE}/build/${JOB_NAME}.build/Coverage-iphonesimulator/${JOB_NAME}.build/Objects-normal/i386/*.gc* /Users/shared/Jenkins/tmp/${JOB_NAME}
-cd /Users/shared/Jenkins/tmp/${JOB_NAME}
-gcovr -r $WORKSPACE/$JOB_NAME -x &gt; ${WORKSPACE}/coverage.xml
-</code></pre>
-
-<p>The <a href="http://blog.octo.com/en/jenkins-quality-dashboard-ios-development/">Octo Talks</a> blog also suggested a number of other metrics which could be captured in Jenkins. I added the SLOC Count and the Clang Build Scan. Both of these required installing tools and then Jenkins plugins which used those tools. This instructions on the blog covered this. Ones that I&#8217;ve put on the someday/maybe list are the PMD plugin and OCLint.</p>
-
-<p>At the end of all this, Jenkins is working quite well for my simple test project. Next step is to try it out on my app.</p>
 ]]></content>
   </entry>
   

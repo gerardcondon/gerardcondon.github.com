@@ -9,7 +9,7 @@
   <meta name="author" content="Gerard Condon">
 
   
-  <meta name="description" content="I recently subscribed to Gary Bernhardt&#8217;s Destroy All Software screencasts. I found these absolutely fantastic. There are only about ten to &hellip;">
+  <meta name="description" content="One of the things to learn about iOS is the MVC model. The Cocoa implementation of MVC has some differences compared to the traditional approach. For &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,50 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/03/17/controllers-in-objective-c/">Controllers in Objective C</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-17T13:52:00+00:00" pubdate data-updated="true">Mar 17<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>One of the things to learn about iOS is the MVC model. The Cocoa implementation of MVC has some <a href="http://developer.apple.com/library/ios/documentation/general/conceptual/CocoaEncyclopedia/Model-View-Controller/Model-View-Controller.html#//apple_ref/doc/uid/TP40010810-CH14-SW9">differences</a> compared to the traditional approach. For example, in Cocoa, views are not aware of the models and don&#8217;t listen for model updates. Instead the all events pass through the controller, i.e. it listens for model changes and then tells the view to update itself.</p>
+
+<p>In <a href="http://rubyonrails.org/">Rails</a>, the constant refrain is that controllers should be thin. However on iOS they seem to be absolutely huge. One joke that I saw on Twitter was that on iOS, MVC stood for Massive View Controller. For example, the Recipe sample application from Apple has controllers with hundreds of lines of code with one topping out at 600 LOC.</p>
+
+<p>One of my issues with these view controllers is that they don&#8217;t follow the Single Responsibility Principle, but instead combine multiple functions. They act as delegates for multiple protocols e.g. table data source, fetched results controller delegate etc. I find it hard to distinguish the separate elements of MVC when one class is doing everything. Also in Objective C, once everything is in the same file, it&#8217;s not obvious to which protocol an item belongs. I think this risks breaking the MVC boundaries. For example, during a refactor, if you&#8217;re not careful, you can easily get model variables depending on controller variables and vice-versa.</p>
+
+<p>I&#8217;d much prefer it if these controllers were split out into lots of different classes, each with a single job as per the SRP. This would lead to a more composition-based rather than inheritance-based codebase. I also think that this greatly helps with code navigation. Jumping to a small, focused file has the effect of filtering out irrelevant code. I&#8217;ve started using Sublime Text recently and it has great functionality for navigating between files, so I prefer having lots of smaller files rather than a few large monolithic classes.</p>
+
+<p>(On a side note this is one thing that really annoys me about XCode. Given a properly nested folder structure with well named files, I think it becomes a lot easier to find your way around the app. For example even after only a few weeks learning Rails, I know exactly where to look to find the controllers, models, db code etc. But XCode is a disaster here. It doesn&#8217;t push the groupings made in the app on to the file system underneath. It requires duplicate effort of organising the code both inside and outside the application to keep the codebase properly organised.)</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -766,62 +810,6 @@ gcovr -r $WORKSPACE/$JOB_NAME -x &gt; ${WORKSPACE}/coverage.xml
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/02/21/code-coverage-updates-for-xcode-4-dot-3/">Code Coverage Updates for Xcode 4.3</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-21T00:02:00+00:00" pubdate data-updated="true">Feb 21<span>st</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>In a previous <a href="http://www.gerardcondon.com/blog/2012/02/17/adding-code-coverage-to-unit-tests/">post</a>, I described how I got code coverage up and running in Xcode 4.2. Apple have just released Xcode 4.3 and unfortunatly updating to this has broken my code coverage. The reason is that 4.3 removes the /Developer folder and moves this internally to the Xcode.app package. While this has good consequences - it should be possible to update Xcode from the App Store like a normal app - unfortunately it has also removed the libprofile_rt library from /Developer/usr/lib. I haven&#8217;t been able to find a new version of this library in Xcode 4.3. When I tried using the version from 4.2, I got &#8220;mach-o but wrong architecture&#8221; errors.</p>
-
-<p>This means that when building my unit tests with Coverage I get link errors saying that I am missing llvm_gcda functions (llvm_gcda_start_file, llvm_gcda_increment_indirect_counter, llvm_gcda_emit_function, llvm_gcda_emit_arcs). I searched on Google to try and find a solution for 4.3 but it seemed all solutions were for 4.2 so I needed to try to solve this myself. The solution I came up with is fairly hacky. I&#8217;m hoping that as more people upgrade to 4.3, a better solution will be found and I can switch to that.</p>
-
-<p>My solution is to take the actual file which contained the gcda functions in libprofile_rt, add it to my own source code and compile it myself. The file in question can be found on llvm.org - <a href="https://llvm.org/svn/llvm-project/llvm/trunk/runtime/libprofile/GCDAProfiling.c">here</a>. To get it to build locally I deleted the win32 and sys includes (lines 27 to 31 inclusive) and replaced the llvm include (line 23) with <code>#include "stdint.h"</code>. This builds fine using the Coverage build configuration and outputs the same gcda and gcno files as before. To make sure that this code doesn&#8217;t end up in the released project by accident, I&#8217;ve included it in the unit test bundle rather than the app bundle. This is fine for me as I only need coverage when running the tests anyway.</p>
-
-<p><strong>Update:</strong> Some feedback from Tom Black, who emailed me to point out that libprofile_rt can be found in <code>/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/</code>
-However this library did not work for either of us. Instead we got errors like
-<code>The bundle “GCUtilsTests.octest” couldn’t be loaded because it is damaged or missing necessary resources.</code>
-<code>Library not loaded: @executable_path ... libprofile_rt.dylib</code>
-<code>Reason: image not found</code><br/>
-Also this library didn&#8217;t produce .gcda files but instead generated .dia files which didn&#8217;t work in Coverflow.</p>
-
-<p>What worked for Tom, but not for me, was not to include libprofile at all. This removed these errors and another incompatible binary error. Now however he got the following error.
-<code>Detected an attempt to call a symbol in system libraries that is not present on the iPhone:
-fopen$UNIX2003 called from function llvm_gcda_start_file</code>
-He found the solution to this issue <a href="http://www.infinite-loop.dk/blog/2012/02/code-coverage-and-fopen-unix2003-problems/">here</a>. I still got link errors when I followed this though so I need to stick with my original solution.</p>
-
-<p><strong>Update:</strong> Another commenter Rajiv emailed me to say that creating a new target for his project made the coverage work for him. It generated the .gcda and .gcno files when he exited using exit(0). I&#8217;ve tried creating a new simple iOS app and I don&#8217;t get any errors for this when I enable coverage.</p>
-
-<p>One thing which might explain why it still doesn&#8217;t work for some of my projects is the type of project being built. My original project was a static library. I tried to create a new static library project and when I try to enable coverage I get the same link errors as above.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/categories/development/page/3/">&larr; Older</a>
@@ -837,6 +825,10 @@ He found the solution to this issue <a href="http://www.infinite-loop.dk/blog/20
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/06/01/linx-7-standby-battery-life-fix/">Linx 7 Standby Battery Life Fix</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/05/20/mini-linx-7-review/">Mini Linx 7 Review</a>
@@ -872,10 +864,6 @@ He found the solution to this issue <a href="http://www.infinite-loop.dk/blog/20
     
       <li class="post">
         <a href="/blog/2013/05/05/learning-javascript/">Learning JavaScript</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/04/23/irish-rail-realtime-api/">Irish Rail&#8217;s RealTime API</a>
       </li>
     
   </ul>

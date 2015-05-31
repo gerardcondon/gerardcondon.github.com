@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Development | Gerard Condon's Blog]]></title>
   <link href="http://www.gerardcondon.com/blog/categories/development/atom.xml" rel="self"/>
   <link href="http://www.gerardcondon.com/"/>
-  <updated>2015-05-21T00:18:45+01:00</updated>
+  <updated>2015-06-01T00:27:54+01:00</updated>
   <id>http://www.gerardcondon.com/</id>
   <author>
     <name><![CDATA[Gerard Condon]]></name>
@@ -12,6 +12,15 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Linx 7 Standby Battery Life Fix]]></title>
+    <link href="http://www.gerardcondon.com/blog/2015/06/01/linx-7-standby-battery-life-fix/"/>
+    <updated>2015-06-01T00:23:00+01:00</updated>
+    <id>http://www.gerardcondon.com/blog/2015/06/01/linx-7-standby-battery-life-fix</id>
+    <content type="html"><![CDATA[<p>One issue I had with my Linx 7 was that the battery was draining really quickly in standby mode. I was having to shut down the tablet completely between uses. I found <a href="http://www.linxtablet.co.uk/viewtopic.php?f=41&amp;t=214#p1139">this</a> page on a Linx forum site which recommended upgrading the wifi driver. I installed the driver and now the standby battery life is excellent.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Mini Linx 7 Review]]></title>
@@ -27,6 +36,8 @@
 <p>I play a good bit of chess and the apps on iOS are nowhere near the quality of those on Windows. And apparently also those on <a href="http://prodigalpawnchessbookreviews.blogspot.ie/2015/05/why-android-chess-apps-have-it-all-over.html">Android</a>. However with the Linx I can run any Windows chess app. Even Chessbase runs fine on it, which gives access to a vast library of Chessbase Fritz Trainer videos. I can open pgn files in multiple different applications and copy and paste data between them. I can use source control to version my notes. Also on Windows, developers are able to charge proper rates for their applications, thus ensuring a robust marketplace for software.</p>
 
 <p>The problem with using Windows applications on the Linx is that the UI is really awkward to use with just your fingers. However to me, this is a small price to pay for being able to use these apps at all on a tablet. Also you can use Bluetooth mice and keyboards with the Linx so at least you have some options.</p>
+
+<p><strong>Update</strong> If you have a Linx tablet then you should <a href="http://www.gerardcondon.com/blog/2015/06/01/linx-7-standby-battery-life-fix">upgrade the wifi drivers</a> to fix the battery life.</p>
 ]]></content>
   </entry>
   
@@ -157,24 +168,6 @@ Some features of JavaScript e.g. different return types, can't be represented in
 <p>One issue I'd have with TypeScript is trying to gauge Microsoft's commitment to the language. Are they really in this for the long term? For example, the code samples on their website haven't been updated in ages. Also how large can the TypeScript community get? Are there really going to be a critical mass of developers abandoning JavaScript for this - especially considering Microsoft's past attitude to the web and Internet Explorer. The amount of bridges they must have burned is quite large at this stage. If I'd suffered for years working around IE6's issues, the last thing I'd do is switch to Microsoft's new web language.</p>
 
 <p>Overall though, I think it was worthwhile for the company to use TypeScript. The pros outweigh the cons, especially once you identify the issues with TypeScript and develop coding standards to avoid them. As a developer I would have preferred CoffeeScript as a JavaScript replacement but I can see how it would be easier to shift Java developers over to TypeScript. I think its given them a lot of security that they wouldn't have had with JavaScript.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Automating Jasmine Unit Tests]]></title>
-    <link href="http://www.gerardcondon.com/blog/2013/07/10/automating-javascript-jasmine-unit-tests/"/>
-    <updated>2013-07-10T23:48:00+01:00</updated>
-    <id>http://www.gerardcondon.com/blog/2013/07/10/automating-javascript-jasmine-unit-tests</id>
-    <content type="html"><![CDATA[<p>For the first cut at automating my JavaScript unit testing, I started running them from the command line via <a href="http://phantomjs.org/">PhantomJS</a>. PhantomJS is a headless browser so it will render my HTML &amp; CSS and execute the JavaScript, but will not display it on the screen. The steps I followed were:</p>
-
-<ul>
-<li><p>I installed phantomjs from <a href="http://phantomjs.org/download.html">here</a> using homebrew <code>brew install phantomjs</code>.</p></li>
-<li><p>I got the command for running Phantom.js <a href="http://kilon.org/blog/2013/01/running-jasmine-tests-with-phantomjs/">here</a>.</p></li>
-<li><p>I found the default output from Phantom.js to be lacking in detail. I came across a good link <a href="http://blog.jphpsf.com/2012/10/31/running-Jasmine-tests-with-Phantom-js-or-Webdriver">here</a> which shows how to add stack traces on failure and how to add colours to the output using a console reporter.</p></li>
-</ul>
-
-
-<p>In future, I'd like to add this to a build system which will run jshint on my code and also do whatever minfication/optimizations are needed. It's looking like <a href="http://gruntjs.com/">Grunt</a> is a good tool for this so will investigate that further.</p>
 ]]></content>
   </entry>
   

@@ -86,6 +86,42 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2015/06/01/linx-7-standby-battery-life-fix/">Linx 7 Standby Battery Life Fix</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-06-01T00:23:00+01:00" pubdate data-updated="true">Jun 1<span>st</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>One issue I had with my Linx 7 was that the battery was draining really quickly in standby mode. I was having to shut down the tablet completely between uses. I found <a href="http://www.linxtablet.co.uk/viewtopic.php?f=41&amp;t=214#p1139">this</a> page on a Linx forum site which recommended upgrading the wifi driver. I installed the driver and now the standby battery life is excellent.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2015/05/20/mini-linx-7-review/">Mini Linx 7 Review</a></h1>
     
     
@@ -118,6 +154,8 @@
 <p>I play a good bit of chess and the apps on iOS are nowhere near the quality of those on Windows. And apparently also those on <a href="http://prodigalpawnchessbookreviews.blogspot.ie/2015/05/why-android-chess-apps-have-it-all-over.html">Android</a>. However with the Linx I can run any Windows chess app. Even Chessbase runs fine on it, which gives access to a vast library of Chessbase Fritz Trainer videos. I can open pgn files in multiple different applications and copy and paste data between them. I can use source control to version my notes. Also on Windows, developers are able to charge proper rates for their applications, thus ensuring a robust marketplace for software.</p>
 
 <p>The problem with using Windows applications on the Linx is that the UI is really awkward to use with just your fingers. However to me, this is a small price to pay for being able to use these apps at all on a tablet. Also you can use Bluetooth mice and keyboards with the Linx so at least you have some options.</p>
+
+<p><strong>Update</strong> If you have a Linx tablet then you should <a href="http://www.gerardcondon.com/blog/2015/06/01/linx-7-standby-battery-life-fix">upgrade the wifi drivers</a> to fix the battery life.</p>
 </div>
   
   
@@ -560,50 +598,6 @@ Some features of JavaScript e.g. different return types, can&#8217;t be represen
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/03/17/controllers-in-objective-c/">Controllers in Objective C</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-03-17T13:52:00+00:00" pubdate data-updated="true">Mar 17<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>One of the things to learn about iOS is the MVC model. The Cocoa implementation of MVC has some <a href="http://developer.apple.com/library/ios/documentation/general/conceptual/CocoaEncyclopedia/Model-View-Controller/Model-View-Controller.html#//apple_ref/doc/uid/TP40010810-CH14-SW9">differences</a> compared to the traditional approach. For example, in Cocoa, views are not aware of the models and don&#8217;t listen for model updates. Instead the all events pass through the controller, i.e. it listens for model changes and then tells the view to update itself.</p>
-
-<p>In <a href="http://rubyonrails.org/">Rails</a>, the constant refrain is that controllers should be thin. However on iOS they seem to be absolutely huge. One joke that I saw on Twitter was that on iOS, MVC stood for Massive View Controller. For example, the Recipe sample application from Apple has controllers with hundreds of lines of code with one topping out at 600 LOC.</p>
-
-<p>One of my issues with these view controllers is that they don&#8217;t follow the Single Responsibility Principle, but instead combine multiple functions. They act as delegates for multiple protocols e.g. table data source, fetched results controller delegate etc. I find it hard to distinguish the separate elements of MVC when one class is doing everything. Also in Objective C, once everything is in the same file, it&#8217;s not obvious to which protocol an item belongs. I think this risks breaking the MVC boundaries. For example, during a refactor, if you&#8217;re not careful, you can easily get model variables depending on controller variables and vice-versa.</p>
-
-<p>I&#8217;d much prefer it if these controllers were split out into lots of different classes, each with a single job as per the SRP. This would lead to a more composition-based rather than inheritance-based codebase. I also think that this greatly helps with code navigation. Jumping to a small, focused file has the effect of filtering out irrelevant code. I&#8217;ve started using Sublime Text recently and it has great functionality for navigating between files, so I prefer having lots of smaller files rather than a few large monolithic classes.</p>
-
-<p>(On a side note this is one thing that really annoys me about XCode. Given a properly nested folder structure with well named files, I think it becomes a lot easier to find your way around the app. For example even after only a few weeks learning Rails, I know exactly where to look to find the controllers, models, db code etc. But XCode is a disaster here. It doesn&#8217;t push the groupings made in the app on to the file system underneath. It requires duplicate effort of organising the code both inside and outside the application to keep the codebase properly organised.)</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/categories/development/page/2/">&larr; Older</a>
@@ -617,6 +611,10 @@ Some features of JavaScript e.g. different return types, can&#8217;t be represen
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/06/01/linx-7-standby-battery-life-fix/">Linx 7 Standby Battery Life Fix</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/05/20/mini-linx-7-review/">Mini Linx 7 Review</a>
@@ -652,10 +650,6 @@ Some features of JavaScript e.g. different return types, can&#8217;t be represen
     
       <li class="post">
         <a href="/blog/2013/05/05/learning-javascript/">Learning JavaScript</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/04/23/irish-rail-realtime-api/">Irish Rail's RealTime API</a>
       </li>
     
   </ul>

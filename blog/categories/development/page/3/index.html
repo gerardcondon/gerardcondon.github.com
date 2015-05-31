@@ -9,7 +9,7 @@
   <meta name="author" content="Gerard Condon">
 
   
-  <meta name="description" content="Apple has posted a new guide to iOS development which ties together all the various strands of creating an app. (via Loop Insight). Looks really nice &hellip;">
+  <meta name="description" content="In a previous post, I described how I got code coverage up and running in Xcode 4.2. Apple have just released Xcode 4.3 and unfortunatly updating to &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,62 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/02/21/code-coverage-updates-for-xcode-4-dot-3/">Code Coverage Updates for Xcode 4.3</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-21T00:02:00+00:00" pubdate data-updated="true">Feb 21<span>st</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In a previous <a href="http://www.gerardcondon.com/blog/2012/02/17/adding-code-coverage-to-unit-tests/">post</a>, I described how I got code coverage up and running in Xcode 4.2. Apple have just released Xcode 4.3 and unfortunatly updating to this has broken my code coverage. The reason is that 4.3 removes the /Developer folder and moves this internally to the Xcode.app package. While this has good consequences - it should be possible to update Xcode from the App Store like a normal app - unfortunately it has also removed the libprofile_rt library from /Developer/usr/lib. I haven&#8217;t been able to find a new version of this library in Xcode 4.3. When I tried using the version from 4.2, I got &#8220;mach-o but wrong architecture&#8221; errors.</p>
+
+<p>This means that when building my unit tests with Coverage I get link errors saying that I am missing llvm_gcda functions (llvm_gcda_start_file, llvm_gcda_increment_indirect_counter, llvm_gcda_emit_function, llvm_gcda_emit_arcs). I searched on Google to try and find a solution for 4.3 but it seemed all solutions were for 4.2 so I needed to try to solve this myself. The solution I came up with is fairly hacky. I&#8217;m hoping that as more people upgrade to 4.3, a better solution will be found and I can switch to that.</p>
+
+<p>My solution is to take the actual file which contained the gcda functions in libprofile_rt, add it to my own source code and compile it myself. The file in question can be found on llvm.org - <a href="https://llvm.org/svn/llvm-project/llvm/trunk/runtime/libprofile/GCDAProfiling.c">here</a>. To get it to build locally I deleted the win32 and sys includes (lines 27 to 31 inclusive) and replaced the llvm include (line 23) with <code>#include "stdint.h"</code>. This builds fine using the Coverage build configuration and outputs the same gcda and gcno files as before. To make sure that this code doesn&#8217;t end up in the released project by accident, I&#8217;ve included it in the unit test bundle rather than the app bundle. This is fine for me as I only need coverage when running the tests anyway.</p>
+
+<p><strong>Update:</strong> Some feedback from Tom Black, who emailed me to point out that libprofile_rt can be found in <code>/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/</code>
+However this library did not work for either of us. Instead we got errors like
+<code>The bundle “GCUtilsTests.octest” couldn’t be loaded because it is damaged or missing necessary resources.</code>
+<code>Library not loaded: @executable_path ... libprofile_rt.dylib</code>
+<code>Reason: image not found</code><br/>
+Also this library didn&#8217;t produce .gcda files but instead generated .dia files which didn&#8217;t work in Coverflow.</p>
+
+<p>What worked for Tom, but not for me, was not to include libprofile at all. This removed these errors and another incompatible binary error. Now however he got the following error.
+<code>Detected an attempt to call a symbol in system libraries that is not present on the iPhone:
+fopen$UNIX2003 called from function llvm_gcda_start_file</code>
+He found the solution to this issue <a href="http://www.infinite-loop.dk/blog/2012/02/code-coverage-and-fopen-unix2003-problems/">here</a>. I still got link errors when I followed this though so I need to stick with my original solution.</p>
+
+<p><strong>Update:</strong> Another commenter Rajiv emailed me to say that creating a new target for his project made the coverage work for him. It generated the .gcda and .gcno files when he exited using exit(0). I&#8217;ve tried creating a new simple iOS app and I don&#8217;t get any errors for this when I enable coverage.</p>
+
+<p>One thing which might explain why it still doesn&#8217;t work for some of my projects is the type of project being built. My original project was a static library. I tried to create a new static library project and when I try to enable coverage I get the same link errors as above.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -580,46 +636,6 @@ The bare option is used as this will just clone the contents of the local .git d
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/01/18/beginning-with-xcode/">Beginning With Xcode</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-18T21:58:00+00:00" pubdate data-updated="true">Jan 18<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>The main application for developing apps is Xcode. I&#8217;m not sure if there are any alternatives but at the moment I don&#8217;t think I really need any. Xcode is free, installs from the app store. What more do I need?</p>
-
-<p>Ok, so first I installed Xcode. Or rather I installed an installer for Xcode. Seems a bit odd. I&#8217;m not sure how that will work with updates from the Mac Store. At first glance it looked the same as most other editors. Text area for writing code, tree navigator for files etc. My initial impressions are that it should be straightforward to learn to use.</p>
-
-<p>Onto learning how to create apps. My first stop was the tutorials on Ray Wenderlich&#8217;s <a href="http://www.raywenderlich.com/tutorials">site</a>. They&#8217;re really comprehensive and I really recommend them. I began with the iOS Apprentice free tutorial which teaches you how to create a game called Bullseye. From that I think I gained enough knowledge to find my way around Xcode. From here, time for the next step i.e. learning Objective C.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/categories/development/page/4/">&larr; Older</a>
@@ -635,6 +651,10 @@ The bare option is used as this will just clone the contents of the local .git d
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/06/01/linx-7-standby-battery-life-fix/">Linx 7 Standby Battery Life Fix</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/05/20/mini-linx-7-review/">Mini Linx 7 Review</a>
@@ -670,10 +690,6 @@ The bare option is used as this will just clone the contents of the local .git d
     
       <li class="post">
         <a href="/blog/2013/05/05/learning-javascript/">Learning JavaScript</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/04/23/irish-rail-realtime-api/">Irish Rail&#8217;s RealTime API</a>
       </li>
     
   </ul>
