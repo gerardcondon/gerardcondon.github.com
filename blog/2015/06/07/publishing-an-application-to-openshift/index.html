@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Automating Jasmine Unit Tests - Gerard Condon's Blog</title>
+  <title>Publishing an application to OpenShift - Gerard Condon's Blog</title>
   <meta name="author" content="Gerard Condon">
 
   
-  <meta name="description" content="For the first cut at automating my JavaScript unit testing, I started running them from the command line via PhantomJS. PhantomJS is a headless &hellip;">
-  <meta name="keywords" content="JavaScript, testing, PhantomJS">
+  <meta name="description" content="I was doing some sample Rails apps recently and was looking for a place to run them. Heroku would have been my first port of call but given the &hellip;">
+  <meta name="keywords" content="OpenShift, Rails, Github">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://www.gerardcondon.com/blog/2013/07/10/automating-javascript-jasmine-unit-tests/">
+  <link rel="canonical" href="http://www.gerardcondon.com/blog/2015/06/07/publishing-an-application-to-openshift/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -83,7 +83,7 @@
   
   <header>
     
-      <h1 class="entry-title">Automating Jasmine Unit Tests</h1>
+      <h1 class="entry-title">Publishing an Application to OpenShift</h1>
     
     
       <p class="meta">
@@ -99,23 +99,54 @@
   
 
 
-<time datetime="2013-07-10T23:48:00+01:00" pubdate data-updated="true">Jul 10<span>th</span>, 2013</time>
+<time datetime="2015-06-07T23:08:00+01:00" pubdate data-updated="true">Jun 7<span>th</span>, 2015</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>For the first cut at automating my JavaScript unit testing, I started running them from the command line via <a href="http://phantomjs.org/">PhantomJS</a>. PhantomJS is a headless browser so it will render my HTML &amp; CSS and execute the JavaScript, but will not display it on the screen. The steps I followed were:</p>
+<div class="entry-content"><p>I was doing some sample Rails apps recently and was looking for a place to run them. <a href="http://www.heroku.com">Heroku</a> would have been my first port of call but given the limits on database size for the free account, I looked around to see what else was out there. I ended up on <a href="http://www.openshift.com">OpenShift</a>. The free account gives 3 gears (or VMs) with 1GB storage on each. This is better for me as I can run a proper database on it without the 10000 row limit. The 1GB storage is also persistent so you can use it to store assets.</p>
 
-<ul>
-<li><p>I installed phantomjs from <a href="http://phantomjs.org/download.html">here</a> using homebrew <code>brew install phantomjs</code>.</p></li>
-<li><p>I got the command for running Phantom.js <a href="http://kilon.org/blog/2013/01/running-jasmine-tests-with-phantomjs/">here</a>.</p></li>
-<li><p>I found the default output from Phantom.js to be lacking in detail. I came across a good link <a href="http://blog.jphpsf.com/2012/10/31/running-Jasmine-tests-with-Phantom-js-or-Webdriver">here</a> which shows how to add stack traces on failure and how to add colours to the output using a console reporter.</p></li>
-</ul>
+<p>Redhat has an <a href="https://rubygems.org/gems/rhc/">rhc gem</a> which allows you to control your gears from the command line. You can create new apps from here or you can do as I did and create them from the OpenShift web page. They have a large list of pre-configured applications covering languages such as Java, Ruby, Python and frameworks like Node and Rails.</p>
 
+<p>I selected the Rails 4 application. This forks the <a href="https://github.com/openshift/rails4-example">Rails 4 example</a> repository from Github. The name you give your application forms the basis for its url i.e. appname-username.rhcloud.com. You can choose a database - the options for Rails are <a href="https://www.mysql.com">MySql</a> and <a href="http://www.postgresql.org">Postgres</a>. This creates a blank Rails application - to add OpenShift support to an existing application you can follow the steps <a href="http://pranavprakash.net/2014/11/08/migrating-ruby-on-rails-app-from-heroku-to-openshift/">here</a>.</p>
 
-<p>In future, I&#8217;d like to add this to a build system which will run jshint on my code and also do whatever minfication/optimizations are needed. It&#8217;s looking like <a href="http://gruntjs.com/">Grunt</a> is a good tool for this so will investigate that further.</p>
+<p>After a short wait a screen pops up with the database credentials and instructions on how to clone the application to a local git repository.</p>
+
+<p>After I clone the repository I typically change the configuration. I want to also store the application code on Github, so I rename the origin repository to openshift.</p>
+
+<pre><code> git remote rename origin openshift
+</code></pre>
+
+<p>Then I add a new origin remote using</p>
+
+<pre><code>git remote add origin git@github.com:gerardcondon/rails-app.git
+</code></pre>
+
+<p>and I do an initial push to this remote</p>
+
+<pre><code>git push origin
+</code></pre>
+
+<p>The current master branch is still tracking openshift/master so now I change this to track origin/master using</p>
+
+<pre><code>git branch master -u origin/master
+</code></pre>
+
+<p>Now by default changes are pushed to Github when I run <code>git push</code>. When I want to deploy to OpenShift I have to manually specify it using</p>
+
+<pre><code>git push openshift
+</code></pre>
+
+<p>After the push, Openshift will stop the application, perform any db migrations and restart it again. There is also <a href="https://developers.openshift.com/en/managing-modifying-applications.html">support</a> for adding in your own operations at various stages in the deployment.</p>
+
+<p>If I want to clone the repository on a new machine then I clone from Github and add an OpenShift remote using</p>
+
+<pre><code>git remote add openshift ssh://&lt;&lt;openshift repository ssh url&gt;&gt;
+</code></pre>
+
+<p>The repository&#8217;s ssh url is available from the application&#8217;s dashboard on OpenShift.</p>
 </div>
 
 
@@ -138,21 +169,15 @@
   
 
 
-<time datetime="2013-07-10T23:48:00+01:00" pubdate data-updated="true">Jul 10<span>th</span>, 2013</time>
+<time datetime="2015-06-07T23:08:00+01:00" pubdate data-updated="true">Jun 7<span>th</span>, 2015</time>
       
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/development/'>Development</a>
-  
-</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.gerardcondon.com/blog/2013/07/10/automating-javascript-jasmine-unit-tests/" data-via="" data-counturl="http://www.gerardcondon.com/blog/2013/07/10/automating-javascript-jasmine-unit-tests/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.gerardcondon.com/blog/2015/06/07/publishing-an-application-to-openshift/" data-via="" data-counturl="http://www.gerardcondon.com/blog/2015/06/07/publishing-an-application-to-openshift/" >Tweet</a>
   
   
   
@@ -161,10 +186,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/06/04/the-design-of-icloud/" title="Previous Post: The Design of iCloud">&laquo; The Design of iCloud</a>
+        <a class="basic-alignment left" href="/blog/2015/06/01/linx-7-standby-battery-life-fix/" title="Previous Post: Linx 7 Standby Battery Life Fix">&laquo; Linx 7 Standby Battery Life Fix</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2014/09/19/working-with-typescript/" title="Next Post: Working With Typescript">Working With Typescript &raquo;</a>
       
     </p>
   </footer>
