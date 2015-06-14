@@ -86,6 +86,127 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2015/06/15/upgrading-to-rails-4-dot-2-on-openshift/">Upgrading to Rails 4.2 on OpenShift</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-06-15T00:03:00+01:00" pubdate data-updated="true">Jun 15<span>th</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I updated my Rails test app from 4.1 to 4.2. However when I pushed to <a href="http://www.openshift.com">OpenShift</a> I got the following error</p>
+
+<pre><code>You have already activated rack 1.5.2, but your Gemfile requires rack 1.6.0. 
+Using bundle exec may solve this. (Gem::LoadError)
+</code></pre>
+
+<p>I found the answer on Google Groups <a href="https://groups.google.com/forum/#!topic/phusion-passenger/BLf0FDyhFAM">here</a>. The root cause is that OpenShift is <a href="https://bugzilla.redhat.com/show_bug.cgi?id=1184179">dependent</a> on Rack 1.5.2 and Passenger 4.0.18. The proper fix will have to wait until they update their versions of that software. Until then to fix this error, ssh into the OpenShift app and in the <code>app-root</code> folder run</p>
+
+<pre><code>gem install rack
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/06/07/publishing-an-application-to-openshift/">Publishing an Application to OpenShift</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-06-07T23:08:00+01:00" pubdate data-updated="true">Jun 7<span>th</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I was doing some sample Rails apps recently and was looking for a place to run them. <a href="http://www.heroku.com">Heroku</a> would have been my first port of call but given the limits on database size for the free account, I looked around to see what else was out there. I ended up on <a href="http://www.openshift.com">OpenShift</a>. The free account gives 3 gears (or VMs) with 1GB storage on each. This is better for me as I can run a proper database on it without the 10000 row limit. The 1GB storage is also persistent so you can use it to store assets.</p>
+
+<p>Redhat has an <a href="https://rubygems.org/gems/rhc/">rhc gem</a> which allows you to control your gears from the command line. You can create new apps from here or you can do as I did and create them from the OpenShift web page. They have a large list of pre-configured applications covering languages such as Java, Ruby, Python and frameworks like Node and Rails.</p>
+
+<p>I selected the Rails 4 application. This forks the <a href="https://github.com/openshift/rails4-example">Rails 4 example</a> repository from Github. The name you give your application forms the basis for its url i.e. appname-username.rhcloud.com. You can choose a database - the options for Rails are <a href="https://www.mysql.com">MySql</a> and <a href="http://www.postgresql.org">Postgres</a>. This creates a blank Rails application - to add OpenShift support to an existing application you can follow the steps <a href="http://pranavprakash.net/2014/11/08/migrating-ruby-on-rails-app-from-heroku-to-openshift/">here</a>.</p>
+
+<p>After a short wait a screen pops up with the database credentials and instructions on how to clone the application to a local git repository.</p>
+
+<p>After I clone the repository I typically change the configuration. I want to also store the application code on Github, so I rename the origin repository to openshift.</p>
+
+<pre><code> git remote rename origin openshift
+</code></pre>
+
+<p>Then I add a new origin remote using</p>
+
+<pre><code>git remote add origin git@github.com:gerardcondon/rails-app.git
+</code></pre>
+
+<p>and I do an initial push to this remote</p>
+
+<pre><code>git push origin
+</code></pre>
+
+<p>The current master branch is still tracking openshift/master so now I change this to track origin/master using</p>
+
+<pre><code>git branch master -u origin/master
+</code></pre>
+
+<p>Now by default changes are pushed to Github when I run <code>git push</code>. When I want to deploy to OpenShift I have to manually specify it using</p>
+
+<pre><code>git push openshift
+</code></pre>
+
+<p>After the push, Openshift will stop the application, perform any db migrations and restart it again. There is also <a href="https://developers.openshift.com/en/managing-modifying-applications.html">support</a> for adding in your own operations at various stages in the deployment.</p>
+
+<p>If I want to clone the repository on a new machine then I clone from Github and add an OpenShift remote using</p>
+
+<pre><code>git remote add openshift ssh://&lt;&lt;openshift repository ssh url&gt;&gt;
+</code></pre>
+
+<p>The repository&#8217;s ssh url is available from the application&#8217;s dashboard on OpenShift.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2015/06/01/linx-7-standby-battery-life-fix/">Linx 7 Standby Battery Life Fix</a></h1>
     
     
@@ -503,101 +624,6 @@ Some features of JavaScript e.g. different return types, can&#8217;t be represen
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/05/learning-javascript/">Learning JavaScript</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-05T22:52:00+01:00" pubdate data-updated="true">May 5<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Last year, the project I was working on at work switched languages for its UI code from C++ to HTML and JavaScript. For me, this meant learning JavaScript and web development.</p>
-
-<p>When I was in college, we studied Java as the &#8220;proper&#8221; programming language and barely covered JavaScript - only as part of a HTML course. Back then, I never really saw it as anything more than a language for adding simple dynamic features to a web page. However ten years later, and (hopefully!) knowing a great deal more about programming, my opinions have changed. Now, I have a whole new respect for JavaScript, based on features that I wouldn&#8217;t have been able to really comprehend back then.</p>
-
-<p>I love the power that first class functions and closures give you. It&#8217;s spoiled me as a programmer as I&#8217;m finding it hard going back to languages without those features! I know that they are coming, or have recently come, to Java and C++. However given the nature of exising legacy codebases in those languages and that projects may be restricted to earlier compilers, it&#8217;ll be a while before they&#8217;re mainstream.</p>
-
-<p>There are no shortage of in-depth JavaScript books and tutorials which teach all the features of the language. However learning JavaScript syntax and features is not the problem. The real issue is knowing what features to avoid. Unfortunately it&#8217;s incredibly easy to write unmaintainable code in JavaScript if you&#8217;re not careful. Luckily there are some very good books written on this topic. The ones I recommend are:</p>
-
-<ul>
-<li>Douglas Crockford&#8217;s <a href="http://www.amazon.com/JavaScript-Good-Parts-Douglas-Crockford/dp/0596517742">JavaScript: The Good Parts</a>. This is an really good compact book. It allows you to limit yourself to the features of JavaScript which support good software development practices.</li>
-<li>Nicholas Zakas&#8217;s <a href="http://www.amazon.com/Maintainable-JavaScript-Nicholas-C-Zakas/dp/1449327680">Maintainable JavaScript</a>. Again this book is more than a simple explanation of JavaScript syntax. It&#8217;s topics include JavaScript programming practices and build automation. The build process part is especially useful for learning the proper process for building, linting and testing JavaScript code.</li>
-<li>Marijn Haverbeke&#8217;s <a href="http://eloquentjavascript.net">Eloquent JavaScript</a>. This is available for free on the website. The really cool part about the site is that all the JavaScript code snippets are interactive and can be run on the page while you are reading them.</li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/04/23/irish-rail-realtime-api/">Irish Rail's RealTime API</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-04-23T23:03:00+01:00" pubdate data-updated="true">Apr 23<span>rd</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I spent a lot of time in my childhood and early twenties traveling on the Irish Rail Network. Mostly this seemed to involve waiting for ages at Limerick Junction or barely finding a space to stand on a packed train from Dublin. Those experiences didn&#8217;t exactly leave me with a great impression of <a href="http://www.irishrail.ie">Iarnród Éireann</a>.</p>
-
-<p>Given this, I was amazed to find out recently, that Iarnród Éireann have an <a href="http://api.irishrail.ie/realtime/index.htm">XML API</a> for accessing realtime data about the trains running on their network. Credit where credit is due, this is an excellent idea and I wish more companies would implement something similar.</p>
-
-<p>The API provides functionality for getting a list of the stations and what trains are due at those stations in the next ninety minutes. It also gives a list of all trains active on the network. It can filter by DART, Suburban or Mainline trains (that leaves some trains in an &#8216;other&#8217; category - I&#8217;m not too sure what these actually are).</p>
-
-<p>I used this API as part of a Backbone learning <a href="http://www.gerardcondon.com/projects/irishrail/index.html">project</a>. It was quite fun to do. The API returns latitude and longitude coordinates for each station and train, allowing them to be plotted on a Google Map widget. I never realised there were so many stations in Ireland until I saw them plotted on the map.</p>
-
-<p>One issue I ran into was testing the application with live data. Given that I was programming this at night after work, you&#8217;d soon reach a time when there are very few trains left on the network!</p>
-
-<p>One technical detail about the API is that it is in XML rather than JSON. This means that I can&#8217;t use Ajax or JSONP to get the data, due to the same origin policy. Instead I had to bounce the results through <a href="http://developer.yahoo.com/yql/">YQL</a>. YQL exposes a SQL like interface to web data. I&#8217;m only using a basic &#8216;select all&#8217; query here but looking at their site you can do lots of cool and complex stuff. I found a good <a href="http://www.cypressnorth.com/blog/programming/cross-domain-ajax-request-with-xml-response-for-iefirefoxchrome-safari-jquery/">tutorial</a> from Cypress North on how to use YQL in your code to consume an XML API.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/categories/development/page/2/">&larr; Older</a>
@@ -611,6 +637,10 @@ Some features of JavaScript e.g. different return types, can&#8217;t be represen
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/06/15/upgrading-to-rails-4-dot-2-on-openshift/">Upgrading to Rails 4.2 on OpenShift</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/06/07/publishing-an-application-to-openshift/">Publishing an application to OpenShift</a>
@@ -646,10 +676,6 @@ Some features of JavaScript e.g. different return types, can&#8217;t be represen
     
       <li class="post">
         <a href="/blog/2013/06/04/the-design-of-icloud/">The Design of iCloud</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/22/test-driven-design-in-practice/">Test Driven Design in practice</a>
       </li>
     
   </ul>

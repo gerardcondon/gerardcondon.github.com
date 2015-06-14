@@ -9,7 +9,7 @@
   <meta name="author" content="Gerard Condon">
 
   
-  <meta name="description" content="One of the things to learn about iOS is the MVC model. The Cocoa implementation of MVC has some differences compared to the traditional approach. For &hellip;">
+  <meta name="description" content="Last year, the project I was working on at work switched languages for its UI code from C++ to HTML and JavaScript. For me, this meant learning &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,101 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/05/05/learning-javascript/">Learning JavaScript</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-05T22:52:00+01:00" pubdate data-updated="true">May 5<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Last year, the project I was working on at work switched languages for its UI code from C++ to HTML and JavaScript. For me, this meant learning JavaScript and web development.</p>
+
+<p>When I was in college, we studied Java as the &#8220;proper&#8221; programming language and barely covered JavaScript - only as part of a HTML course. Back then, I never really saw it as anything more than a language for adding simple dynamic features to a web page. However ten years later, and (hopefully!) knowing a great deal more about programming, my opinions have changed. Now, I have a whole new respect for JavaScript, based on features that I wouldn&#8217;t have been able to really comprehend back then.</p>
+
+<p>I love the power that first class functions and closures give you. It&#8217;s spoiled me as a programmer as I&#8217;m finding it hard going back to languages without those features! I know that they are coming, or have recently come, to Java and C++. However given the nature of exising legacy codebases in those languages and that projects may be restricted to earlier compilers, it&#8217;ll be a while before they&#8217;re mainstream.</p>
+
+<p>There are no shortage of in-depth JavaScript books and tutorials which teach all the features of the language. However learning JavaScript syntax and features is not the problem. The real issue is knowing what features to avoid. Unfortunately it&#8217;s incredibly easy to write unmaintainable code in JavaScript if you&#8217;re not careful. Luckily there are some very good books written on this topic. The ones I recommend are:</p>
+
+<ul>
+<li>Douglas Crockford&#8217;s <a href="http://www.amazon.com/JavaScript-Good-Parts-Douglas-Crockford/dp/0596517742">JavaScript: The Good Parts</a>. This is an really good compact book. It allows you to limit yourself to the features of JavaScript which support good software development practices.</li>
+<li>Nicholas Zakas&#8217;s <a href="http://www.amazon.com/Maintainable-JavaScript-Nicholas-C-Zakas/dp/1449327680">Maintainable JavaScript</a>. Again this book is more than a simple explanation of JavaScript syntax. It&#8217;s topics include JavaScript programming practices and build automation. The build process part is especially useful for learning the proper process for building, linting and testing JavaScript code.</li>
+<li>Marijn Haverbeke&#8217;s <a href="http://eloquentjavascript.net">Eloquent JavaScript</a>. This is available for free on the website. The really cool part about the site is that all the JavaScript code snippets are interactive and can be run on the page while you are reading them.</li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/04/23/irish-rail-realtime-api/">Irish Rail&#8217;s RealTime API</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-23T23:03:00+01:00" pubdate data-updated="true">Apr 23<span>rd</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I spent a lot of time in my childhood and early twenties traveling on the Irish Rail Network. Mostly this seemed to involve waiting for ages at Limerick Junction or barely finding a space to stand on a packed train from Dublin. Those experiences didn&#8217;t exactly leave me with a great impression of <a href="http://www.irishrail.ie">Iarnród Éireann</a>.</p>
+
+<p>Given this, I was amazed to find out recently, that Iarnród Éireann have an <a href="http://api.irishrail.ie/realtime/index.htm">XML API</a> for accessing realtime data about the trains running on their network. Credit where credit is due, this is an excellent idea and I wish more companies would implement something similar.</p>
+
+<p>The API provides functionality for getting a list of the stations and what trains are due at those stations in the next ninety minutes. It also gives a list of all trains active on the network. It can filter by DART, Suburban or Mainline trains (that leaves some trains in an &#8216;other&#8217; category - I&#8217;m not too sure what these actually are).</p>
+
+<p>I used this API as part of a Backbone learning <a href="http://www.gerardcondon.com/projects/irishrail/index.html">project</a>. It was quite fun to do. The API returns latitude and longitude coordinates for each station and train, allowing them to be plotted on a Google Map widget. I never realised there were so many stations in Ireland until I saw them plotted on the map.</p>
+
+<p>One issue I ran into was testing the application with live data. Given that I was programming this at night after work, you&#8217;d soon reach a time when there are very few trains left on the network!</p>
+
+<p>One technical detail about the API is that it is in XML rather than JSON. This means that I can&#8217;t use Ajax or JSONP to get the data, due to the same origin policy. Instead I had to bounce the results through <a href="http://developer.yahoo.com/yql/">YQL</a>. YQL exposes a SQL like interface to web data. I&#8217;m only using a basic &#8216;select all&#8217; query here but looking at their site you can do lots of cool and complex stuff. I found a good <a href="http://www.cypressnorth.com/blog/programming/cross-domain-ajax-request-with-xml-response-for-iefirefoxchrome-safari-jquery/">tutorial</a> from Cypress North on how to use YQL in your code to consume an XML API.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -712,104 +807,6 @@ gcovr -r $WORKSPACE/$JOB_NAME -x &gt; ${WORKSPACE}/coverage.xml
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/05/15/starting-with-core-data/">Starting Out With Core Data</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-05-15T21:59:00+01:00" pubdate data-updated="true">May 15<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>For my project, I need a way to store the model data that I will be generating. I certainly don&#8217;t want to write a persistence layer for my model objects so I will definitely use a standard library for this. There are a number of options</p>
-
-<ul>
-<li>Core Data. This provides an editor to create the objects and XCode will generate the required model classes for me.</li>
-<li>Use a database like Sqlite directly. Core Data uses a sqlite database behind the scenes but instead I could create one directly and access it using a library like <a href="https://github.com/ccgus/fmdb">FMVH</a>.</li>
-<li>A service like <a href="http://www.parse.com">Parse.com</a>. This provides an online backend for apps.</li>
-</ul>
-
-
-<p>I don&#8217;t want to use the database directly as I prefer working with objects, so that would rule out sqlite for me. Parse.com is really interesting. Among other things, it provides an online site where you can see the data in a spreadsheet interface. This <a href="http://houseofbilz.com/archives/2011/11/30/an-example-backboneparse-com-app/">tutorial</a> shows how you can use Parse.com to implement a todo list website. It&#8217;s a real pity that iCloud doesn&#8217;t provide a similar API to allow non-Apple devices access the data.</p>
-
-<p>In the end I&#8217;ve decided to go with Core Data. The reasons for this are</p>
-
-<ul>
-<li>It&#8217;s an Apple standard library and one of the purposes of writing an app was to learn about iOS and Apple technologies. Where possible I&#8217;ve tried to stick to the Apple way of doing things as I can be sure that this approach will be supported in future - or if there is a new system, then a transition path will be provided.</li>
-<li>Core Data works on the object level rather than the database level. I&#8217;ve programmed in objects for most of my career so this is familiar to me. I have a working knowledge of databases but I feel more comfortable using OOP.</li>
-<li>I&#8217;m assuming that Core Data should integrate with iCloud better than other approaches. Thinking ahead I&#8217;d like to look at iCloud at some stage and learning Core Data first should make that a bit easier.</li>
-</ul>
-
-
-<h2>Magical Record and Mogenerator</h2>
-
-<p>There are some good Core Data tutorials out there. The best introduction that I found was the <a href="http://www.stanford.edu/class/cs193p/cgi-bin/drupal/downloads-2011-fall">Stanford</a> iOS course (lectures 13 &amp; 14). To be honest, the code required to implement Core Data is fairly complex and verbose. To deal with that, I started looking for libraries which would improve the Core Data experience. The best I found is <a href="https://github.com/magicalpanda/MagicalRecord">Magical Record</a>. This library simplifies Core Data a great deal and provides loads of helper categories &amp; functions. There is an excellent tutorial on MagicalRecord <a href="http://yannickloriot.com/2012/03/magicalrecord-how-to-make-programming-with-core-data-pleasant/">here</a>. I also found <a href="http://ablfx.com/blog/?post_type=post&amp;p=561">this</a> tutorial really good and it also includes a sample project which uses MagicalRecord.</p>
-
-<p>Magical Record works well with another tool called <a href="https://github.com/rentzsch/mogenerator">Mogenerator</a>. You download a .dmg from the site and install from that. There is a nice tutorial <a href="http://raptureinvenice.com/getting-started-with-mogenerator/">here</a>. Mogenerator generates classes from the Core Data xcdatamodel file. The normal Core Data build can also do this but the advantage of Mogenerator is that it generates a second set of classes for each Core Data entity. This second set will never be overwritten so you can write custom code in these. The first set of classes will be regenerated each time the model gets updated.</p>
-
-<p>Magical Record is available on Github. Like most iOS projects I&#8217;ve found there, it seems the standard way to integrate this with your project is to copy the source files into your code and work away. I&#8217;m not too comfortable with this approach and would prefer to keep third party libraries separate from my code. This would allow me to update these independently and share them between projects. I&#8217;ll have to look into what options are available for this.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/04/29/joined-the-ios-developer-program/">Joined the iOS Developer Program</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-04-29T21:40:00+01:00" pubdate data-updated="true">Apr 29<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I&#8217;ve been fairly busy with the Start Your Own Business course so I haven&#8217;t had much time to do iOS programming. It&#8217;s time to get back into it now though, and so I&#8217;ve just paid my subscription to the iOS developer program. I&#8217;m looking forward to being able to run code on an actual device. It&#8217;s been a bit limiting working on just the simulator and there&#8217;s nothing like seeing your code running on the final hardware.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/categories/development/page/3/">&larr; Older</a>
@@ -825,6 +822,10 @@ gcovr -r $WORKSPACE/$JOB_NAME -x &gt; ${WORKSPACE}/coverage.xml
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/06/15/upgrading-to-rails-4-dot-2-on-openshift/">Upgrading to Rails 4.2 on OpenShift</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/06/07/publishing-an-application-to-openshift/">Publishing an application to OpenShift</a>
@@ -860,10 +861,6 @@ gcovr -r $WORKSPACE/$JOB_NAME -x &gt; ${WORKSPACE}/coverage.xml
     
       <li class="post">
         <a href="/blog/2013/06/04/the-design-of-icloud/">The Design of iCloud</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/22/test-driven-design-in-practice/">Test Driven Design in practice</a>
       </li>
     
   </ul>

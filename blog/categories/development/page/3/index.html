@@ -9,7 +9,7 @@
   <meta name="author" content="Gerard Condon">
 
   
-  <meta name="description" content="In a previous post, I described how I got code coverage up and running in Xcode 4.2. Apple have just released Xcode 4.3 and unfortunatly updating to &hellip;">
+  <meta name="description" content="For my project, I need a way to store the model data that I will be generating. I certainly don&#8217;t want to write a persistence layer for my &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,104 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/05/15/starting-with-core-data/">Starting Out With Core Data</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-05-15T21:59:00+01:00" pubdate data-updated="true">May 15<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>For my project, I need a way to store the model data that I will be generating. I certainly don&#8217;t want to write a persistence layer for my model objects so I will definitely use a standard library for this. There are a number of options</p>
+
+<ul>
+<li>Core Data. This provides an editor to create the objects and XCode will generate the required model classes for me.</li>
+<li>Use a database like Sqlite directly. Core Data uses a sqlite database behind the scenes but instead I could create one directly and access it using a library like <a href="https://github.com/ccgus/fmdb">FMVH</a>.</li>
+<li>A service like <a href="http://www.parse.com">Parse.com</a>. This provides an online backend for apps.</li>
+</ul>
+
+
+<p>I don&#8217;t want to use the database directly as I prefer working with objects, so that would rule out sqlite for me. Parse.com is really interesting. Among other things, it provides an online site where you can see the data in a spreadsheet interface. This <a href="http://houseofbilz.com/archives/2011/11/30/an-example-backboneparse-com-app/">tutorial</a> shows how you can use Parse.com to implement a todo list website. It&#8217;s a real pity that iCloud doesn&#8217;t provide a similar API to allow non-Apple devices access the data.</p>
+
+<p>In the end I&#8217;ve decided to go with Core Data. The reasons for this are</p>
+
+<ul>
+<li>It&#8217;s an Apple standard library and one of the purposes of writing an app was to learn about iOS and Apple technologies. Where possible I&#8217;ve tried to stick to the Apple way of doing things as I can be sure that this approach will be supported in future - or if there is a new system, then a transition path will be provided.</li>
+<li>Core Data works on the object level rather than the database level. I&#8217;ve programmed in objects for most of my career so this is familiar to me. I have a working knowledge of databases but I feel more comfortable using OOP.</li>
+<li>I&#8217;m assuming that Core Data should integrate with iCloud better than other approaches. Thinking ahead I&#8217;d like to look at iCloud at some stage and learning Core Data first should make that a bit easier.</li>
+</ul>
+
+
+<h2>Magical Record and Mogenerator</h2>
+
+<p>There are some good Core Data tutorials out there. The best introduction that I found was the <a href="http://www.stanford.edu/class/cs193p/cgi-bin/drupal/downloads-2011-fall">Stanford</a> iOS course (lectures 13 &amp; 14). To be honest, the code required to implement Core Data is fairly complex and verbose. To deal with that, I started looking for libraries which would improve the Core Data experience. The best I found is <a href="https://github.com/magicalpanda/MagicalRecord">Magical Record</a>. This library simplifies Core Data a great deal and provides loads of helper categories &amp; functions. There is an excellent tutorial on MagicalRecord <a href="http://yannickloriot.com/2012/03/magicalrecord-how-to-make-programming-with-core-data-pleasant/">here</a>. I also found <a href="http://ablfx.com/blog/?post_type=post&amp;p=561">this</a> tutorial really good and it also includes a sample project which uses MagicalRecord.</p>
+
+<p>Magical Record works well with another tool called <a href="https://github.com/rentzsch/mogenerator">Mogenerator</a>. You download a .dmg from the site and install from that. There is a nice tutorial <a href="http://raptureinvenice.com/getting-started-with-mogenerator/">here</a>. Mogenerator generates classes from the Core Data xcdatamodel file. The normal Core Data build can also do this but the advantage of Mogenerator is that it generates a second set of classes for each Core Data entity. This second set will never be overwritten so you can write custom code in these. The first set of classes will be regenerated each time the model gets updated.</p>
+
+<p>Magical Record is available on Github. Like most iOS projects I&#8217;ve found there, it seems the standard way to integrate this with your project is to copy the source files into your code and work away. I&#8217;m not too comfortable with this approach and would prefer to keep third party libraries separate from my code. This would allow me to update these independently and share them between projects. I&#8217;ll have to look into what options are available for this.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/04/29/joined-the-ios-developer-program/">Joined the iOS Developer Program</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-29T21:40:00+01:00" pubdate data-updated="true">Apr 29<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&#8217;ve been fairly busy with the Start Your Own Business course so I haven&#8217;t had much time to do iOS programming. It&#8217;s time to get back into it now though, and so I&#8217;ve just paid my subscription to the iOS developer program. I&#8217;m looking forward to being able to run code on an actual device. It&#8217;s been a bit limiting working on just the simulator and there&#8217;s nothing like seeing your code running on the final hardware.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -520,122 +618,6 @@ Otherwise when we refactor code, we end up breaking lots of seemingly unrelated 
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/01/26/version-control-in-xcode-using-git-and-dropbox/">Version Control in Xcode Using Git and Dropbox</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-26T18:00:00+00:00" pubdate data-updated="true">Jan 26<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>When I first created projects in Xcode, I just let it take care of the version control for me by creating a Git local repository for my code. This was working fine for me but I could see that in future I would need more flexibility. I think it’s better to build that (and good programming habits in general) in at the start of a project when the codebase is small rather than refactoring down the line when it becomes a bigger problem.</p>
-
-<p>One issue is that the local Git repository could only be used by one computer. If I wanted to share this code I would need to switch to using remote Git repositories. I also wanted to incorporate some form of remote backup for additional security.</p>
-
-<p><a href="http://www.github.com">Github</a> (recommended to me by <a href="http://au.linkedin.com/pub/ian-hennessy/5/1b4/987">Ian Hennessy</a>) would do the job just fine but the free accounts are limited to public repositories. If I was working with other developers then it would make sense to pay for one of their plans. The collaboration tools e.g. issue tracking, code review look really good. It’s certainly a site I can see myself using in the future.</p>
-
-<p>However for someone like me who is a solo developer, these features don’t add much value. I really just needed the backup functionality. So for this, I looked at storing the repository on <a href="http://www.dropbox.com">Dropbox</a>. It’s private and the free two gigabytes should be more than enough to host my code. Also Dropbox is available on pretty much everything and works well with firewalls. As for backups, it’s bullet proof. I’ve had my Windows PC hard drive fail recently. In the past this would have been a nightmare to deal with. Now I just installed a new drive, reinstalled Dropbox and saw all my documents reappear.</p>
-
-<p>One issue that I think may arise would occur if Dropbox has conflicting edits on the same file from multiple locations. In that case I’d imagine it’s merge resolution would mess up the Git repository. Fortunately I don’t think that this will apply in this situation. I will be the only person with access to the repository and I won’t be editing the same files from two PCs at the same time.</p>
-
-<p>To set up Dropbox I followed the steps on <a href="http://www.cimgf.com/2008/06/03/version-control-makes-you-a-better-programmer/">this</a> post from cimgf.com. This <a href="http://stackoverflow.com/questions/1960799/using-gitdropbox-together-effectively">answer</a> on StackOverflow is also a good reference.</p>
-
-<ul>
-<li>I created the project I wanted in Xcode and allowed it to set up a local Git Repository for me.</li>
-<li>I cloned the repository using the bare keyword to a Dropbox location.
-<code>git clone –-bare . ~/Dropbox/development/repositories/GCUtils/GCUtils.git</code>
-The bare option is used as this will just clone the contents of the local .git directory to Dropbox. We don’t want to create a working copy of the code on Dropbox, as this may lead to Dropbox edit conflicts if that working copy is edited directly. In order to edit the code, a user should have to clone the repository to their machine, work on it locally and then push the changes to the Dropbox repository.</li>
-<li>I created a remote alias.
-<code>git remote add dbGCUtils ~/Dropbox/development/repositories/GCUtils/GCUtils.git</code></li>
-<li>I restarted Xcode and in the repositories tab of the Organizer, it picked up the remote repository automatically.</li>
-</ul>
-
-
-<p>And that’s pretty much it for the initial setup. From here Xcode can manage the commits to the local repository and also the push and pull from the remote repository. The Xcode user guide describes how Xcode can interact with Git <a href="http://developer.apple.com/library/mac/#documentation/ToolsLanguages/Conceptual/Xcode4UserGuide/SCM/SCM.html">here</a>.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/01/21/learning-objective-c/">Learning Objective C</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-21T18:00:00+00:00" pubdate data-updated="true">Jan 21<span>st</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Here is a list of the resources I used when learning Objective C.</p>
-
-<ul>
-<li><a href="http://developer.apple.com/library/ios/navigation/#section=Resource%20Types&amp;amp;topic=Getting%20Started">Apple Documentation</a>. This is really good, especially the Javadoc like pages for the UI classes. There are load of documents here. Ones that I missed first time around are the “Your First/Second/Third iOS App” guides. I’ll have to catch up on those. (One tip which I completely missed out on for ages. For these webpages, on the right hand side of the second toolbar, is a button which gets the whole doc as a PDF. It’s worth building up a library of these.) The two main documents that I used were
-
-<ul>
-<li><a href="http://developer.apple.com/library/ios/#documentation/UserExperience/Conceptual/MobileHIG/Introduction/Introduction.html">The Human Interface Guide</a>. This is a really excellent document for describing how to design an iOS app. It’s not code based but instead operates at a higher level explaining the UI principles and how the UI elements should be used.</li>
-<li> <a href="http://developer.apple.com/library/ios/#documentation/Cocoa/Conceptual/ObjectiveC/Introduction/introObjectiveC.html#//apple_ref/doc/uid/TP30001163">Objective C Programming Language</a>. I think this document is essential for learning Obejctive C. It details the extensions Objective C makes to the base C language and is really thorough.</li>
-</ul>
-</li>
-<li> <a href="http://www.stackoverflow.com" title="">Stack Overflow</a>. This site is an absolute godsend. How did we ever live without it? The documents above are fine as an introduction to Objective C and app development. However when you start to create an app and run into practical issues, this site is fantastic. There has been no coding question that I have had that they haven’t been able to answer and the coding samples provided are normally top notch. I can’t recommend this site enough.</li>
-<li>Google &amp; Blogs. In general searching for Objective C questions on google brings up a list of blogs which detail people’s practical implementations of various issues. These are useful to read as they normally contain any design decisions and reasons why alternatives were rejected.</li>
-</ul>
-
-
-<p>The main class of resources that I haven’t decided to use in learning Objective C have been books. There seem to be some good ones out there but I don’t think there’s much there that I haven’t been able to find on the web. Blogs and Stack Overflow have killed programming language books for me.</p>
-
-<p>The other thing is that I think books about specific programming languages are the ones at risk of going out of date. My data structures and pattern books from college are still useful but any Java books from then have become outdated. The core object-oriented parts are still valid but you can say goodbye to vectors, Swing etc. I’ll have to keep an eye out for good Objective C pattern books.</p>
-
-<p>To give a specific example, the ARC memory management recently introduced to Objective C has rendered the sample code in a lot of books obsolete. Not just obsolete but incorrect actually as the old code won’t compile with ARC enabled. On the web this can be updated, but the books are stuck with the older, invalid code. Maybe with ebooks becoming more popular there will be scope for having books that update their sample code automatically. Until then we have to wait for revised editions, if indeed they are released at all.</p>
-
-<p>I just found <a href="http://chachatelier.fr/programmation/fichiers/cpp-objc-en.pdf">this</a> document (via <a href="http://www.twitter.com/steipete">@steipete</a>) which is a guide from C++ to Objective C. This looks to be really good.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/categories/development/page/4/">&larr; Older</a>
@@ -651,6 +633,10 @@ The bare option is used as this will just clone the contents of the local .git d
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/06/15/upgrading-to-rails-4-dot-2-on-openshift/">Upgrading to Rails 4.2 on OpenShift</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/06/07/publishing-an-application-to-openshift/">Publishing an application to OpenShift</a>
@@ -686,10 +672,6 @@ The bare option is used as this will just clone the contents of the local .git d
     
       <li class="post">
         <a href="/blog/2013/06/04/the-design-of-icloud/">The Design of iCloud</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/22/test-driven-design-in-practice/">Test Driven Design in practice</a>
       </li>
     
   </ul>

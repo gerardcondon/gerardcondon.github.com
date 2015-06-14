@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Apple's New Introduction to iOS Development - Gerard Condon's Blog</title>
+  <title>Upgrading to Rails 4.2 on OpenShift - Gerard Condon's Blog</title>
   <meta name="author" content="Gerard Condon">
 
   
-  <meta name="description" content="Apple has posted a new guide to iOS development which ties together all the various strands of creating an app. (via Loop Insight). Looks really nice &hellip;">
-  <meta name="keywords" content="Apple, iOS, Development">
+  <meta name="description" content="I updated my Rails test app from 4.1 to 4.2. However when I pushed to OpenShift I got the following error You have already activated rack 1.5.2, but &hellip;">
+  <meta name="keywords" content="Rails, OpenShift">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://www.gerardcondon.com/blog/2012/02/18/apple-new-introduction-to-ios-development/">
+  <link rel="canonical" href="http://www.gerardcondon.com/blog/2015/06/15/upgrading-to-rails-4-dot-2-on-openshift/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -83,7 +83,7 @@
   
   <header>
     
-      <h1 class="entry-title">Apple's New Introduction to iOS Development</h1>
+      <h1 class="entry-title">Upgrading to Rails 4.2 on OpenShift</h1>
     
     
       <p class="meta">
@@ -99,14 +99,23 @@
   
 
 
-<time datetime="2012-02-18T09:44:00+00:00" pubdate data-updated="true">Feb 18<span>th</span>, 2012</time>
+<time datetime="2015-06-15T00:03:00+01:00" pubdate data-updated="true">Jun 15<span>th</span>, 2015</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>Apple has posted a <a href="https://developer.apple.com/library/ios/#referencelibrary/GettingStarted/RoadMapiOS/Introduction/Introduction.html">new guide</a> to iOS development which ties together all the various strands of creating an app. (via <a href="http://www.loopinsight.com/2012/02/17/apple-posts-guide-to-start-developing-ios-apps/">Loop Insight</a>). Looks really nice.</p>
+<div class="entry-content"><p>I updated my Rails test app from 4.1 to 4.2. However when I pushed to <a href="http://www.openshift.com">OpenShift</a> I got the following error</p>
+
+<pre><code>You have already activated rack 1.5.2, but your Gemfile requires rack 1.6.0. 
+Using bundle exec may solve this. (Gem::LoadError)
+</code></pre>
+
+<p>I found the answer on Google Groups <a href="https://groups.google.com/forum/#!topic/phusion-passenger/BLf0FDyhFAM">here</a>. The root cause is that OpenShift is <a href="https://bugzilla.redhat.com/show_bug.cgi?id=1184179">dependent</a> on Rack 1.5.2 and Passenger 4.0.18. The proper fix will have to wait until they update their versions of that software. Until then to fix this error, ssh into the OpenShift app and in the <code>app-root</code> folder run</p>
+
+<pre><code>gem install rack
+</code></pre>
 </div>
 
 
@@ -129,7 +138,7 @@
   
 
 
-<time datetime="2012-02-18T09:44:00+00:00" pubdate data-updated="true">Feb 18<span>th</span>, 2012</time>
+<time datetime="2015-06-15T00:03:00+01:00" pubdate data-updated="true">Jun 15<span>th</span>, 2015</time>
       
 
 <span class="categories">
@@ -143,7 +152,7 @@
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.gerardcondon.com/blog/2012/02/18/apple-new-introduction-to-ios-development/" data-via="" data-counturl="http://www.gerardcondon.com/blog/2012/02/18/apple-new-introduction-to-ios-development/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.gerardcondon.com/blog/2015/06/15/upgrading-to-rails-4-dot-2-on-openshift/" data-via="" data-counturl="http://www.gerardcondon.com/blog/2015/06/15/upgrading-to-rails-4-dot-2-on-openshift/" >Tweet</a>
   
   
   
@@ -152,10 +161,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2012/02/17/adding-code-coverage-to-unit-tests/" title="Previous Post: Adding Code Coverage to Unit Tests for Xcode 4.2">&laquo; Adding Code Coverage to Unit Tests for Xcode 4.2</a>
+        <a class="basic-alignment left" href="/blog/2015/06/07/publishing-an-application-to-openshift/" title="Previous Post: Publishing an application to OpenShift">&laquo; Publishing an application to OpenShift</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2012/02/21/code-coverage-updates-for-xcode-4-dot-3/" title="Next Post: Code Coverage Updates for Xcode 4.3">Code Coverage Updates for Xcode 4.3 &raquo;</a>
       
     </p>
   </footer>

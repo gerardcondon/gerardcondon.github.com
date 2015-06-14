@@ -9,7 +9,7 @@
   <meta name="author" content="Gerard Condon">
 
   
-  <meta name="description" content="I was doing some sample Rails apps recently and was looking for a place to run them. Heroku would have been my first port of call but given the &hellip;">
+  <meta name="description" content="I updated my Rails test app from 4.1 to 4.2. However when I pushed to OpenShift I got the following error You have already activated rack 1.5.2, but &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,51 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/06/15/upgrading-to-rails-4-dot-2-on-openshift/">Upgrading to Rails 4.2 on OpenShift</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-06-15T00:03:00+01:00" pubdate data-updated="true">Jun 15<span>th</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I updated my Rails test app from 4.1 to 4.2. However when I pushed to <a href="http://www.openshift.com">OpenShift</a> I got the following error</p>
+
+<pre><code>You have already activated rack 1.5.2, but your Gemfile requires rack 1.6.0. 
+Using bundle exec may solve this. (Gem::LoadError)
+</code></pre>
+
+<p>I found the answer on Google Groups <a href="https://groups.google.com/forum/#!topic/phusion-passenger/BLf0FDyhFAM">here</a>. The root cause is that OpenShift is <a href="https://bugzilla.redhat.com/show_bug.cgi?id=1184179">dependent</a> on Rack 1.5.2 and Passenger 4.0.18. The proper fix will have to wait until they update their versions of that software. Until then to fix this error, ssh into the OpenShift app and in the <code>app-root</code> folder run</p>
+
+<pre><code>gem install rack
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -627,46 +672,6 @@ Some features of JavaScript e.g. different return types, can&#8217;t be represen
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/22/test-driven-design-in-practice/">Test Driven Design in Practice</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-22T21:35:00+01:00" pubdate data-updated="true">May 22<span>nd</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I recently tried implementing a JavaScript project at work using the testing methods I&#8217;ve learned from the <a href="http://www.destroyallsoftware.com">Destroy All Software</a> Screencast. It ended up being some of the best code I&#8217;ve written. The interfaces grew neatly, it wasn&#8217;t not over designed and it was completely covered by tests. It&#8217;s the project that I have the most confidence in its correctnesss. It&#8217;s nice to know that despite any modifications in future, as long as all the tests pass it will pretty much always work first time.</p>
-
-<p>Anywhere I&#8217;ve worked up to now, testing was always seen as something that you implemented after the fact. Code coverage was the main driver of the testing. However this approach completely misses the input that TDD has on the design of the application. By writing applications so that they can be tested easily, they turn out to be much better designed. They are less coupled and all the dependencies are visible. Having the design emerge from the growing system is better than imposing over elaborate architecture and patterns top down.</p>
-
-<p>I found a couple of good resources recently on testing and the impact it has on your code. This is a good <a href="http://vimeo.com/15007792">talk</a> by Michael Feathers on the synergy between testing and design. He shows how testing problems are indicative of design problems. Misko Hevery&#8217;s <a href="http://misko.hevery.com">site</a> has some great presentations and resources on how to design code that is testable.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -680,6 +685,10 @@ Some features of JavaScript e.g. different return types, can&#8217;t be represen
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/06/15/upgrading-to-rails-4-dot-2-on-openshift/">Upgrading to Rails 4.2 on OpenShift</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/06/07/publishing-an-application-to-openshift/">Publishing an application to OpenShift</a>
@@ -715,10 +724,6 @@ Some features of JavaScript e.g. different return types, can&#8217;t be represen
     
       <li class="post">
         <a href="/blog/2013/06/04/the-design-of-icloud/">The Design of iCloud</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/22/test-driven-design-in-practice/">Test Driven Design in practice</a>
       </li>
     
   </ul>
