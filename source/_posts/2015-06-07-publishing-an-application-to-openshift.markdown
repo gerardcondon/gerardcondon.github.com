@@ -3,7 +3,7 @@ layout: post
 title: "Publishing an application to OpenShift"
 date: 2015-06-07 23:08
 comments: true
-categories: 
+categories: Development
 keywords: OpenShift, Rails, Github
 ---
 
