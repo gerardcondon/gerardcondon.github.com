@@ -2,18 +2,8 @@
 <section>
   <h1>Latest Tweets</h1>
   <ul id="tweets">
-    <li class="loading">Status updating...</li>
+      <a class="twitter-timeline" data-chrome="nofooter transparent noheader" data-tweet-limit="5" href="https://twitter.com/gercondon">Tweets by gercondon</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
   </ul>
-  <script type="text/javascript">
-    $.domReady(function(){
-      getTwitterFeed("{{site.twitter_user}}", {{site.twitter_tweet_count}}, {{site.twitter_show_replies}});
-    });
-  </script>
-  <script src="{{ root_url }}/javascripts/twitter.js" type="text/javascript"> </script>
-  {% if site.twitter_follow_button %}
-    <a href="http://twitter.com/{{ site.twitter_user }}" class="twitter-follow-button" data-show-count="{{ site.twitter_show_follower_count }}">Follow @{{ site.twitter_user }}</a>
-  {% else %}
-    <p>Follow <a href="http://twitter.com/{{site.twitter_user}}">@{{ site.twitter_user }}</a></p>
-  {% endif %}
-</section>
+  <a class="twitter-follow-button" href="https://twitter.com/gercondon">Follow @gercondon</a>
+</section> 
 {% endif %}
