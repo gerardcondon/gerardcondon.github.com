@@ -16,7 +16,7 @@ However for someone like me who is a solo developer, these features don’t add 
 
 One issue that I think may arise would occur if Dropbox has conflicting edits on the same file from multiple locations. In that case I’d imagine it’s merge resolution would mess up the Git repository. Fortunately I don’t think that this will apply in this situation. I will be the only person with access to the repository and I won’t be editing the same files from two PCs at the same time.
 
-To set up Dropbox I followed the steps on [this](http://www.cimgf.com/2008/06/03/version-control-makes-you-a-better-programmer/) post from cimgf.com. This [answer](http://stackoverflow.com/questions/1960799/using-gitdropbox-together-effectively) on StackOverflow is also a good reference.
+To set up Dropbox I followed the steps on [this](http://www.cimgf.com/2008/06/03/version-control-makes-you-a-better-programmer/) post from cimgf.com. This [answer](http://stackoverflow.com/q/1960799/1131820) on StackOverflow is also a good reference.
 
 *   I created the project I wanted in Xcode and allowed it to set up a local Git Repository for me.
 *   I cloned the repository using the bare keyword to a Dropbox location.

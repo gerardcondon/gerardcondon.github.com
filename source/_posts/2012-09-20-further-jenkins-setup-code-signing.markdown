@@ -14,13 +14,13 @@ The first error I got was
     Code Sign error: The identity 'iPhone Developer' doesn't match any valid certificate/private key pair in the default keychain` 
 
 This [post](
-http://stackoverflow.com/questions/9245149/jenkins-on-os-x-xcodebuild-gives-code-sign-error/9246321#9246321) on Stack Overflow has a really detailed set of instructions on how best to fix this. Unfortunately as my iPhone developer account is not a business one, I can't add a jenkins user to it. So to solve my problem I added my certificate to the system keychain so that now my local jenkins user can access it.
+http://stackoverflow.com/a/9246321/1131820) on Stack Overflow has a really detailed set of instructions on how best to fix this. Unfortunately as my iPhone developer account is not a business one, I can't add a jenkins user to it. So to solve my problem I added my certificate to the system keychain so that now my local jenkins user can access it.
 
 Once that was out of the way, the next issue to rear its head was a provisioning profile error. 
 
     Code Sign error: A valid provisioning profile matching the application's Identifier '...' could not be found
 
-I found the solution to this again on [Stack Overflow](http://stackoverflow.com/questions/10454628/xcodebuild-code-sign-error-provisioning-profile-x-cant-be-found).
+I found the solution to this again on [Stack Overflow](http://stackoverflow.com/q/10454628/1131820).
 I needed to copy my provisioning profile from `~/Library/MobileDevice/Provisioning` to the jenkins user's folder at `/Users/Shared/Jenkins/Home/Library/MobileDevice/Provisioning Profiles`.
 
 The next reason for the build failing was that I was invoking xcodebuild using a target instead of a scheme. The target worked fine for the static library but was failing for the app as it was unable to find all the include files. Once I switched to building a scheme, the build worked fine. Building via a scheme or target is easy to configure using the Jenkins XCode plugin. You set the XCode Schema File entry to the name of the XCode build scheme.
@@ -32,7 +32,7 @@ Nearly there! Now that the build was working I turned my attention to getting th
 Peter's blog describes the fix for this. You need to patch the `RunPlatformUnitTests` file in order to remove the warning printout and invoke the tests.
 
 The last error I had to deal with was with the code coverage. I started seeing errors with `fopen$UNIX2003` and `fwrite$UNIX2003`. I had seen this issue on other blogs before but hadn't encountered it myself until I tried building an app using the command line. The solution as described [here](
-http://stackoverflow.com/questions/8732393/code-coverage-with-xcode-4-2-missing-files) is to add implementations of these into your application which simply call the standard C functions.
+http://stackoverflow.com/q/8732393/1131820) is to add implementations of these into your application which simply call the standard C functions.
 
     #include <stdio.h>
 

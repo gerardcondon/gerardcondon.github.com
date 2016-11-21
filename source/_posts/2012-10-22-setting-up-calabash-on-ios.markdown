@@ -70,7 +70,7 @@ A good blog on the Calabash install and initial test setup is [here](http://www.
 		end
 
 * My typical test layout is to use 
-	* **Given** to put the system in a specific state - this is where I use the backdoor function to set up the app model. I do things like erase all the Core Data objects here (from [Stack Overflow](http://stackoverflow.com/questions/1077810/delete-reset-all-entries-in-core-data)) to ensure that each test starts with a clean slate.
+	* **Given** to put the system in a specific state - this is where I use the backdoor function to set up the app model. I do things like erase all the Core Data objects here (from [Stack Overflow](http://stackoverflow.com/a/1222145/1131820)) to ensure that each test starts with a clean slate.
 	* **When** to perform an action. These are driven through the app UI.
 	* **Then** to check the results of the actions. I've typically done these using the app UI e.g. checking for the existence of views, the state of the UI etc. As an alternative I could also use the backdoor function to check the model here.
 

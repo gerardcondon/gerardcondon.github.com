@@ -3,7 +3,7 @@ layout: post
 title: "Adding microposts to Middleman"
 date: 2016-11-20 22:10
 comments: true
-categories: 
+categories: Development
 ---
 
 I came across the idea of microblogs from Manton Reece's [blog](http://www.manton.org/tag/microblogs).
