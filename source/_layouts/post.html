@@ -8,9 +8,9 @@ single: true
   {% include article.html %}
   <footer>
     <p class="meta">
-      {% include post/author.html %}
+      <a href="{{ root_url }}{{ post.url }}">→</a> &nbsp; posted on
       {% include post/date.html %}{% if updated %}{{ updated }}{% else %}{{ time }}{% endif %}
-      {% include post/categories.html %}
+      &nbsp; &#x2022 &nbsp; {% include post/categories.html %}
     </p>
     {% unless page.sharing == false %}
       {% include post/sharing.html %}

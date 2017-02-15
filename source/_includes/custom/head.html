@@ -7,7 +7,7 @@
 <!-- Twitter Card -->
 {% if site.twitter_user %}
 <meta property="twitter:card" content="{% if page.twitter_card.type %}{{ page.twitter_card.type}}{% else %}summary{% endif %}" />
-<meta property="twitter:site" content="{{ site.twitter_user }}" />
+<meta property="twitter:site" content="@{{ site.twitter_user }}" />
 <meta property="twitter:url" content="{% if canonical %}{{ canonical }}{% else %}{{ site.url }}{% endif %}" />
 <meta property="twitter:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}" />
 <meta property="twitter:description" content="{{ description | strip_html | condense_spaces | truncate:200 }}" />
