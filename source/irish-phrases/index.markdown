@@ -21,3 +21,15 @@ This page contains the Irish phrases that my son is learning at school.
 **Tá Gearóid ag rith** - Gerard is running<br>
 **Tá Gearóid ag léim** - Gerard is jumping<br>
 **Tá Gearóid ag súil** - Gerard is walking<br>
+
+**Cad é sin?** - What is that?<br>
+**Sin bórd** - That is a table<br>
+**Sin fuinneog** - That is a window<br>
+**Sin cófra** - That is a cupboard<br>
+**Sin doras** - That is a door<br>
+**Sin mála scoile** - That is a school bag<br>
+
+**Cad atá sa mhála scoile?** - What is in the school bag?<br>
+**Tá leabhair sa mhála scoile** - There is a book in the school bag<br>
+**Tá cóipleabhair sa mhála scoile** - There is a copybook in the school bag<br>
+**Tá peann luaidhe sa mhála scoile** - There is a pencil in the school bag<br>
