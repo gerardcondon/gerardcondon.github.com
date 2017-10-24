@@ -33,3 +33,7 @@ This page contains the Irish phrases that my son is learning at school.
 **Tá leabhair sa mhála scoile** - There is a book in the school bag<br>
 **Tá cóipleabhair sa mhála scoile** - There is a copybook in the school bag<br>
 **Tá peann luaidhe sa mhála scoile** - There is a pencil in the school bag<br>
+
+**Is míse an phúca** - I am the ghost<br>
+**Is míse an chailleach** - I am the witch<br>
+**Is míse an cat** - I am the cat<br>
