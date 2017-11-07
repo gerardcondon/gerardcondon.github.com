@@ -37,3 +37,8 @@ This page contains the Irish phrases that my son is learning at school.
 **Is míse an phúca** - I am the ghost<br>
 **Is míse an chailleach** - I am the witch<br>
 **Is míse an cat** - I am the cat<br>
+
+**Conas atá tusa** - How are you?<br>
+**Tá mé go matih** - I am good<br>
+**Níl mé go maith** - I am not good<br>
+**Tá mé tinn** - I am sick<br>
