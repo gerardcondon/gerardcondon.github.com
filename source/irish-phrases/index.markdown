@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "irish phrases"
+title: "Irish Phrases"
 date: 2017-10-03 23:08
 comments: true
 sharing: true
