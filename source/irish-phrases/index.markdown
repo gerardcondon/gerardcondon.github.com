@@ -22,6 +22,8 @@ This page contains the Irish phrases that my son is learning at school.
 **Tá Gearóid ag léim** - Gerard is jumping<br>
 **Tá Gearóid ag súil** - Gerard is walking<br>
 
+**Tá mé ag súil** - I am walking<br>
+
 **Cad é sin?** - What is that?<br>
 **Sin bórd** - That is a table<br>
 **Sin fuinneog** - That is a window<br>
