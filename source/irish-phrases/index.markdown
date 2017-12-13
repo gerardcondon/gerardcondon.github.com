@@ -48,3 +48,6 @@ This page contains the Irish phrases that my son is learning at school.
 **Tá banana sa bhosca lóin** - There is a banana in the lunch box<br>
 **Tá ceapaire sa bhosca lóin** - There is a sandwich in the lunch box<br>
 **Tá úll sa bhosca lóin** - There is an apple in the lunch box<br>
+
+**Nollaig Shona Duit** - Merry Christmas
+**Daidí na Nollaig** - Santa Claus
